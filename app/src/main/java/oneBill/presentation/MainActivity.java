@@ -1,4 +1,4 @@
-package cn.edu.tsinghua.cs.httpsoft.onebill;
+package oneBill.presentation;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 
 public class MainActivity extends AppCompatActivity {
 
