@@ -1,4 +1,4 @@
-package cn.edu.tsinghua.cs.httpsoft.onebill;
+package oneBill;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

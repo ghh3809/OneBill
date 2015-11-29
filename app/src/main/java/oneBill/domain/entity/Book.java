@@ -1,9 +1,12 @@
-package oneBill.entity;
+package oneBill.domain.entity;
 
 import java.util.Calendar;
 import java.util.Vector;
 
-import oneBill.entity.error.*;
+import oneBill.domain.entity.error.AmountMismatchException;
+import oneBill.domain.entity.error.MemberMismatchException;
+import oneBill.domain.entity.error.PersonNotFoundException;
+import oneBill.domain.entity.error.UnableToClearException;
 
 /**
  * Created by 豪豪 on 2015/11/26.
