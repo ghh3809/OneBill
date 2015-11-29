@@ -1,4 +1,4 @@
-package oneBill.entity;
+package oneBill.domain.entity;
 
 /**
  * Created by 豪豪 on 2015/11/26.

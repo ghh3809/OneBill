@@ -1,4 +1,4 @@
-package oneBill.entity;
+package oneBill.domain.entity;
 
 import java.util.Calendar;
 

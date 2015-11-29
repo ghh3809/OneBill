@@ -9,8 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import oneBill.entity.Person;
-import oneBill.entity.Type;
+import oneBill.domain.entity.Type;
 
 /**
  * Created by 豪豪 on 2015/11/26.
@@ -37,7 +36,7 @@ public class Writer {
         db.insert("Book", null, cv);
     }
 
-    public void AddPerson(ArrayList<String> _persons, String _bookName) {
+    public void AddPerson(String _bookName ,ArrayList<String> _persons) {
         db.beginTransaction();
         try {
             for (String person : _persons) {
@@ -49,7 +48,7 @@ public class Writer {
         }
     }
 
-    public void AddPerson(String _person, String _bookName) {
+    public void AddPerson(String _bookName, String _person) {
         db.execSQL("INSERT INTO person VALUES(?, ?)", new String[]{_person, _bookName});
     }
 
@@ -84,64 +83,61 @@ public class Writer {
         }
     }
 
-    public void deleteBook(String _bookName) {
-
+    public void DeleteBook(String _bookName) {
+        db.delete("book", "BookName = ?", new String[]{_bookName});
+        db.delete("person", "BookName = ?", new String[]{_bookName});
+        db.delete("log", "BookName = ?", new String[]{_bookName});
+        db.delete("detail", "BookName = ?", new String[]{_bookName});
     }
 
-    public void deletePerson(String _person) {
-
+    public void DeletePerson(String _bookName, String _person) {
+        ContentValues cv = new ContentValues();
+        cv.put("IsExist", false);
+        db.update("person", cv, "BookName = ? AND Name = ?", new String[]{_bookName, _person});
     }
 
-//    /**
-//     * update person's age
-//     * @param person
-//     */
-//    public void updateAge(Person person) {
-//        ContentValues cv = new ContentValues();
-//        cv.put("age", person.age);
-//        db.update("person", cv, "name = ?", new String[]{person.name});
-//    }
-//
-//    /**
-//     * delete old person
-//     * @param person
-//     */
-//    public void deleteOldPerson(Person person) {
-//        db.delete("person", "age >= ?", new String[]{String.valueOf(person.age)});
-//    }
-//
-//    /**
-//     * query all persons, return list
-//     * @return List<Person>
-//     */
-//    public List<Person> query() {
-//        ArrayList<Person> persons = new ArrayList<Person>();
-//        Cursor c = queryTheCursor();
-//        while (c.moveToNext()) {
-//            Person person = new Person();
-//            person._id = c.getInt(c.getColumnIndex("_id"));
-//            person.name = c.getString(c.getColumnIndex("name"));
-//            person.age = c.getInt(c.getColumnIndex("age"));
-//            person.info = c.getString(c.getColumnIndex("info"));
-//            persons.add(person);
-//        }
-//        c.close();
-//        return persons;
-//    }
-//
-//    /**
-//     * query all persons, return cursor
-//     * @return	Cursor
-//     */
-//    public Cursor queryTheCursor() {
-//        Cursor c = db.rawQuery("SELECT * FROM person", null);
-//        return c;
-//    }
+    public void DeleteLog(int _id) {
+        db.delete("log", "ID = ?", new String[]{String.valueOf(_id)});
+        db.delete("detail", "ID = ?", new String[]{String.valueOf(_id)});
+    }
 
-    /**
-     * close database
-     */
-    public void closeDB() {
+    public void UpdateBookTime(String _bookName) {
+        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String nowTime = formatter.format(curDate);
+        ContentValues cv = new ContentValues();
+        cv.put("ChangeTime", nowTime);
+        db.update("book", cv, "BookName = ?", new String[]{_bookName});
+    }
+
+    public void UpdateBookName(String _oldName, String _newName) {
+        ContentValues cv = new ContentValues();
+        cv.put("BookName", _newName);
+        db.update("book", cv, "BookName = ?", new String[]{_oldName});
+        db.update("person", cv, "BookName = ?", new String[]{_oldName});
+        db.update("log", cv, "BookName = ?", new String[]{_oldName});
+        db.update("detail", cv, "BookName = ?", new String[]{_oldName});
+    }
+
+    public void UpdateBookNumber() {
+        Cursor c = db.rawQuery("SELECT BookNum FROM const", null);
+        int BookNum = c.getInt(c.getColumnIndex("BookNum"));
+        BookNum ++;
+        ContentValues cv = new ContentValues();
+        cv.put("BookNum", BookNum);
+        db.update("const", cv, null, null);
+    }
+
+    public void UpdateIDNumber() {
+        Cursor c = db.rawQuery("SELECT IDNum FROM const", null);
+        int IDNum = c.getInt(c.getColumnIndex("IDNum"));
+        IDNum ++;
+        ContentValues cv = new ContentValues();
+        cv.put("IDNum", IDNum);
+        db.update("const", cv, null, null);
+    }
+
+    public void CloseDB() {
         db.close();
     }
 }
