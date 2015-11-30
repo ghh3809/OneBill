@@ -5,6 +5,8 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 
+import oneBill.domain.entity.Type;
+import oneBill.domain.entity.error.AmountMismatchException;
 import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.foundation.Reader;
 import oneBill.foundation.Writer;
@@ -93,5 +95,33 @@ public class Broker {
         }
         return logs;
     }
+
+    public ArrayList<ArrayList<String>> GetDetail(int _ID) {
+        ArrayList<ArrayList<String>> logdetail = new ArrayList<ArrayList<String>>();
+        Cursor c = reader.QueryLogDetail(_ID);
+        while(c.moveToNext()) {
+            ArrayList<String> detail = new ArrayList<String>();
+            detail.add(0, c.getString(c.getColumnIndex("Name")));
+            detail.add(1, String.valueOf(c.getDouble(c.getColumnIndex("Paid"))));
+            detail.add(2, String.valueOf(c.getDouble(c.getColumnIndex("Payable"))));
+        }
+        return logdetail;
+    }
+
+    public void CreateConsumRecord(String _bookName, Type _type, ArrayList<Double> _paid, ArrayList<Double> _payable) throws AmountMismatchException {
+        double sumPaid = 0;
+        double sumPayable = 0;
+        for(int i = 0; i < _paid.size(); i ++) {
+            sumPaid += _paid.get(i);
+            sumPayable += _paid.get(i);
+        }
+        if(Math.abs(sumPaid - sumPayable) > 1E-5) throw new AmountMismatchException(sumPaid, sumPayable);
+        int _id = reader.QueryIDNum() + 1;
+        writer.AddLog(_id, _type, _bookName, sumPaid);
+        writer.AddDetails(_id, _bookName, GetMember(_bookName), _paid, _payable);
+        writer.UpdateIDNumber();
+    }
+
+
 
 }

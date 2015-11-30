@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import oneBill.domain.entity.Solution;
 import oneBill.domain.entity.Type;
+import oneBill.domain.entity.error.AmountMismatchException;
 import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.domain.entity.error.NullException;
 import oneBill.domain.mediator.Broker;
@@ -107,23 +108,38 @@ public class Actioner {
 
     /**
      * 获取账本记录.
-     * <p>获取该账本的简要记录，包括时间、金额、类型。记录方式为二维ArrayList。<br>
+     * <p>获取该账本的简要记录，包括时间、金额、类型。记录方式为二维ArrayList，每个ArrayList为一行记录。<br>
      * @param _bookName 要获取记录的账本
      * @return 返回账本记录
      */
     public ArrayList<ArrayList<String>> GetRecord(String _bookName) {
-        return new ArrayList<ArrayList<String>>();
+        return br.GetRecord(_bookName);
     }
 
+    /**
+     * 获取记录明细.
+     * <p>获取记录的明细，包括参与人员、实付、应付。记录方式为二维ArrayList，每个ArrayList为一行记录。<br>
+     * @param _ID 要获取明细的记录ID号
+     * @return 返回记录明细
+     */
     public ArrayList<ArrayList<String>> GetDetail(int _ID) {
-        return new ArrayList<ArrayList<String>>();
+        return br.GetDetail(_ID);
     }
 
-    public int CreateConsumRecord(String _bookName, Type _type, float[] _paid, float[] _payable) {
-        return 0;
+    /**
+     * 新增账本消费记录.
+     * <p>新增一条消费记录，需要传递实付与应付两个ArrayList，其排列顺序应与GetMember方法中给出的顺序一致。<br>
+     * @param _bookName 要新增记录的账本名
+     * @param _type 新增记录的类型
+     * @param _paid 实付数组
+     * @param _payable 应付数组
+     * @throws AmountMismatchException 当实付与应付总额出现矛盾时，抛出此异常。
+     */
+    public void CreateConsumRecord(String _bookName, Type _type, ArrayList<Double> _paid, ArrayList<Double> _payable) throws AmountMismatchException {
+        br.CreateConsumRecord(_bookName, _type, _paid, _payable);
     }
 
-    public int CreateLoanRecord(String _bookName, String _lender, String _borrower, float _amount) {
+    public int CreateLoanRecord(String _bookName, String _lender, String _borrower, double _amount) {
         return 0;
     }
 
@@ -131,8 +147,8 @@ public class Actioner {
 
     }
 
-    public ArrayList GetLog(String _bookName, String _person) {
-        return new ArrayList();
+    public ArrayList<ArrayList<String>> GetPersonLog(String _bookName, String _person) {
+        return new ArrayList<ArrayList<String>>();
     }
 
     public double QueryPaid(String _bookName, String _person) {

@@ -37,6 +37,11 @@ public class Reader {
         return c;
     }
 
+    public Cursor QueryLogDetail(int _ID) {
+        Cursor c = db.rawQuery("SELECT * FROM detail WHERE ID = ?", new String[]{String.valueOf(_ID)});
+        return c;
+    }
+
     public Cursor QueryDetail(String _bookName, String _person) {
         Cursor c = db.rawQuery("SELECT * FROM detail WHERE BookName = ? AND WHERE Name = ? ORDER BY id", new String[]{_bookName, _person});
         return c;

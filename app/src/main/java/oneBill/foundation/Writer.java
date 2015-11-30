@@ -64,7 +64,7 @@ public class Writer {
         db.insert("log", null, cv);
     }
 
-    public void AddDetail(int _id, String _bookName, ArrayList<String> _persons, ArrayList<Double> _paid, ArrayList<Double> _payable) {
+    public void AddDetails(int _id, String _bookName, ArrayList<String> _persons, ArrayList<Double> _paid, ArrayList<Double> _payable) {
         db.beginTransaction();
         int n = _persons.size();
         try {
@@ -75,7 +75,7 @@ public class Writer {
                 cv.put("BookName", _bookName);
                 cv.put("Paid", _paid.get(i));
                 cv.put("Payable", _payable.get(i));
-                db.insert("detail", null, cv);
+                if ((_paid.get(i) > 1E-5) && (_payable.get(i) > 1E-5)) db.insert("detail", null, cv);
             }
             db.setTransactionSuccessful();
         } finally {
