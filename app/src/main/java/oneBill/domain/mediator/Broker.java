@@ -83,6 +83,10 @@ public class Broker {
         writer.DeletePerson(_bookName, _person);
     }
 
+    public double GetSum(String _bookName) {
+        return reader.QuerySum(_bookName);
+    }
+
     public ArrayList<ArrayList<String>> GetRecord(String _bookName) {
         Cursor c = reader.QueryLog(_bookName);
         ArrayList<ArrayList<String>> logs = new ArrayList<ArrayList<String>>();
@@ -108,20 +112,72 @@ public class Broker {
         return logdetail;
     }
 
-    public void CreateConsumRecord(String _bookName, Type _type, ArrayList<Double> _paid, ArrayList<Double> _payable) throws AmountMismatchException {
+    public void CreateConsumRecord(String _bookName, int _type, ArrayList<Double> _paid, ArrayList<Double> _payable) throws AmountMismatchException {
         double sumPaid = 0;
         double sumPayable = 0;
+        Type type = Type.FOOD;
+        switch(_type) {
+            case 1: type = Type.FOOD; break;
+            case 2: type = Type.TRANS; break;
+            case 3: type = Type.PLAY; break;
+            case 4: type = Type.ACCOM; break;
+            case 5: type = Type.OTHER; break;
+        }
         for(int i = 0; i < _paid.size(); i ++) {
             sumPaid += _paid.get(i);
             sumPayable += _paid.get(i);
         }
+
         if(Math.abs(sumPaid - sumPayable) > 1E-5) throw new AmountMismatchException(sumPaid, sumPayable);
-        int _id = reader.QueryIDNum() + 1;
-        writer.AddLog(_id, _type, _bookName, sumPaid);
-        writer.AddDetails(_id, _bookName, GetMember(_bookName), _paid, _payable);
+        int id = reader.QueryIDNum() + 1;
+        writer.AddLog(id, type.toString(), _bookName, sumPaid);
+        writer.AddDetails(id, _bookName, GetMember(_bookName), _paid, _payable);
         writer.UpdateIDNumber();
     }
 
+    public void CreateLoanRecord(String _bookName, String _lender, String _borrower, double _amount) {
+        Type type = Type.LOAN;
+        int id = reader.QueryIDNum() + 1;
+        writer.AddLog(id, type.toString(), _bookName, _amount);
+        writer.AddDetail(id, _bookName, _lender, _amount, 0);
+        writer.AddDetail(id, _bookName, _lender, 0, _amount);
+        writer.UpdateIDNumber();
+    }
 
+    public void DeleteRecord(int _ID) {
+        writer.DeleteLog(_ID);
+    }
+
+    public double QueryNetAmount(String _bookName, String _person) {
+        Cursor c = reader.QueryDetail(_bookName, _person);
+        double paid = 0, payable = 0;
+        while(c.moveToNext()) {
+            paid += c.getDouble(c.getColumnIndex("Paid"));
+            payable += c.getDouble(c.getColumnIndex("Payable"));
+        }
+        return paid - payable;
+    }
+
+    public void SettlePerson(String _bookName, String _person, String _trader) {
+        double net = QueryNetAmount(_bookName, _person);
+        if(net > 0) CreateLoanRecord(_bookName, _trader, _person, net);
+        else if(net < 0) CreateLoanRecord(_bookName, _person, _trader, net);
+        DeleteMember(_bookName, _person);
+    }
+
+    public void CloseDataBase() {
+        reader.CloseDB();
+        writer.CloseDB();
+    }
+
+    public ArrayList<String> GetType() {
+        ArrayList<String> type = new ArrayList<String>();
+        type.add(Type.FOOD.toString());
+        type.add(Type.TRANS.toString());
+        type.add(Type.PLAY.toString());
+        type.add(Type.ACCOM.toString());
+        type.add(Type.OTHER.toString());
+        return type;
+    }
 
 }

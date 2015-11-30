@@ -52,16 +52,26 @@ public class Writer {
         db.execSQL("INSERT INTO person VALUES(?, ?)", new String[]{_person, _bookName});
     }
 
-    public void AddLog(int _id, Type _type, String _bookName, double _amount) {
-        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm");
+    public void AddLog(int _id, String _type, String _bookName, double _amount) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String nowTime = formatter.format(curDate);
         ContentValues cv = new ContentValues();
         cv.put("ID", _id);
-        cv.put("Type", _type.toString());
+        cv.put("Type", _type);
         cv.put("BookName", _bookName);
         cv.put("Amount", _amount);
         db.insert("log", null, cv);
+    }
+
+    public void AddDetail(int _id, String _bookName, String _person, double _paid, double _payable) {
+        ContentValues cv = new ContentValues();
+        cv.put("ID", _id);
+        cv.put("Name", _person);
+        cv.put("BookName", _bookName);
+        cv.put("Paid", _paid);
+        cv.put("Payable", _payable);
+        if ((_paid > 1E-5) && (_payable > 1E-5)) db.insert("detail", null, cv);
     }
 
     public void AddDetails(int _id, String _bookName, ArrayList<String> _persons, ArrayList<Double> _paid, ArrayList<Double> _payable) {
@@ -69,13 +79,7 @@ public class Writer {
         int n = _persons.size();
         try {
             for(int i = 0; i < n; i ++) {
-                ContentValues cv = new ContentValues();
-                cv.put("ID", _id);
-                cv.put("Name", _persons.get(i));
-                cv.put("BookName", _bookName);
-                cv.put("Paid", _paid.get(i));
-                cv.put("Payable", _payable.get(i));
-                if ((_paid.get(i) > 1E-5) && (_payable.get(i) > 1E-5)) db.insert("detail", null, cv);
+                AddDetail(_id, _bookName, _persons.get(i), _paid.get(i), _payable.get(i));
             }
             db.setTransactionSuccessful();
         } finally {
