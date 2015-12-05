@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">OneBill</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_manage_member">ManageMember</string>
+    <string name="book_title">账本1</string>
+    <string name="title_activity_delete_member">DeleteMember</string>
+    <string name="delete_comfirm">已还清，确认离开</string>
 </resources>

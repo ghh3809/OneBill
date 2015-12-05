@@ -317,7 +317,7 @@ public class Book {
 
     public float queryNetAmount(String _personName) throws PersonNotFoundException {
         int findp = this.findPerson(_personName);
-        return (float)this.member.get(findp).getNetAmount();
+        return this.member.get(findp).getNetAmount();
     }
 
     /**
@@ -329,7 +329,7 @@ public class Book {
 
     public float queryPaid(String _personName) throws PersonNotFoundException {
         int findp = this.findPerson(_personName);
-        return (float)this.member.get(findp).getPaid();
+        return this.member.get(findp).getPaid();
     }
 
     /**
@@ -341,7 +341,7 @@ public class Book {
 
     public float queryPayable(String _personName) throws PersonNotFoundException {
         int findp = this.findPerson(_personName);
-        return (float)this.member.get(findp).getPayable();
+        return this.member.get(findp).getPayable();
     }
 
     /**
