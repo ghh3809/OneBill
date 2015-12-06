@@ -17,6 +17,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import oneBill.control.Actioner;
+
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 
 public class ManageMember extends AppCompatActivity {
@@ -30,9 +34,18 @@ public class ManageMember extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_member);
 
+        Actioner actioner = new Actioner(this);
+
         final String bookName="一叶账目示例";
+
         //Intent intent = getIntent();
         //final String bookName = intent.getStringExtra("bookName");
+
+        //ArrayList names = actioner.GetMember(bookName);
+        //ArrayList bills = actioner.QueryNetAmount(bookName);
+        //names.get(index);
+
+
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(bookName);
 

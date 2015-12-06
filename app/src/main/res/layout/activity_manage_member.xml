@@ -10,15 +10,16 @@
     tools:context="oneBill.presentation.ManageMember">
 
 
-
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="fitXY"
         android:background="#0000"
         android:src="@mipmap/arrow_head_left"
         android:id="@+id/imageButton"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/left_margin" />
     <TextView
         android:text="@string/book_title"
         android:layout_width="wrap_content"
@@ -30,22 +31,20 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/imageButton"
         android:layout_toEndOf="@+id/imageButton"
-        android:layout_alignBottom="@+id/imageButton" />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="asdfljaskldf"
-        android:layout_below="@+id/textView"
-        android:background="@drawable/edit_shape"/>
+        android:layout_alignBottom="@+id/imageButton"
+        android:layout_marginLeft="@dimen/left_margin"/>
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="fitXY"
         android:background="#0000"
         android:src="@mipmap/trash"
         android:id="@+id/imageDelete"
         android:layout_toRightOf="@id/textView"
         android:layout_toEndOf="@id/textView"
         android:layout_marginLeft="@dimen/left_margin"/>
+
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
