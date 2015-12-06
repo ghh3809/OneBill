@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,10 @@ public class DeleteMember extends AppCompatActivity {
         setContentView(R.layout.activity_delete_member);
 
         Intent intent = getIntent();
-        int i = intent.getIntExtra("bookID",-1);
+        String bookName = intent.getStringExtra("bookName");
+
+        TextView bookTitle = (TextView) findViewById(R.id.bookTitle);
+        bookTitle.setText(bookName);
 
         spinner = (Spinner) findViewById(R.id.personNameTo);
 

@@ -29,6 +29,13 @@ public class ManageMember extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_member);
+
+        final String bookName="一叶账目示例";
+        //Intent intent = getIntent();
+        //final String bookName = intent.getStringExtra("bookName");
+        TextView textView = (TextView) findViewById(R.id.textView);
+        textView.setText(bookName);
+
         listView=(ListView)this.findViewById(R.id.manageMemberList);
         listView.setAdapter(new ListViewAdapter(names, bills));
 
@@ -45,8 +52,7 @@ public class ManageMember extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManageMember.this, DeleteMember.class);
-                int i = 1;
-                intent.putExtra("bookID", i);
+                intent.putExtra("bookName",bookName);
                 startActivity(intent);
             }
         });
