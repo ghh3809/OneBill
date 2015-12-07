@@ -2,7 +2,6 @@ package oneBill.control;
 
 import android.content.Context;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import oneBill.domain.entity.Solution;
@@ -10,6 +9,7 @@ import oneBill.domain.entity.Type;
 import oneBill.domain.entity.error.AmountMismatchException;
 import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.domain.entity.error.NullException;
+import oneBill.domain.entity.error.UnableToClearException;
 import oneBill.domain.mediator.Broker;
 
 /**
@@ -107,6 +107,16 @@ public class Actioner {
     }
 
     /**
+     * 获取账本总消费金额.
+     * <p>从记录中搜索所有的消费记录（不包括借款记录），返回消费总金额。<br>
+     * @param _bookName 要查找的账本名称
+     * @return 返回消费总金额
+     */
+    public double GetSum(String _bookName) {
+        return br.GetSum(_bookName);
+    }
+
+    /**
      * 获取账本记录.
      * <p>获取该账本的简要记录，包括时间、金额、类型。记录方式为二维ArrayList，每个ArrayList为一行记录。<br>
      * @param _bookName 要获取记录的账本
@@ -135,44 +145,107 @@ public class Actioner {
      * @param _payable 应付数组
      * @throws AmountMismatchException 当实付与应付总额出现矛盾时，抛出此异常。
      */
-    public void CreateConsumRecord(String _bookName, Type _type, ArrayList<Double> _paid, ArrayList<Double> _payable) throws AmountMismatchException {
+    public void CreateConsumRecord(String _bookName, int _type, ArrayList<Double> _paid, ArrayList<Double> _payable) throws AmountMismatchException {
         br.CreateConsumRecord(_bookName, _type, _paid, _payable);
     }
 
-    public int CreateLoanRecord(String _bookName, String _lender, String _borrower, double _amount) {
-        return 0;
+    /**
+     * 新增账本借款记录.
+     * <p>新增一条借款记录，需要传递借出人、借入人及金额三个参数。<br>
+     * @param _bookName 要增加记录的账本名
+     * @param _lender 借出人
+     * @param _borrower 借入人
+     * @param _amount 借款金额
+     */
+    public void CreateLoanRecord(String _bookName, String _lender, String _borrower, double _amount) {
+        if (_amount > 0) br.CreateLoanRecord(_bookName, _lender, _borrower, _amount);
+        else if (_amount < 0) br.CreateLoanRecord(_bookName, _borrower, _lender, -_amount);
     }
 
+    /**
+     * 删除某条账本记录.
+     * <p>按id号删除一条记录，可能为消费记录或借款记录。<br>
+     * @param _ID 要删除记录的ID号
+     */
     public void DeleteRecord(int _ID) {
-
+        br.DeleteRecord(_ID);
     }
 
-    public ArrayList<ArrayList<String>> GetPersonLog(String _bookName, String _person) {
-        return new ArrayList<ArrayList<String>>();
+    /**
+     * 查询净支出额.
+     * <p>查询列表中成员的净支出额（总支出-总收入），顺序按照人员列表顺序排列。<br>
+     * @param _bookName 要查询的账本名
+     * @return 净支出额列表
+     */
+    public ArrayList<Double> QueryNetAmount(String _bookName) {
+        ArrayList<String> persons = br.GetMember(_bookName);
+        ArrayList<Double> net = new ArrayList<Double>();
+        for(int i = 0; i < persons.size(); i ++) {
+            net.add(QueryNetAmount(_bookName, persons.get(i)));
+        }
+        return net;
     }
 
-    public double QueryPaid(String _bookName, String _person) {
-        return 0;
-    }
-
-    public double QueryPayable(String _bookName, String _person) {
-        return 0;
-    }
-
+    /**
+     * 查询个人净支出额.
+     * <p>查询账本中某成员的净支出额（总支出-总收入）。<br>
+     * @param _bookName 要查询的账本名
+     * @param _person 要查询的人员姓名
+     * @return 净支出额
+     */
     public double QueryNetAmount(String _bookName, String _person) {
-        return 0;
+        return br.QueryNetAmount(_bookName, _person);
     }
 
+    /**
+     * 个人清账并删除成员.
+     * <p>个人清账并删除成员，其中最后一个参数为交易者（删除成员要求其净支出额必须为0）<br>
+     * @param _bookName 要清账个人所在的账本
+     * @param _person 清账人姓名
+     * @param _trader 交易者姓名
+     */
     public void SettlePerson(String _bookName, String _person, String _trader) {
-
+        br.SettlePerson(_bookName, _person, _trader);
     }
 
-    public ArrayList<Solution> SettleRecord(String _bookName) {
-        return new ArrayList<Solution>();
+    /**
+     * 全员清账.
+     * <p>提供全员清账函数，包括两种传参方法。此方法用于不含任何约束条件时的清账。<br>
+     * @param _bookName 要清账的账本名
+     * @return 清账方案，以Solution类型存于ArrayList中
+     * @throws UnableToClearException 无法清账时，抛出此错误
+     */
+    public ArrayList<Solution> SettleRecord(String _bookName) throws UnableToClearException {
+        return br.SettleRecord(_bookName, new ArrayList<Solution>());
     }
 
-    public ArrayList<Solution> SettleRecord(String _bookName, ArrayList<Solution> constrint) {
-        return new ArrayList<Solution>();
+    /**
+     * 全员清账.
+     * <p>提供全员清账函数，包括两种传参方法。此方法用于含有约束条件时的清账。<br>
+     * @param _bookName 要清账的账本名
+     * @param constrint 包含的约束条件，以Solution类型存于ArrayList中
+     * @return 清账方案，以Solution类型存于ArrayList中
+     * @throws UnableToClearException UnableToClearException 无法清账时，抛出此错误
+     */
+    public ArrayList<Solution> SettleRecord(String _bookName, ArrayList<Solution> constrint) throws UnableToClearException {
+        return br.SettleRecord(_bookName, new ArrayList<Solution>());
+    }
+
+    /**
+     * 关闭数据库.
+     * <p>关闭程序调用的数据库。在Activity被关闭或退出时，请务必调用此方法！<br>
+     */
+    public void CloseDataBase() {
+        br.CloseDataBase();
+    }
+
+    /**
+     * 返回消费/借贷类型.
+     * 返回消费或者借贷的类型列表，包括FOOD, TRANS, PLAY, ACCOM, OTHER, LOAN几种。
+     * @return 类型列表
+     */
+    public ArrayList<String> GetType() {
+        return br.GetType();
     }
 
 }

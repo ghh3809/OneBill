@@ -25,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS person" +
                 "(Name CHAR(32), BookName CHAR(32), IsExist BOOL DEFAULT TRUE, PRIMARY KEY(Name, BookName), FOREIGN KEY(BookName) REFERENCES book(BookName))");
         db.execSQL("CREATE TABLE IF NOT EXISTS log" +
-                "(ID INT PRIMARY KEY, Time DATETIME, Type INT, BookName CHAR(32), Amount DOUBLE, FOREIGN KEY(BookName) REFERENCES book(BookName))");
+                "(ID INT PRIMARY KEY, Time DATETIME, Type CHAR(32), BookName CHAR(32), Amount DOUBLE, FOREIGN KEY(BookName) REFERENCES book(BookName))");
         db.execSQL("CREATE TABLE IF NOT EXISTS detail" +
                 "(ID INT, Name CHAR(32), BookName CHAR(32), Paid DOUBLE, Payable DOUBLE, FOREIGN KEY(id) REFERENCES log(id), FOREIGN KEY(Name) REFERENCES person(Name), FOREIGN KEY(BookName) REFERENCES person(BookName))");
         db.execSQL("CREATE TABLE IF NOT EXISTS const" +

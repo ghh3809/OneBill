@@ -37,6 +37,15 @@ public class Reader {
         return c;
     }
 
+    public double QuerySum(String _bookName) {
+        Cursor c = db.rawQuery("SELECT Amount FROM log WHERE BookName = ? AND Type <> LOAN", new String[]{_bookName});
+        double sum = 0;
+        while(c.moveToNext()) {
+            sum += c.getDouble(c.getColumnIndex("Amount"));
+        }
+        return sum;
+    }
+
     public Cursor QueryLogDetail(int _ID) {
         Cursor c = db.rawQuery("SELECT * FROM detail WHERE ID = ?", new String[]{String.valueOf(_ID)});
         return c;
