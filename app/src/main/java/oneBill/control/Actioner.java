@@ -9,6 +9,7 @@ import oneBill.domain.entity.Type;
 import oneBill.domain.entity.error.AmountMismatchException;
 import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.domain.entity.error.NullException;
+import oneBill.domain.entity.error.UnableToClearException;
 import oneBill.domain.mediator.Broker;
 
 /**
@@ -207,18 +208,42 @@ public class Actioner {
         br.SettlePerson(_bookName, _person, _trader);
     }
 
-    public ArrayList<Solution> SettleRecord(String _bookName) {
-        return new ArrayList<Solution>();
+    /**
+     * 全员清账.
+     * <p>提供全员清账函数，包括两种传参方法。此方法用于不含任何约束条件时的清账。<br>
+     * @param _bookName 要清账的账本名
+     * @return 清账方案，以Solution类型存于ArrayList中
+     * @throws UnableToClearException 无法清账时，抛出此错误
+     */
+    public ArrayList<Solution> SettleRecord(String _bookName) throws UnableToClearException {
+        return br.SettleRecord(_bookName, new ArrayList<Solution>());
     }
 
-    public ArrayList<Solution> SettleRecord(String _bookName, ArrayList<Solution> constrint) {
-        return new ArrayList<Solution>();
+    /**
+     * 全员清账.
+     * <p>提供全员清账函数，包括两种传参方法。此方法用于含有约束条件时的清账。<br>
+     * @param _bookName 要清账的账本名
+     * @param constrint 包含的约束条件，以Solution类型存于ArrayList中
+     * @return 清账方案，以Solution类型存于ArrayList中
+     * @throws UnableToClearException UnableToClearException 无法清账时，抛出此错误
+     */
+    public ArrayList<Solution> SettleRecord(String _bookName, ArrayList<Solution> constrint) throws UnableToClearException {
+        return br.SettleRecord(_bookName, new ArrayList<Solution>());
     }
 
+    /**
+     * 关闭数据库.
+     * <p>关闭程序调用的数据库。在Activity被关闭或退出时，请务必调用此方法！<br>
+     */
     public void CloseDataBase() {
         br.CloseDataBase();
     }
 
+    /**
+     * 返回消费/借贷类型.
+     * 返回消费或者借贷的类型列表，包括FOOD, TRANS, PLAY, ACCOM, OTHER, LOAN几种。
+     * @return 类型列表
+     */
     public ArrayList<String> GetType() {
         return br.GetType();
     }
