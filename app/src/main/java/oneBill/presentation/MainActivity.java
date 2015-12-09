@@ -9,7 +9,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
+import oneBill.control.Actioner;
+import oneBill.domain.entity.Solution;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +32,68 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        //正式测试内容（请将以下代码复制到activity里进行测试，且请只运行一次！！！否则请把数据库删了重来……）
+
+/*        Actioner actioner = new Actioner(this);
+        try{
+            //创建账本My Book1
+            actioner.CreateBook("My Book1");
+            //添加成员
+            actioner.CreateMember("My Book1", "Andy");
+            actioner.CreateMember("My Book1", "Ketty");
+            actioner.CreateMember("My Book1", "Jack");
+            actioner.CreateMember("My Book1", "Judy");
+            //删除成员
+            actioner.DeleteMember("My Book1", "Andy");
+            //重设账本名
+            actioner.SetName("My Book1", "New Name");
+            //添加消费记录1
+            ArrayList<Double> paid1 = new ArrayList<Double>();
+            ArrayList<Double> payable1 = new ArrayList<Double>();
+            paid1.add(12.26);
+            paid1.add(10.0);
+            paid1.add(5.0);
+            payable1.add(20.0);
+            payable1.add(7.26);
+            payable1.add(0.0);
+            actioner.CreateConsumRecord("New Name", 1, paid1, payable1);
+            //添加消费记录2
+            ArrayList<Double> paid2 = new ArrayList<Double>();
+            ArrayList<Double> payable2 = new ArrayList<Double>();
+            paid2.add(1.0);
+            paid2.add(2.0);
+            paid2.add(3.0);
+            payable2.add(2.0);
+            payable2.add(2.0);
+            payable2.add(2.0);
+            actioner.CreateConsumRecord("New Name", 1, paid2, payable2);
+            //添加消费记录3
+            ArrayList<Double> paid3 = new ArrayList<Double>();
+            ArrayList<Double> payable3 = new ArrayList<Double>();
+            paid3.add(1.0);
+            paid3.add(2.0);
+            paid3.add(3.0);
+            payable3.add(2.0);
+            payable3.add(2.0);
+            payable3.add(2.0);
+            actioner.CreateConsumRecord("New Name", 1, paid3, payable3);
+            //删除消费记录3
+            actioner.DeleteRecord(3);
+            //添加借款记录4
+            actioner.CreateLoanRecord("New Name", "Ketty", "Jack", 18.0);
+            //创建账本My Book2
+            actioner.CreateBook("My Book2");
+            //添加成员
+            actioner.CreateMember("My Book2", "Andy");
+            actioner.CreateMember("My Book2", "Ketty");
+            //关闭数据库（大家一定不要忘了这一步哇不然运行会报错的！）
+            actioner.CloseDataBase();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }*/
+
     }
 
     @Override
