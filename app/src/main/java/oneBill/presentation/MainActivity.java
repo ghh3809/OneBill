@@ -1,5 +1,6 @@
 package oneBill.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,9 +14,17 @@ import java.util.ArrayList;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+<<<<<<< Updated upstream
 import oneBill.domain.entity.Solution;
+=======
+import oneBill.domain.entity.Person;
+import oneBill.domain.entity.error.DuplicationNameException;
+import oneBill.domain.entity.error.NullException;
+>>>>>>> Stashed changes
 
 public class MainActivity extends AppCompatActivity {
+
+    public Actioner actioner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +33,38 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        actioner=new Actioner(this);
+        try {
+            actioner.CreateBook("book1");
+        } catch (NullException e) {
+            e.printStackTrace();
+        } catch (DuplicationNameException e) {
+            e.printStackTrace();
+        }
+        try {
+            actioner.CreateMember("book1","Lillard");
+            actioner.CreateMember("book1","McColum");
+            actioner.CreateMember("book1","Aminu");
+            actioner.CreateMember("book1","Leonard");
+            actioner.CreateMember("book1","Pulumle");
+        } catch (DuplicationNameException e) {
+            e.printStackTrace();
+        }
+        System.out.println(actioner.GetBook().get(0));
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Intent intent=new Intent(MainActivity.this,AddRecordActivity.class);
+                intent.putExtra("bookName","book1");
+                startActivity(intent);
             }
         });
 
+<<<<<<< Updated upstream
         //正式测试内容（请将以下代码复制到activity里进行测试，且请只运行一次！！！否则请把数据库删了重来……）
 
 /*        Actioner actioner = new Actioner(this);
@@ -94,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }*/
 
+=======
+>>>>>>> Stashed changes
     }
 
     @Override
