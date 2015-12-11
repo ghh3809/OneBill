@@ -1,16 +1,27 @@
 package oneBill.presentation;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,224 +31,233 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import oneBill.control.Actioner;
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 
-
+//public class ManageMember  extends Activity {
 public class ManageMember extends AppCompatActivity {
 
-    ListView listView;
-    EditText addEdit = null;
-    ListViewAdapter adapter = null;
+    ArrayList<String> names = new ArrayList<String>();
+    ArrayList<Double> Bills = new ArrayList<Double>();
+    ArrayList<String> bills = new ArrayList<String>();
 
-    final ArrayList<String> names = new ArrayList<String>();
-    final ArrayList<Double> Bills = new ArrayList<Double>();
-    final ArrayList<String> bills = new ArrayList<String>();
-    final Actioner actioner = new Actioner(this);
+    //Actioner actioner = new Actioner(this);
 
     String bookName;
-    String deleteName;
-    Double deleteBill;
+    ListAdapter adapter = null;
+    ListView listView01 = null;
+    EditText editTextPersonName = null;
+    Button addButton = null;
+    Button addConfirmButton = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_member);
 
+        //获取组件
+        listView01 = (ListView) findViewById(R.id.listView01);
+        editTextPersonName = (EditText) findViewById(R.id.editText01Edit);
+        addButton = (Button) findViewById(R.id.addButton);
+        addConfirmButton = (Button) findViewById(R.id.button01Edit);
 
-
-        bookName="一叶账目示例";
-
+        //获取账本名称
         //Intent intent = getIntent();
         //final String bookName = intent.getStringExtra("bookName");
+        bookName = "一叶账目示例";
 
+        //显示账本名称
+        TextView textView = (TextView) findViewById(R.id.textView);
+        textView.setText(bookName);
+
+        //显示ListView
+        initListAllPersons();
+        showByMyBaseAdapter();
+
+        //初始化ListView的事件
+        //initListView01Event();
+    }
+
+    public void initListAllPersons() {
+        //从数据库获取names和bills
         //ArrayList names = actioner.GetMember(bookName);
         //ArrayList Bills = actioner.QueryNetAmount(bookName);
-        //names.get(index);
-
-        //final ArrayList<String> names = new ArrayList<String>();
         names.add("张三");
         names.add("李四");
         names.add("王五");
 
-        //final ArrayList<Double> Bills = new ArrayList<Double>();
         Bills.add(-50.0);
         Bills.add(20.0);
         Bills.add(30.0);
 
-        // bills = paid - payable
+        //处理bills的显示
         DecimalFormat df = new DecimalFormat("0.00");
-        for (int i = 0; i < Bills.size(); i++){
+        for (int i = 0; i < Bills.size(); i++) {
             double tempBill = Bills.get(i);
-            if (tempBill>=0)
-                bills.add("应收￥"+df.format(tempBill));
+            if (tempBill >= 0)
+                bills.add("应收￥" + df.format(tempBill));
             else
-                bills.add("应付￥"+df.format(-tempBill));
+                bills.add("应付￥" + df.format(-tempBill));
         }
 
-        TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setText(bookName);
+    }
 
-        listView=(ListView)this.findViewById(R.id.manageMemberList);
-
-        // TODO 检测adapter
-        listView.setAdapter(new ListViewAdapter(names, bills));
-
-        Button addPerson = (Button) findViewById(R.id.button);
-        addPerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ManageMember.this, "Add a person", Toast.LENGTH_SHORT).show();
-                Button ConfirmAddButton = (Button) findViewById(R.id.confirmAddButton);
-                addEdit = (EditText) findViewById(R.id.addEdit);
-                ConfirmAddButton.setVisibility(View.VISIBLE);
-                addEdit.setVisibility(View.VISIBLE);
-                /*
-                ConfirmAddButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(ManageMember.this,"Confirm add a person",Toast.LENGTH_SHORT).show();
-                        //addPersonAndRefreshListView(v);
-                    }
-                });
-                */
-
-                //ListViewAdapter.this.notifyDataSetChanged();
-            }
-        });
-
+    public void showByMyBaseAdapter() {
+        adapter = new MyBaseAdapter(this, names, bills,Bills);
+        //adapter = new MyBaseAdapter(this, persons);
+        listView01.setAdapter(adapter);
     }
 
     /**
-     * 按钮ConfirmAddButton的onClick事件
+     * 按钮button01Edit的onClick事件.
+     *
+     * @param view
      */
-    public void addPersonAndRefreshListView(View view){
-        //获取addEdit数据
-        String value = addEdit.getText().toString();
-        //创建新成员
-        //actioner.CreateMember(bookName,value);
-        //更新listView内容
-        //ArrayList names = actioner.GetMember(bookName);
-        //ArrayList Bills = actioner.QueryNetAmount(bookName);
-        // bills = paid - payable
-        /*
-        DecimalFormat df = new DecimalFormat("0.00");
-        for (int i = 0; i < Bills.size(); i++){
-            double tempBill = Bills.get(i);
-            if (tempBill>=0)
-                bills.add("应收￥"+df.format(tempBill));
-            else
-                bills.add("应付￥"+df.format(-tempBill));
+    public void editPersonAndRefreshListView01(View view) {
+        //获取TextEdit数据
+        String value = editTextPersonName.getText().toString();
+        //设置addButton可见
+        addButton.setVisibility(View.VISIBLE);
+        //设置editText01Edit不可见(editTextPersonName)
+        editTextPersonName.setText("");
+        editTextPersonName.setVisibility(View.INVISIBLE);
+        //设置button01Edit不可见(addConfirmButton)
+        addConfirmButton.setVisibility(View.INVISIBLE);
+        //更新ListView的内容
+        //TODO 这句似乎没用...
+        if (value == "") {
+            Toast.makeText(ManageMember.this, "人名不能为空，请重新添加", Toast.LENGTH_SHORT).show();
+        } else {
+            //actioner.CreateMember(bookName,value);
+            //ArrayList names = actioner.GetMember(bookName);
+            names.add(value);
+            if (names.size() == bills.size() + 1) {
+                bills.add("应收￥0.00");
+                Bills.add(0.0);
+                //动态刷新
+                ((BaseAdapter) adapter).notifyDataSetChanged();
+            } else
+                Toast.makeText(ManageMember.this, "添加成员错误，请重新添加", Toast.LENGTH_SHORT).show();
         }
-        */
-        names.add("value");
-        bills.add("应收￥0.00");
-        //动态刷新
-        //((BaseAdapter) adapter).notifyDataSetChanged();
     }
 
-    public class ListViewAdapter extends BaseAdapter {
-        View[] itemViews;
-        //private final static String tag = "ListViewAdapter";
+    /**
+     * 按钮addButton的onClick事件
+     */
+    public void addPersonAndShowEdit(View view) {
+        //设置addButton不可见
+        addButton.setVisibility(View.INVISIBLE);
+        //设置editText01Edit可见(editTextPersonName)
+        editTextPersonName.setVisibility(View.VISIBLE);
+        //设置button01Edit可见(addConfirmButton)
+        addConfirmButton.setVisibility(View.VISIBLE);
+    }
 
-        public ListViewAdapter(ArrayList<String> itemNames, ArrayList<String> itemBills){
-                //String[] itemNames, String[] itemBills) {
-            //建立项目个数
-            itemViews = new View[itemNames.size()];
-            //循环，每条项目调用一次makeItemView
-            for (int i = 0; i < itemViews.length; i++) {
-                itemViews[i] = makeItemView(itemNames.get(i), itemBills.get(i), i);
-            }
+
+    /**
+     * 按钮itemDelete的onClick事件
+     */
+    public void showInfo(int pos){
+        //Toast.makeText(ManageMember.this, "Delete a person"+pos, Toast.LENGTH_SHORT).show();
+        String deleteName=names.get(pos);
+        Double deleteBill=Bills.get(pos);
+        Intent intent = new Intent(ManageMember.this, DeleteMember.class);
+        intent.putExtra("bookName",bookName);
+        intent.putExtra("deleteName", deleteName);
+        intent.putExtra("deleteBill", deleteBill);
+        startActivity(intent);
+    }
+
+
+    public class MyBaseAdapter extends BaseAdapter {
+
+        private ArrayList<String> names = new ArrayList<String>();
+        private ArrayList<Double> Bills = new ArrayList<Double>();
+        private ArrayList<String> bills = new ArrayList<String>();
+
+        Context context;
+
+
+        public MyBaseAdapter(Context context,ArrayList<String> names,ArrayList<String> bills,ArrayList<Double> Bills){
+
+            this.names = names;
+            this.Bills=Bills;
+            this.bills=bills;
+            this.context = context;
         }
 
-        private View makeItemView(String strName, String strBill, final int pos) {
-            LayoutInflater inflater = (LayoutInflater) ManageMember.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        @Override
+        public int getCount() {
+            //TODO adjust sizeCount
+            return (names == null)?0:names.size();
+        }
 
-            // 使用View的对象itemView与R.layout.item关联
-            View itemView = inflater.inflate(R.layout.list_view_item, null);
+        @Override
+        public Object getItem(int position) {
+            //TODO adjust getItem
+            return names.get(position);
+        }
 
-            // 通过findViewById()方法实例R.layout.item内各组件
-            TextView name = (TextView) itemView.findViewById(R.id.itemName);
-            name.setText(strName);
-            TextView bill = (TextView) itemView.findViewById(R.id.itemBill);
-            bill.setText(strBill);
-            ImageButton itemDelete = (ImageButton) itemView.findViewById(R.id.itemDelete);
-            itemDelete.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+
+        public class ViewHolder{
+            TextView textViewItem01;
+            TextView textViewItem02;
+            ImageButton itemDelete;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final String name = names.get(position);
+            final String bill = bills.get(position);
+            final double Bill = Bills.get(position);
+
+            ViewHolder viewHolder = null;
+
+            if(convertView==null){
+                Log.d("MyBaseAdapter", "新建convertView,position=" + position);
+
+                convertView = LayoutInflater.from(context).inflate(
+                        R.layout.list_view_item, null);
+
+                viewHolder = new ViewHolder();
+                viewHolder.textViewItem01 = (TextView) convertView.findViewById(
+                        R.id.listView01Item01);
+                viewHolder.textViewItem02 = (TextView) convertView.findViewById(
+                        R.id.listView01Item02);
+                viewHolder.itemDelete = (ImageButton) convertView.findViewById(R.id.itemDelete);
+
+                convertView.setTag(viewHolder);
+
+            }else{
+                viewHolder = (ViewHolder) convertView.getTag();
+                Log.d("MyBaseAdapter", "旧的convertView,position=" + position);
+            }
+
+            viewHolder.textViewItem01.setText(name);
+            viewHolder.textViewItem02.setText(bill);
+
+            if (Bill >= 0)
+                viewHolder.textViewItem02.setTextColor(getResources().getColor(R.color.colorGreen));
+            else
+                viewHolder.textViewItem02.setTextColor(getResources().getColor(R.color.colorRed));
+
+            final int pos = position;
+            viewHolder.itemDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //MainActivity mainActivity = new MainActivity();
                     showInfo(pos);
                 }
             });
 
-            return itemView;
-        }
-
-        public void showInfo(int pos){
-            //Toast.makeText(ManageMember.this, "Delete a person"+pos, Toast.LENGTH_SHORT).show();
-            deleteName=names.get(pos);
-            deleteBill=Bills.get(pos);
-            Intent intent = new Intent(ManageMember.this, DeleteMember.class);
-            intent.putExtra("bookName",bookName);
-            intent.putExtra("deleteName", deleteName);
-            intent.putExtra("deleteBill", deleteBill);
-            startActivity(intent);
-        }
-
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            if (convertView == null)
-                return itemViews[position];
             return convertView;
         }
 
-        public int getCount()   {
-            return itemViews.length;
-        }
-
-        public View getItem(int position)   {
-            return itemViews[position];
-        }
-
-        public long getItemId(int position) {
-            return position;
-        }
-        /*
-        public void updateSingleRow(ListView listView; long id){
-            if (listView != null){
-                int start = listView.getFirstVisiblePosition();
-                for (int i = start, j = listView.getLastVisiblePosition(); i <= j; i++)
-                    if (id == ((Messages) listView.getItemAtPosition(i)).getId()) {
-                        View view = listView.getChildAt(i - start);
-                        getView(i, view, listView);
-                        break;
-                    }
-            }
-        }
-        */
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_manage_member, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

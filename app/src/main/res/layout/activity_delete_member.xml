@@ -30,7 +30,6 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/goBack"
         android:layout_toEndOf="@+id/goBack"
-        android:layout_alignBottom="@+id/goBack"
         android:layout_marginLeft="@dimen/left_margin"/>
     <ImageView
         android:layout_width="fill_parent"
@@ -107,7 +106,7 @@
         android:text="@string/delete_comfirm"
         android:textColor="@color/colorText"
         android:textSize="@dimen/text_normal"
-        android:layout_below="@+id/personNameTo"
+        android:layout_below="@+id/to"
         android:layout_marginTop="@dimen/up_margin_small"
         android:background="@drawable/button_shape"
         android:id="@+id/deleteButton"

@@ -17,11 +17,9 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
-import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
-
+import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 
 
 public class DeleteMember extends AppCompatActivity {
@@ -36,7 +34,7 @@ public class DeleteMember extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_member);
 
-        final Actioner actioner = new Actioner(this);
+        //final Actioner actioner = new Actioner(this);
 
         Intent intent = getIntent();
         final String bookName = intent.getStringExtra("bookName");
