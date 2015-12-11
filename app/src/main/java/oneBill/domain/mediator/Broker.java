@@ -64,6 +64,7 @@ public class Broker {
             if(persons.get(i).equals(_person)) throw new DuplicationNameException();
         }
         writer.AddPerson(_bookName, _person);
+        writer.UpdateBookTime(_bookName);
     }
 
     public ArrayList<String> GetMember(String _bookName) {
@@ -85,6 +86,7 @@ public class Broker {
 
     public void DeleteMember(String _bookName, String _person) {
         writer.DeletePerson(_bookName, _person);
+        writer.UpdateBookTime(_bookName);
     }
 
     public double GetSum(String _bookName) {
@@ -112,6 +114,7 @@ public class Broker {
             detail.add(0, c.getString(c.getColumnIndex("Name")));
             detail.add(1, String.valueOf(c.getDouble(c.getColumnIndex("Paid"))));
             detail.add(2, String.valueOf(c.getDouble(c.getColumnIndex("Payable"))));
+            logdetail.add(detail);
         }
         return logdetail;
     }
@@ -129,13 +132,15 @@ public class Broker {
         }
         for(int i = 0; i < _paid.size(); i ++) {
             sumPaid += _paid.get(i);
-            sumPayable += _paid.get(i);
+            sumPayable += _payable.get(i);
         }
 
         if(Math.abs(sumPaid - sumPayable) > 1E-5) throw new AmountMismatchException(sumPaid, sumPayable);
         int id = reader.QueryIDNum() + 1;
         writer.AddLog(id, type.toString(), _bookName, sumPaid);
         writer.AddDetails(id, _bookName, GetMember(_bookName), _paid, _payable);
+        writer.AddSum(_bookName, sumPaid);
+        writer.UpdateBookTime(_bookName);
         writer.UpdateIDNumber();
     }
 
@@ -144,7 +149,8 @@ public class Broker {
         int id = reader.QueryIDNum() + 1;
         writer.AddLog(id, type.toString(), _bookName, _amount);
         writer.AddDetail(id, _bookName, _lender, _amount, 0);
-        writer.AddDetail(id, _bookName, _lender, 0, _amount);
+        writer.AddDetail(id, _bookName, _borrower, 0, _amount);
+        writer.UpdateBookTime(_bookName);
         writer.UpdateIDNumber();
     }
 
