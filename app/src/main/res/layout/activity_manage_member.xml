@@ -11,8 +11,8 @@
 
 
     <ImageButton
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/icon"
+        android:layout_height="@dimen/icon"
         android:scaleType="fitXY"
         android:background="#0000"
         android:src="@mipmap/arrow_head_left"
@@ -33,18 +33,6 @@
         android:layout_toEndOf="@+id/imageButton"
         android:layout_alignBottom="@+id/imageButton"
         android:layout_marginLeft="@dimen/left_margin"/>
-    <ImageButton
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:scaleType="fitXY"
-        android:background="#0000"
-        android:src="@mipmap/trash"
-        android:id="@+id/imageDelete"
-        android:layout_toRightOf="@id/textView"
-        android:layout_toEndOf="@id/textView"
-        android:layout_marginLeft="@dimen/left_margin"/>
-
-
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -58,6 +46,37 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/button"
         android:layout_marginTop="@dimen/up_margin"/>
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="43dp"
+        android:layout_below="@+id/imageButton"
+        android:layout_marginTop="@dimen/up_margin"
+        android:background="@drawable/edit_shape"
+        android:textSize="@dimen/text_normal"
+        android:textColor="@color/colorText"
+        android:hint="请输入人名"
+        android:id="@+id/addEdit"
+        android:visibility="invisible"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/imageButton"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:text="确认"
+            android:gravity="center"
+            android:background="@drawable/button_shape"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/text_normal"
+            android:id="@+id/confirmAddButton"
+            android:layout_below="@+id/imageButton"
+            android:layout_marginTop="@dimen/up_margin"
+            android:layout_marginRight="@dimen/left_margin"
+            android:layout_gravity="right|center_vertical"
+            android:visibility="invisible" />
+    </LinearLayout>
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

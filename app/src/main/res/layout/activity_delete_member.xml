@@ -9,8 +9,8 @@
 
 
     <ImageButton
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/icon"
+        android:layout_height="@dimen/icon"
         android:scaleType="fitXY"
         android:background="#0000"
         android:src="@mipmap/arrow_head_left"
@@ -86,7 +86,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="还给"
+        android:text="交易者"
         android:textColor="@color/colorText"
         android:textSize="@dimen/text_normal"
         android:layout_below="@+id/bill"

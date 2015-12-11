@@ -5,4 +5,7 @@
     <string name="book_title">账本1</string>
     <string name="title_activity_delete_member">DeleteMember</string>
     <string name="delete_comfirm">已还清，确认离开</string>
+    <string name="title_activity_manage_member_scroll">ManageMemberScroll</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

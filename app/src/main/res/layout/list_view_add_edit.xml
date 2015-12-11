@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/AddPersonList"
+        android:layout_marginTop="@dimen/up_margin_small"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="@dimen/up_margin_small"
+            android:background="@drawable/edit_shape"
+            android:textSize="@dimen/text_normal"
+            android:textColor="@color/colorText"
+            android:hint="请输入人名"
+            android:id="@+id/addEdit"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
+                android:text="确认"
+                android:gravity="center"
+                android:background="@drawable/button_shape"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_normal"
+                android:id="@+id/confirmAddButton"
+                android:layout_marginTop="@dimen/up_margin_small"
+                android:layout_marginRight="@dimen/left_margin"
+                android:layout_gravity="right|center_vertical"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

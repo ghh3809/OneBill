@@ -7,6 +7,9 @@
     <dimen name="up_margin">30dp</dimen>
     <dimen name="up_margin_small">20dp</dimen>
     <dimen name="left_margin">20dp</dimen>
+    <dimen name="left_margin_big">40dp</dimen>
+
+    <dimen name="icon">24dp</dimen>
 
     <dimen name="text_title">22sp</dimen>
     <dimen name="text_normal">18sp</dimen>
