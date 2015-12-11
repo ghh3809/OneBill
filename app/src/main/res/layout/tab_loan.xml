@@ -50,17 +50,22 @@
         android:layout_alignTop="@+id/imageView2"
         android:layout_toRightOf="@+id/imageView2"
         android:layout_alignRight="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView"/>
+        android:layout_alignEnd="@+id/imageView"
+        android:dropDownSelector="@color/lightGreen"/>
 
     <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:id="@+id/editText"
         android:layout_below="@+id/spinner2"
         android:layout_alignLeft="@+id/imageView2"
         android:layout_alignStart="@+id/imageView2"
         android:layout_marginTop="52dp"
         android:hint="￥"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        android:background="#ffffff"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2"
+        android:textCursorDrawable="@null"/>
 </RelativeLayout>
 

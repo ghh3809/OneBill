@@ -22,7 +22,7 @@ public class PreviewActivity extends AppCompatActivity {
 
     Actioner actioner;
     String bookName;
-    Type type;
+    int type;
     String[] person;
     double[] paid;
     double[] payable;
@@ -35,7 +35,7 @@ public class PreviewActivity extends AppCompatActivity {
         actioner=new Actioner(this);
         Intent intent=getIntent();
         bookName=intent.getStringExtra("bookName");
-        type= (Type) intent.getSerializableExtra("type");
+        type= (int) intent.getIntExtra("type",0);
         paid=intent.getDoubleArrayExtra("paid");
         payable=intent.getDoubleArrayExtra("payable");
         person=intent.getStringArrayExtra("person");
@@ -59,7 +59,8 @@ public class PreviewActivity extends AppCompatActivity {
                     payable_list.add(payable[i]);
                 }
                 try {
-                    actioner.CreateConsumRecord(bookName,actioner.GetType().indexOf(type)+1,paid_list,payable_list);
+                    actioner.CreateConsumRecord(bookName,type,paid_list,payable_list);
+                    actioner.CloseDataBase();
                 } catch (AmountMismatchException e) {
                     e.printStackTrace();
                 }
@@ -73,7 +74,7 @@ public class PreviewActivity extends AppCompatActivity {
         for(int i=0;i<person.length;i++){
             LinearLayout panel=new LinearLayout(this);
             panel.setOrientation(LinearLayout.HORIZONTAL);
-            display_layout.addView(panel, LinearLayout.LayoutParams.MATCH_PARENT, 160);
+            display_layout.addView(panel, LinearLayout.LayoutParams.MATCH_PARENT, 100);
 
             TextView[] text=new TextView[3];
             for(int j=0;j<3;j++){

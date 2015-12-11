@@ -17,8 +17,8 @@
         android:layout_height="40dp">
         <Button
             android:id="@+id/back_button"
-            android:layout_width="22sp"
-            android:layout_height="22sp"
+            android:layout_width="24sp"
+            android:layout_height="24sp"
             android:layout_alignParentLeft="true"
             android:background="@mipmap/arrow_head_left"/>
         <TextView
@@ -34,12 +34,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="确认"
-            android:textSize="18sp"
+            android:textSize="22sp"
             />
         <Button
             android:id="@+id/confirm_button"
-            android:layout_width="18sp"
-            android:layout_height="18sp"
+            android:layout_width="24sp"
+            android:layout_height="24sp"
             android:layout_toLeftOf="@id/confirmt_text"
             android:background="@mipmap/arror_head_right"
             />
@@ -47,7 +47,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="match_parent"
@@ -73,7 +73,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="match_parent"
@@ -84,14 +84,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="应付"
+            android:text="实付"
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="18sp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="实付"
+            android:text="应付"
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="18sp"/>
