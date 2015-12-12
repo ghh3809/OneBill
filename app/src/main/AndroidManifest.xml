@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     package="cn.edu.tsinghua.cs.httpsoft.onebill">
+=======
+    package="cn.edu.tsinghua.cs.httpsoft.onebill" >
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
+>>>>>>> 5a4a62bab0baeec95f0592a79b30bb68ba2bc320
 
     <application
         android:allowBackup="true"
@@ -19,6 +29,7 @@
             </intent-filter>
         </activity>
         <activity
+<<<<<<< HEAD
             android:name="oneBill.presentation.PreviewActivity"
             android:label="@string/title_activity_preview" >
         </activity>
@@ -36,6 +47,11 @@
             android:name="oneBill.presentation.AddRecordActivity"
             android:label="@string/title_activity_add_record"
             android:launchMode="singleTask">
+=======
+            android:name="oneBill.presentation.AddBook"
+            android:theme="@style/AppTheme.NoActionBar"  >
+
+>>>>>>> 5a4a62bab0baeec95f0592a79b30bb68ba2bc320
         </activity>
     </application>
 
