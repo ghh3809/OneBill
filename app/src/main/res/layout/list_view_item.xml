@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textList"
+    android:layout_marginTop="@dimen/up_margin_small">
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="TextView01"
+        android:id="@+id/listView01Item01"
+        android:textSize="@dimen/text_normal"
+        android:textColor="@color/colorText"
+        android:layout_weight="0.5"
+        android:layout_marginTop="@dimen/up_margin_small"/>
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="TextView02"
+        android:id="@+id/listView01Item02"
+        android:textSize="@dimen/text_normal"
+        android:layout_toRightOf="@+id/listView01Item01"
+        android:layout_weight="0.5"
+        android:layout_marginTop="@dimen/up_margin_small"/>
+    <ImageButton
+        android:src="@mipmap/trash"
+        android:layout_width="@dimen/icon"
+        android:layout_height="@dimen/icon"
+        android:scaleType="fitXY"
+        android:background="@color/colorTransparent"
+        android:layout_marginLeft="@dimen/left_margin_big"
+        android:layout_gravity="bottom"
+        android:id="@+id/itemDelete" />
+
+</LinearLayout>

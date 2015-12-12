@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
         //正式测试内容（请将以下代码复制到activity里进行测试，且请只运行一次！！！否则请把数据库删了重来……）
 
-/*        Actioner actioner = new Actioner(this);
+        Actioner actioner = new Actioner(this);
         try{
             //创建账本My Book1
             actioner.CreateBook("My Book1");
@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
             actioner.CreateMember("My Book1", "Ketty");
             actioner.CreateMember("My Book1", "Jack");
             actioner.CreateMember("My Book1", "Judy");
+
             //删除成员
             actioner.DeleteMember("My Book1", "Andy");
             //重设账本名
@@ -208,8 +209,16 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception e){
             e.printStackTrace();
-        }*/
+        }
 
+    }
+
+    public void manageMember(){
+        Intent intent = new Intent(MainActivity.this, ManageMember.class);
+        String bookName = "My Book1";
+        intent.putExtra("bookName",bookName);
+        startActivity(intent);
+        startActivity(intent);
     }
 
 
