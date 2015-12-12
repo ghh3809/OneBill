@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">OneBill</string>
     <string name="action_settings">Settings</string>
+<<<<<<< HEAD
     <string name="title_activity_manage_member">ManageMember</string>
     <string name="book_title">账本1</string>
     <string name="title_activity_delete_member">DeleteMember</string>
     <string name="delete_comfirm">已还清，确认离开</string>
+=======
+    <string name="title_activity_preview">PreviewActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_payable">PayableActivity</string>
+    <string name="title_activity_add_record">AddRecordActivity</string>
+>>>>>>> feature_onion
 </resources>

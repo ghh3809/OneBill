@@ -28,6 +28,23 @@
             android:name="oneBill.presentation.AddBook"
             android:theme="@style/AppTheme.NoActionBar"  >
 
+            android:name="oneBill.presentation.PreviewActivity"
+            android:label="@string/title_activity_preview" >
+        </activity>
+        <activity
+            android:name="oneBill.presentation.PayableActivity"
+            android:label="@string/title_activity_payable"
+            android:launchMode="singleTask">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name="oneBill.presentation.AddRecordActivity"
+            android:label="@string/title_activity_add_record"
+            android:launchMode="standard">
         </activity>
     </application>
 

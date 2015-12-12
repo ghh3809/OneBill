@@ -16,12 +16,13 @@ import android.widget.TextView;
 import java.util.Vector;
 
 import java.util.ArrayList;
-
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
-import oneBill.domain.entity.Solution;
+import oneBill.domain.entity.error.DuplicationNameException;
+import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
+
     ImageButton ibtnAddBook;
     Vector<RelativeLayout> rlay=new Vector<RelativeLayout>();
     Vector<Button> vbtnmain=new Vector<Button>();
@@ -42,10 +43,16 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout.LayoutParams lp2 ;
     RelativeLayout.LayoutParams lp3;
     View.OnClickListener newconsumption;
+
+    private Actioner actioner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        actioner=new Actioner(this);
+
         ibtnAddBook= (ImageButton) findViewById(R.id.imagebtnAddBook);
         llaymain= (LinearLayout) findViewById(R.id.llayoutmain);
         mainsv= (ScrollView) findViewById(R.id.mainscrollView);
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     newestbook = 0;
             }
         });
+
         for(int i=0;i<booknum;i++) {
             rlay.add(i, new RelativeLayout(this));
             rlaypa.add(3 * i,  new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
@@ -223,3 +231,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
