@@ -7,9 +7,9 @@ public class Solution {
 
     private String giver;
     private String receiver;
-    private float amount;
+    private double amount;
 
-    public Solution(String giver, String receiver, float amount) {
+    public Solution(String giver, String receiver, double amount) {
         super();
         this.giver = giver;
         this.receiver = receiver;
@@ -39,7 +39,7 @@ public class Solution {
      * @return 金额
      */
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 }

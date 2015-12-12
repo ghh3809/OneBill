@@ -40,7 +40,7 @@ public class Writer {
         db.beginTransaction();
         try {
             for (String person : _persons) {
-                db.execSQL("INSERT INTO person VALUES(?, ?)", new String[]{person, _bookName});
+                db.execSQL("INSERT INTO person VALUES(?, ?, ?)", new String[]{person, _bookName, "1"});
             }
             db.setTransactionSuccessful();
         } finally {
@@ -49,7 +49,7 @@ public class Writer {
     }
 
     public void AddPerson(String _bookName, String _person) {
-        db.execSQL("INSERT INTO person VALUES(?, ?)", new String[]{_person, _bookName});
+        db.execSQL("INSERT INTO person VALUES(?, ?, ?)", new String[]{_person, _bookName, "1"});
     }
 
     public void AddLog(int _id, String _type, String _bookName, double _amount) {
@@ -58,6 +58,7 @@ public class Writer {
         String nowTime = formatter.format(curDate);
         ContentValues cv = new ContentValues();
         cv.put("ID", _id);
+        cv.put("Time", nowTime);
         cv.put("Type", _type);
         cv.put("BookName", _bookName);
         cv.put("Amount", _amount);
@@ -71,7 +72,7 @@ public class Writer {
         cv.put("BookName", _bookName);
         cv.put("Paid", _paid);
         cv.put("Payable", _payable);
-        if ((_paid > 1E-5) && (_payable > 1E-5)) db.insert("detail", null, cv);
+        if ((_paid > 1E-5) || (_payable > 1E-5)) db.insert("detail", null, cv);
     }
 
     public void AddDetails(int _id, String _bookName, ArrayList<String> _persons, ArrayList<Double> _paid, ArrayList<Double> _payable) {
@@ -87,6 +88,18 @@ public class Writer {
         }
     }
 
+    public void AddSum(String _bookName, double _amount) {
+        Cursor c = db.rawQuery("SELECT Sum FROM book WHERE BookName = ?", new String[]{_bookName});
+        double sum = 0;
+        while(c.moveToNext()) {
+            sum = c.getDouble(c.getColumnIndex("Sum"));
+        }
+        sum += _amount;
+        ContentValues cv = new ContentValues();
+        cv.put("Sum", sum);
+        db.update("book", cv, "BookName = ?", new String[]{_bookName});
+    }
+
     public void DeleteBook(String _bookName) {
         db.delete("book", "BookName = ?", new String[]{_bookName});
         db.delete("person", "BookName = ?", new String[]{_bookName});
@@ -96,11 +109,20 @@ public class Writer {
 
     public void DeletePerson(String _bookName, String _person) {
         ContentValues cv = new ContentValues();
-        cv.put("IsExist", false);
+        cv.put("IsExist", 0);
         db.update("person", cv, "BookName = ? AND Name = ?", new String[]{_bookName, _person});
     }
 
     public void DeleteLog(int _id) {
+        Cursor c = db.rawQuery("SELECT Amount,BookName FROM log WHERE ID = ?", new String[]{String.valueOf(_id)});
+        double amount = 0;
+        String bookName = "";
+        while(c.moveToNext()) {
+            amount = c.getDouble(c.getColumnIndex("Amount"));
+            bookName = c.getString(c.getColumnIndex("BookName"));
+        }
+        AddSum(bookName, -amount);
+        UpdateBookTime(bookName);
         db.delete("log", "ID = ?", new String[]{String.valueOf(_id)});
         db.delete("detail", "ID = ?", new String[]{String.valueOf(_id)});
     }
@@ -125,7 +147,10 @@ public class Writer {
 
     public void UpdateBookNumber() {
         Cursor c = db.rawQuery("SELECT BookNum FROM const", null);
-        int BookNum = c.getInt(c.getColumnIndex("BookNum"));
+        int BookNum = 0;
+        while(c.moveToNext()) {
+            BookNum = c.getInt(c.getColumnIndex("BookNum"));
+        }
         BookNum ++;
         ContentValues cv = new ContentValues();
         cv.put("BookNum", BookNum);
@@ -134,7 +159,10 @@ public class Writer {
 
     public void UpdateIDNumber() {
         Cursor c = db.rawQuery("SELECT IDNum FROM const", null);
-        int IDNum = c.getInt(c.getColumnIndex("IDNum"));
+        int IDNum = 0;
+        while(c.moveToNext()) {
+            IDNum = c.getInt(c.getColumnIndex("IDNum"));
+        }
         IDNum ++;
         ContentValues cv = new ContentValues();
         cv.put("IDNum", IDNum);

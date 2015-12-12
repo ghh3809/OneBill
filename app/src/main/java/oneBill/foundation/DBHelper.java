@@ -1,6 +1,7 @@
 package oneBill.foundation;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -23,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS book" +
                 "(BookName CHAR(32) PRIMARY KEY, CreateTime DATETIME, ChangeTime DATETIME, Sum DOUBLE)");
         db.execSQL("CREATE TABLE IF NOT EXISTS person" +
-                "(Name CHAR(32), BookName CHAR(32), IsExist BOOL DEFAULT TRUE, PRIMARY KEY(Name, BookName), FOREIGN KEY(BookName) REFERENCES book(BookName))");
+                "(Name CHAR(32), BookName CHAR(32), IsExist INT DEFAULT 1, PRIMARY KEY(Name, BookName), FOREIGN KEY(BookName) REFERENCES book(BookName))");
         db.execSQL("CREATE TABLE IF NOT EXISTS log" +
                 "(ID INT PRIMARY KEY, Time DATETIME, Type CHAR(32), BookName CHAR(32), Amount DOUBLE, FOREIGN KEY(BookName) REFERENCES book(BookName))");
         db.execSQL("CREATE TABLE IF NOT EXISTS detail" +
@@ -31,6 +32,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS const" +
                 "(BookNum INT, IDNum INT)");
         db.execSQL("INSERT INTO const VALUES(0, 0)");
+//        Cursor c = db.rawQuery("SELECT COUNT(*) AS Num FROM const", null);
+//        int constNum = 0;
+//        while(c.moveToNext()) {
+//            constNum = c.getInt(c.getColumnIndex("Num"));
+//        }
+//        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + constNum);
+//        if (constNum == 0) db.execSQL("INSERT INTO const VALUES(0, 0)");
     }
 
     //如果DATABASE_VERSION值被改为2,系统发现现有数据库版本不同,即会调用onUpgrade

@@ -28,7 +28,7 @@ public class Reader {
     }
 
     public Cursor QueryPerson(String _bookName) {
-        Cursor c = db.rawQuery("SELECT * FROM person WHERE BookName = ? AND IsExist = TRUE", new String[]{_bookName});
+        Cursor c = db.rawQuery("SELECT * FROM person WHERE BookName = ? AND IsExist = 1", new String[]{_bookName});
         return c;
     }
 
@@ -52,18 +52,26 @@ public class Reader {
     }
 
     public Cursor QueryDetail(String _bookName, String _person) {
-        Cursor c = db.rawQuery("SELECT * FROM detail WHERE BookName = ? AND WHERE Name = ? ORDER BY id", new String[]{_bookName, _person});
+        Cursor c = db.rawQuery("SELECT * FROM detail WHERE BookName = ? AND Name = ? ORDER BY id", new String[]{_bookName, _person});
         return c;
     }
 
     public int QueryBookNum() {
         Cursor c = db.rawQuery("SELECT BookNum FROM const", null);
-        return c.getInt(c.getColumnIndex("BookNum"));
+        int bookNum = 0;
+        while(c.moveToNext()) {
+            bookNum = c.getInt(c.getColumnIndex("BookNum"));
+        }
+        return bookNum;
     }
 
     public int QueryIDNum() {
         Cursor c = db.rawQuery("SELECT IDNum FROM const", null);
-        return c.getInt(c.getColumnIndex("IDNum"));
+        int IDNum = 0;
+        while(c.moveToNext()) {
+            IDNum = c.getInt(c.getColumnIndex("IDNum"));;
+        }
+        return IDNum;
     }
 
     public void CloseDB() {
