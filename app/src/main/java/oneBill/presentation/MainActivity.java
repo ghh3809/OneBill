@@ -16,7 +16,6 @@ import android.widget.TextView;
 import java.util.Vector;
 
 import java.util.ArrayList;
-
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
 import oneBill.domain.entity.error.DuplicationNameException;
@@ -24,7 +23,6 @@ import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
 
-    public Actioner actioner;
     ImageButton ibtnAddBook;
     Vector<RelativeLayout> rlay=new Vector<RelativeLayout>();
     Vector<Button> vbtnmain=new Vector<Button>();
@@ -45,39 +43,16 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout.LayoutParams lp2 ;
     RelativeLayout.LayoutParams lp3;
     View.OnClickListener newconsumption;
+
+    private Actioner actioner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         actioner=new Actioner(this);
-        try {
-            actioner.CreateBook("book1");
-        } catch (NullException e) {
-            e.printStackTrace();
-        } catch (DuplicationNameException e) {
-            e.printStackTrace();
-        }
-        try {
-            actioner.CreateMember("book1","Lillard");
-            actioner.CreateMember("book1","McColum");
-            actioner.CreateMember("book1","Aminu");
-            actioner.CreateMember("book1","Leonard");
-            actioner.CreateMember("book1","Pulumle");
-        } catch (DuplicationNameException e) {
-            e.printStackTrace();
-        }
-        System.out.println(actioner.GetBook().get(0));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Intent intent=new Intent(MainActivity.this,AddRecordActivity.class);
-                intent.putExtra("bookName","book1");
-                startActivity(intent);
         ibtnAddBook= (ImageButton) findViewById(R.id.imagebtnAddBook);
         llaymain= (LinearLayout) findViewById(R.id.llayoutmain);
         mainsv= (ScrollView) findViewById(R.id.mainscrollView);
@@ -98,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
         newconsumption=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(MainActivity.this,);
+                Intent intent = new Intent(MainActivity.this,AddRecordActivity.class);
+                intent.putExtra("bookName","New Name");
+                startActivity(intent);
             }
         };
         ibtnAddBook.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     newestbook = 0;
             }
         });
+
         for(int i=0;i<booknum;i++) {
             rlay.add(i, new RelativeLayout(this));
             rlaypa.add(3 * i,  new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
@@ -170,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
             rlay.get(newestbook).addView(tvamount, lp1);
             rlay.get(newestbook).addView(tvtime,  lp2);
             rlay.get(newestbook).addView(tvblank, lp3);
-
 
         //正式测试内容（请将以下代码复制到activity里进行测试，且请只运行一次！！！否则请把数据库删了重来……）
 
@@ -256,3 +233,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+

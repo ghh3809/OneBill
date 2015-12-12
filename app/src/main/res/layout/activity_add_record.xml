@@ -14,8 +14,8 @@
         android:id="@+id/relativeLayout">
         <Button
             android:id="@+id/back_to_book_button"
-            android:layout_width="22sp"
-            android:layout_height="22sp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentLeft="true"
             android:background="@mipmap/arrow_head_left"/>
         <TextView
@@ -31,17 +31,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="下一步"
-            android:textSize="18sp"
+            android:textSize="22sp"
             />
         <Button
             android:id="@+id/next_button"
-            android:layout_width="18sp"
-            android:layout_height="18sp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_toLeftOf="@id/next_text"
             android:background="@mipmap/arror_head_right"
             />
-
-
     </RelativeLayout>
 
     <TabHost
@@ -59,7 +57,10 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></TabWidget>
+                android:layout_height="40dp"
+                android:tabStripLeft="@color/lightGreen"
+                android:tabStripRight="@color/lightGreen"
+                ></TabWidget>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"

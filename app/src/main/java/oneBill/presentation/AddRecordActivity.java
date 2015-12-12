@@ -1,8 +1,11 @@
 package oneBill.presentation;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import java.util.Iterator;
@@ -26,7 +30,7 @@ public class AddRecordActivity extends AppCompatActivity {
 
     String bookName;
     Actioner actioner;
-    Type type;
+    int type;
     String[] person;
 
     @Override
@@ -50,6 +54,7 @@ public class AddRecordActivity extends AppCompatActivity {
         tabHost.addTab(tab1);
         TabHost.TabSpec tab2=tabHost.newTabSpec("tab2").setIndicator("借款").setContent(R.id.tab_loan);
         tabHost.addTab(tab2);
+
         Spinner spinner=(Spinner)findViewById(R.id.spinner);
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice,person);
         spinner.setAdapter(adapter);
@@ -73,6 +78,30 @@ public class AddRecordActivity extends AppCompatActivity {
             edit.setHint("￥");
             edit.setInputType(0x00002002);
             edit.setGravity(Gravity.FILL_HORIZONTAL);
+            edit.setBackgroundColor(Color.WHITE);
+            edit.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    double sum = 0;
+                    for (int i = 0; i < person.length; i++) {
+                        double[] paid = new double[person.length];
+                        EditText edit = (EditText) findViewById(i + 1);
+                        if ("".equals(edit.getText().toString())) paid[i] = 0;
+                        else paid[i] = Double.valueOf(edit.getText().toString());
+                        sum = sum + paid[i];
+                    }
+                    TextView sum_text = (TextView) findViewById(R.id.sum_text);
+                    sum_text.setText("总计￥" + String.valueOf(sum));
+                }
+            });
 
             LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
             lp.weight=1.0f;
@@ -94,7 +123,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 trans_button.setAlpha((float)0.5);
                 play_button.setAlpha((float)0.5);
                 other_button.setAlpha((float)0.5);
-                type=Type.FOOD;
+                type=1;
             }
         });
         accom_button.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +134,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 trans_button.setAlpha((float)0.5);
                 play_button.setAlpha((float)0.5);
                 other_button.setAlpha((float)0.5);
-                type=Type.ACCOM;
+                type=2;
             }
         });
         trans_button.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +145,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 v.setAlpha((float) 1.0);
                 play_button.setAlpha((float)0.5);
                 other_button.setAlpha((float)0.5);
-                type=Type.TRANS;
+                type=3;
             }
         });
         play_button.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +156,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 trans_button.setAlpha((float)0.5);
                 v.setAlpha((float) 1.0);
                 other_button.setAlpha((float)0.5);
-                type=Type.PLAY;
+                type=4;
             }
         });
         other_button.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +167,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 trans_button.setAlpha((float)0.5);
                 play_button.setAlpha((float)0.5);
                 v.setAlpha((float) 1.0);
-                type=Type.OTHER;
+                type=5;
             }
         });
 
@@ -156,9 +185,10 @@ public class AddRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(tabHost.getCurrentTab()==0){
                     double[] paid=new double[person.length];
-                    for(int i=0;i<paid.length;i++){
+                    for(int i=0;i<person.length;i++){
                         EditText edit= (EditText) findViewById(i+1);
-                        paid[i]=Double.valueOf(edit.getText().toString());
+                        if("".equals(edit.getText().toString())) paid[i]=0;
+                        else paid[i]=Double.valueOf(edit.getText().toString());
                     }
                     Intent intent=new Intent(AddRecordActivity.this,PayableActivity.class);
                     intent.putExtra("bookName",bookName);
