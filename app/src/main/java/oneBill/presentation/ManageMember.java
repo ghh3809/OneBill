@@ -33,15 +33,13 @@ import android.widget.Toast;
 
 import oneBill.control.Actioner;
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
+import oneBill.domain.entity.error.DuplicationNameException;
 
-//public class ManageMember  extends Activity {
 public class ManageMember extends AppCompatActivity {
 
     ArrayList<String> names = new ArrayList<String>();
     ArrayList<Double> Bills = new ArrayList<Double>();
     ArrayList<String> bills = new ArrayList<String>();
-
-    //Actioner actioner = new Actioner(this);
 
     String bookName;
     ListAdapter adapter = null;
@@ -64,7 +62,7 @@ public class ManageMember extends AppCompatActivity {
         //获取账本名称
         //Intent intent = getIntent();
         //final String bookName = intent.getStringExtra("bookName");
-        bookName = "一叶账目示例";
+        bookName = "New Name";
 
         //显示账本名称
         TextView textView = (TextView) findViewById(R.id.textView);
@@ -74,14 +72,17 @@ public class ManageMember extends AppCompatActivity {
         initListAllPersons();
         showByMyBaseAdapter();
 
-        //初始化ListView的事件
-        //initListView01Event();
     }
 
     public void initListAllPersons() {
         //从数据库获取names和bills
-        //ArrayList names = actioner.GetMember(bookName);
-        //ArrayList Bills = actioner.QueryNetAmount(bookName);
+
+        Actioner actioner = new Actioner(this);
+
+        names = actioner.GetMember(bookName);
+        Bills = actioner.QueryNetAmount(bookName);
+
+        /*
         names.add("张三");
         names.add("李四");
         names.add("王五");
@@ -89,6 +90,7 @@ public class ManageMember extends AppCompatActivity {
         Bills.add(-50.0);
         Bills.add(20.0);
         Bills.add(30.0);
+        */
 
         //处理bills的显示
         DecimalFormat df = new DecimalFormat("0.00");
@@ -104,7 +106,6 @@ public class ManageMember extends AppCompatActivity {
 
     public void showByMyBaseAdapter() {
         adapter = new MyBaseAdapter(this, names, bills,Bills);
-        //adapter = new MyBaseAdapter(this, persons);
         listView01.setAdapter(adapter);
     }
 
@@ -128,8 +129,13 @@ public class ManageMember extends AppCompatActivity {
         if (value == "") {
             Toast.makeText(ManageMember.this, "人名不能为空，请重新添加", Toast.LENGTH_SHORT).show();
         } else {
-            //actioner.CreateMember(bookName,value);
-            //ArrayList names = actioner.GetMember(bookName);
+            Actioner actioner = new Actioner(this);
+            try{
+                actioner.CreateMember(bookName,value);
+            }
+            catch (DuplicationNameException e){
+                Toast.makeText(ManageMember.this,"添加成员出现错误，请重新添加",Toast.LENGTH_SHORT).show();
+            }
             names.add(value);
             if (names.size() == bills.size() + 1) {
                 bills.add("应收￥0.00");

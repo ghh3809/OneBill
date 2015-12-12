@@ -43,11 +43,13 @@ public class DeleteMember extends AppCompatActivity {
 
         //数据
         //TODO 获取成员清单
-        //ArrayList names = actioner.GetMember(bookName);
         ArrayList<String> names = new ArrayList<String>();
-        names.add("张三");
-        names.add("李四");
-        names.add("王五");
+        final Actioner actioner = new Actioner(this);
+        names = actioner.GetMember(bookName);
+
+        //names.add("张三");
+        //names.add("李四");
+        //names.add("王五");
 
         spinner = (Spinner) findViewById(R.id.personNameTo);
 
@@ -99,7 +101,8 @@ public class DeleteMember extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: 添加清帐函数
-                //actioner.SettlePerson(bookName,deleteName,withName);
+                //Actioner actioner = new Actioner(this);
+                actioner.SettlePerson(bookName,deleteName,withName);
                 // TODO: 添加跳转到账本首页
                 //Intent intent = new Intent(DeleteMember.this, Book.class);
                 //intent.putExtra("bookName",bookName);

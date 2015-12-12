@@ -22,6 +22,12 @@
             android:label="@string/title_activity_delete_member"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name="oneBill.presentation.MainActivity"
+            android:label="activity_main"
+            android:theme="@style/AppTheme.NoActionBar" >
+
+        </activity>
     </application>
 
 </manifest>
