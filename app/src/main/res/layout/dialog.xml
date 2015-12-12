@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@color/colorWhite"
-        android:inputType="numberDecimal"/>
+        android:inputType="numberDecimal"
+        android:textCursorDrawable="@null"/>
     <Button
         android:id="@+id/comfirm_add_button"
         android:layout_width="match_parent"

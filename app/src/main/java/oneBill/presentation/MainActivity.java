@@ -19,7 +19,6 @@ import oneBill.domain.entity.error.NullException;
 public class MainActivity extends AppCompatActivity {
 
     private Actioner actioner;
-    private double addi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
