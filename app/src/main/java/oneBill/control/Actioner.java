@@ -5,7 +5,6 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import oneBill.domain.entity.Solution;
-import oneBill.domain.entity.Type;
 import oneBill.domain.entity.error.AmountMismatchException;
 import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.domain.entity.error.NullException;
@@ -33,7 +32,7 @@ public class Actioner {
      * @throws  DuplicationNameException 当出现重名时，返回此异常
      */
     public void CreateBook(String _bookName) throws NullException, DuplicationNameException {
-        if (_bookName.equals("")) throw new NullException();
+        if (_bookName.trim().equals("")) throw new NullException();
         br.CreateBook(_bookName);
     }
 
@@ -71,7 +70,8 @@ public class Actioner {
      * @param _person 要创建成员的姓名
      * @throws DuplicationNameException 当与已有成员出现重名时，抛出此异常
      */
-    public void CreateMember(String _bookName, String _person) throws DuplicationNameException {
+    public void CreateMember(String _bookName, String _person) throws NullException, DuplicationNameException {
+        if (_person.trim().equals("")) throw new NullException();
         br.CreateMember(_bookName, _person);
     }
 
@@ -124,6 +124,16 @@ public class Actioner {
      */
     public ArrayList<ArrayList<String>> GetRecord(String _bookName) {
         return br.GetRecord(_bookName);
+    }
+
+    /**
+     * 获取最新账本记录.
+     * <p>获取该账本的最新一笔账的简要记录，包括时间、金额、类型。记录方式为二维ArrayList，每个ArrayList为一行记录。<br>
+     * @param _bookName 要获取记录的账本
+     * @return 返回账本记录
+     */
+    public ArrayList<String> GetLatestRecord(String _bookName) {
+        return br.GetConsumRecord(_bookName).get(0);
     }
 
     /**

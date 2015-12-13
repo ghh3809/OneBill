@@ -37,8 +37,13 @@ public class Reader {
         return c;
     }
 
+    public Cursor QueryConsumLog(String _bookName) {
+        Cursor c = db.rawQuery("SELECT * FROM log WHERE BookName = ? AND Type <> ? ORDER BY id DESC", new String[]{_bookName, "LOAN"});
+        return c;
+    }
+
     public double QuerySum(String _bookName) {
-        Cursor c = db.rawQuery("SELECT Amount FROM log WHERE BookName = ? AND Type <> LOAN", new String[]{_bookName});
+        Cursor c = db.rawQuery("SELECT Amount FROM log WHERE BookName = ? AND Type <> ?", new String[]{_bookName, "LOAN"});
         double sum = 0;
         while(c.moveToNext()) {
             sum += c.getDouble(c.getColumnIndex("Amount"));
@@ -52,7 +57,7 @@ public class Reader {
     }
 
     public Cursor QueryDetail(String _bookName, String _person) {
-        Cursor c = db.rawQuery("SELECT * FROM detail WHERE BookName = ? AND Name = ? ORDER BY id", new String[]{_bookName, _person});
+        Cursor c = db.rawQuery("SELECT * FROM detail WHERE BookName = ? AND Name = ? ORDER BY id DESC", new String[]{_bookName, _person});
         return c;
     }
 

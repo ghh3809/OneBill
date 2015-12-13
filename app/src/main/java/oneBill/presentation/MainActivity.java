@@ -18,7 +18,11 @@ import java.util.Vector;
 import java.util.ArrayList;
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+<<<<<<< Updated upstream
 import oneBill.domain.entity.error.DuplicationNameException;
+=======
+import oneBill.domain.entity.Solution;
+>>>>>>> Stashed changes
 import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
@@ -153,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
         Actioner actioner = new Actioner(this);
         try{
+<<<<<<< Updated upstream
             //创建账本My Book1
             actioner.CreateBook("My Book1");
             //添加成员
@@ -185,26 +190,61 @@ public class MainActivity extends AppCompatActivity {
             payable2.add(2.0);
             payable2.add(2.0);
             actioner.CreateConsumRecord("New Name", 1, paid2, payable2);
+=======
+//            //创建账本My Book1
+//            actioner.CreateBook("My Book1");
+//            //添加成员
+//            actioner.CreateMember("My Book1", "Andy");
+//            actioner.CreateMember("My Book1", "Ketty");
+//            actioner.CreateMember("My Book1", "Jack");
+//            actioner.CreateMember("My Book1", "Judy");
+//            //删除成员
+//            actioner.DeleteMember("My Book1", "Andy");
+//            //重设账本名
+//            actioner.SetName("My Book1", "New Name");
+//            //添加消费记录1
+//            ArrayList<Double> paid1 = new ArrayList<Double>();
+//            ArrayList<Double> payable1 = new ArrayList<Double>();
+//            paid1.add(12.26);
+//            paid1.add(10.0);
+//            paid1.add(5.0);
+//            payable1.add(20.0);
+//            payable1.add(7.26);
+//            payable1.add(0.0);
+//            actioner.CreateConsumRecord("New Name", 1, paid1, payable1);
+//            //添加消费记录2
+//            ArrayList<Double> paid2 = new ArrayList<Double>();
+//            ArrayList<Double> payable2 = new ArrayList<Double>();
+//            paid2.add(1.0);
+//            paid2.add(2.0);
+//            paid2.add(3.0);
+//            payable2.add(2.0);
+//            payable2.add(2.0);
+//            payable2.add(2.0);
+//            actioner.CreateConsumRecord("New Name", 1, paid2, payable2);
+>>>>>>> Stashed changes
             //添加消费记录3
-            ArrayList<Double> paid3 = new ArrayList<Double>();
-            ArrayList<Double> payable3 = new ArrayList<Double>();
-            paid3.add(1.0);
-            paid3.add(2.0);
-            paid3.add(3.0);
-            payable3.add(2.0);
-            payable3.add(2.0);
-            payable3.add(2.0);
-            actioner.CreateConsumRecord("New Name", 1, paid3, payable3);
-            //删除消费记录3
-            actioner.DeleteRecord(3);
-            //添加借款记录4
-            actioner.CreateLoanRecord("New Name", "Ketty", "Jack", 18.0);
-            //创建账本My Book2
-            actioner.CreateBook("My Book2");
-            //添加成员
-            actioner.CreateMember("My Book2", "Andy");
-            actioner.CreateMember("My Book2", "Ketty");
+//            ArrayList<Double> paid3 = new ArrayList<Double>();
+//            ArrayList<Double> payable3 = new ArrayList<Double>();
+//            paid3.add(90.1);
+//            paid3.add(91.2);
+//            paid3.add(92.3);
+//            payable3.add(92.3);
+//            payable3.add(91.2);
+//            payable3.add(90.1);
+//            actioner.CreateConsumRecord("New Name", 1, paid3, payable3);
+//            ArrayList<ArrayList<String>> a = actioner.GetRecord("New Name");
+//            System.out.println("*******************************" + a.get(0).get(0));
+//            //删除消费记录3
+//            actioner.DeleteRecord(3);
+//            //添加借款记录4
+//            actioner.CreateLoanRecord("New Name", "Ketty", "Jack", 18.0);
+//            //创建账本My Book2
+//            actioner.CreateBook("My Book2");
+//            //添加成员
+//            actioner.CreateMember("My Book2", "Andy");
             //关闭数据库（大家一定不要忘了这一步哇不然运行会报错的！）
+            System.out.println("******************************" + actioner.GetSum("New Name"));
             actioner.CloseDataBase();
         }
         catch (Exception e){
