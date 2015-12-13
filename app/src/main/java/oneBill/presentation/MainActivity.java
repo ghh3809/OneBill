@@ -15,15 +15,8 @@ import android.widget.TextView;
 
 import java.util.Vector;
 
-import java.util.ArrayList;
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
-<<<<<<< Updated upstream
-import oneBill.domain.entity.error.DuplicationNameException;
-=======
-import oneBill.domain.entity.Solution;
->>>>>>> Stashed changes
-import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,21 +35,18 @@ public class MainActivity extends AppCompatActivity {
     TextView tvamount;
     TextView tvtime;
     TextView tvblank;
-    int [] randomcolor=new int [5];
+    int [] randomcolor=new int [4];
     RelativeLayout.LayoutParams lp1;
     RelativeLayout.LayoutParams lp2 ;
     RelativeLayout.LayoutParams lp3;
     View.OnClickListener newconsumption;
-
     private Actioner actioner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         actioner=new Actioner(this);
-
         ibtnAddBook= (ImageButton) findViewById(R.id.imagebtnAddBook);
         llaymain= (LinearLayout) findViewById(R.id.llayoutmain);
         mainsv= (ScrollView) findViewById(R.id.mainscrollView);
@@ -69,11 +59,10 @@ public class MainActivity extends AppCompatActivity {
         tvamount=new TextView(this);
         tvtime=new TextView(this);
         tvblank=new TextView(this);
-        randomcolor[1]=getResources().getColor(R.color.darkGreen);
-        randomcolor[0]=getResources().getColor(R.color.colorPrimaryDark);
-        randomcolor[2]=getResources().getColor(R.color.lightGreen);
-        randomcolor[3]=getResources().getColor(R.color.darkBrown);
-        randomcolor[4]=getResources().getColor(R.color.lightBrown);
+        randomcolor[0]=getResources().getColor(R.color.darkGreen);
+        randomcolor[1]=getResources().getColor(R.color.lightGreen);
+        randomcolor[2]=getResources().getColor(R.color.darkBrown);
+        randomcolor[3]=getResources().getColor(R.color.lightBrown);
         newconsumption=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             vbtnmain.add(i, new Button(this));
             tvcolor.get(i).setId(4 * i + 1);
             tvcolor.get(i).setText(" ");
-            tvcolor.get(i).setBackgroundColor(randomcolor[i%5]);
+            tvcolor.get(i).setBackgroundColor(randomcolor[i%4]);
             vbtnmain.get(i).setId(4 * i + 2);
             vbtnmain.get(i).setPadding(0, 0, 0, 0);
             vbtnmain.get(i).setText("账本");
@@ -154,10 +143,7 @@ public class MainActivity extends AppCompatActivity {
             rlay.get(newestbook).addView(tvblank, lp3);
 
         //正式测试内容（请将以下代码复制到activity里进行测试，且请只运行一次！！！否则请把数据库删了重来……）
-
-        Actioner actioner = new Actioner(this);
-        try{
-<<<<<<< Updated upstream
+/*        try{
             //创建账本My Book1
             actioner.CreateBook("My Book1");
             //添加成员
@@ -165,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
             actioner.CreateMember("My Book1", "Ketty");
             actioner.CreateMember("My Book1", "Jack");
             actioner.CreateMember("My Book1", "Judy");
-
             //删除成员
             actioner.DeleteMember("My Book1", "Andy");
             //重设账本名
@@ -179,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             payable1.add(20.0);
             payable1.add(7.26);
             payable1.add(0.0);
-            actioner.CreateConsumRecord("New Name", 1, paid1, payable1);
+            actioner.CreateConsumRecord("My Book1", 1, paid1, payable1);
             //添加消费记录2
             ArrayList<Double> paid2 = new ArrayList<Double>();
             ArrayList<Double> payable2 = new ArrayList<Double>();
@@ -189,68 +174,35 @@ public class MainActivity extends AppCompatActivity {
             payable2.add(2.0);
             payable2.add(2.0);
             payable2.add(2.0);
-            actioner.CreateConsumRecord("New Name", 1, paid2, payable2);
-=======
-//            //创建账本My Book1
-//            actioner.CreateBook("My Book1");
-//            //添加成员
-//            actioner.CreateMember("My Book1", "Andy");
-//            actioner.CreateMember("My Book1", "Ketty");
-//            actioner.CreateMember("My Book1", "Jack");
-//            actioner.CreateMember("My Book1", "Judy");
-//            //删除成员
-//            actioner.DeleteMember("My Book1", "Andy");
-//            //重设账本名
-//            actioner.SetName("My Book1", "New Name");
-//            //添加消费记录1
-//            ArrayList<Double> paid1 = new ArrayList<Double>();
-//            ArrayList<Double> payable1 = new ArrayList<Double>();
-//            paid1.add(12.26);
-//            paid1.add(10.0);
-//            paid1.add(5.0);
-//            payable1.add(20.0);
-//            payable1.add(7.26);
-//            payable1.add(0.0);
-//            actioner.CreateConsumRecord("New Name", 1, paid1, payable1);
-//            //添加消费记录2
-//            ArrayList<Double> paid2 = new ArrayList<Double>();
-//            ArrayList<Double> payable2 = new ArrayList<Double>();
-//            paid2.add(1.0);
-//            paid2.add(2.0);
-//            paid2.add(3.0);
-//            payable2.add(2.0);
-//            payable2.add(2.0);
-//            payable2.add(2.0);
-//            actioner.CreateConsumRecord("New Name", 1, paid2, payable2);
->>>>>>> Stashed changes
+            actioner.CreateConsumRecord("My Book1", 1, paid2, payable2);
             //添加消费记录3
-//            ArrayList<Double> paid3 = new ArrayList<Double>();
-//            ArrayList<Double> payable3 = new ArrayList<Double>();
-//            paid3.add(90.1);
-//            paid3.add(91.2);
-//            paid3.add(92.3);
-//            payable3.add(92.3);
-//            payable3.add(91.2);
-//            payable3.add(90.1);
-//            actioner.CreateConsumRecord("New Name", 1, paid3, payable3);
-//            ArrayList<ArrayList<String>> a = actioner.GetRecord("New Name");
-//            System.out.println("*******************************" + a.get(0).get(0));
-//            //删除消费记录3
-//            actioner.DeleteRecord(3);
-//            //添加借款记录4
-//            actioner.CreateLoanRecord("New Name", "Ketty", "Jack", 18.0);
-//            //创建账本My Book2
-//            actioner.CreateBook("My Book2");
-//            //添加成员
-//            actioner.CreateMember("My Book2", "Andy");
+            ArrayList<Double> paid3 = new ArrayList<Double>();
+            ArrayList<Double> payable3 = new ArrayList<Double>();
+            paid3.add(90.1);
+            paid3.add(91.2);
+            paid3.add(92.3);
+            payable3.add(92.3);
+            payable3.add(91.2);
+            payable3.add(90.1);
+            actioner.CreateConsumRecord("New Name", 1, paid3, payable3);
+            ArrayList<ArrayList<String>> a = actioner.GetRecord("New Name");
+            System.out.println("*******************************" + a.get(0).get(0));
+            //删除消费记录3
+            actioner.DeleteRecord(3);
+            //添加借款记录4
+            actioner.CreateLoanRecord("New Name", "Ketty", "Jack", 18.0);
+            //创建账本My Book2
+            actioner.CreateBook("My Book2");
+            //添加成员
+            actioner.CreateMember("My Book2", "Andy");
             //关闭数据库（大家一定不要忘了这一步哇不然运行会报错的！）
             System.out.println("******************************" + actioner.GetSum("New Name"));
-            actioner.CloseDataBase();
+//            actioner.CloseDataBase();
         }
         catch (Exception e){
             e.printStackTrace();
         }
-
+*/
     }
 
     public void manageMember(){

@@ -1,27 +1,13 @@
 package oneBill.presentation;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,9 +17,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import oneBill.control.Actioner;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
+import oneBill.control.Actioner;
 import oneBill.domain.entity.error.DuplicationNameException;
+import oneBill.domain.entity.error.NullException;
 
 public class ManageMember extends AppCompatActivity {
 
@@ -135,6 +125,8 @@ public class ManageMember extends AppCompatActivity {
             }
             catch (DuplicationNameException e){
                 Toast.makeText(ManageMember.this,"添加成员出现错误，请重新添加",Toast.LENGTH_SHORT).show();
+            } catch (NullException e) {
+                e.printStackTrace();
             }
             names.add(value);
             if (names.size() == bills.size() + 1) {
