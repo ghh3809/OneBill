@@ -1,7 +1,9 @@
 package oneBill.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ public class AddBook extends AppCompatActivity {
     ImageButton ibtnback;
     ImageButton ibtnok;
     EditText etaddperson;
+    EditText etname;
     Vector<EditText> personname=new Vector<EditText>();
     int i=0;//输入人员的个数
     String person;
@@ -33,6 +36,7 @@ public class AddBook extends AppCompatActivity {
         ibtnback= (ImageButton) findViewById(R.id.imagebtnback);
         ibtnok= (ImageButton) findViewById(R.id.imagebtnok);
         etaddperson= (EditText) findViewById(R.id.etperson);
+        etname= (EditText) findViewById(R.id.etname);
         llayaddperson= (LinearLayout) findViewById(R.id.llaoutperson);
         ibtnaddperson.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -62,8 +66,10 @@ public class AddBook extends AppCompatActivity {
         ibtnok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //commit
-
+                Intent intent = new Intent(AddBook.this, Account.class);
+                Editable editable = etname.getText();
+                intent.putExtra("name",editable.toString());
+                startActivity(intent);
             }
         });
     }
