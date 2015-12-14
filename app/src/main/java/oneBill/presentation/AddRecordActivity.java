@@ -2,6 +2,7 @@ package oneBill.presentation;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -32,6 +33,7 @@ public class AddRecordActivity extends AppCompatActivity {
     Actioner actioner;
     int type;
     String[] person;
+    static AddRecordActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class AddRecordActivity extends AppCompatActivity {
             person[index]= (String) iterator.next();
             index++;
         }
+        instance=this;
 
         final TabHost tabHost= (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
@@ -78,16 +81,14 @@ public class AddRecordActivity extends AppCompatActivity {
             edit.setHint("￥");
             edit.setInputType(0x00002002);
             edit.setGravity(Gravity.FILL_HORIZONTAL);
-            edit.setBackgroundColor(Color.WHITE);
+            edit.setBackground(getResources().getDrawable(R.drawable.edit_shape));
             edit.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
-
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                 }
-
                 @Override
                 public void afterTextChanged(Editable s) {
                     double sum = 0;

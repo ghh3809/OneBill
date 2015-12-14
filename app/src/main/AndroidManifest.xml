@@ -32,7 +32,7 @@
         <activity
             android:name="oneBill.presentation.AddRecordActivity"
             android:label="@string/title_activity_add_record"
-            android:launchMode="standard" >
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name="oneBill.presentation.AddBook"
