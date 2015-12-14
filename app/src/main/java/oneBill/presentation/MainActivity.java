@@ -20,7 +20,6 @@ import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
 
 public class MainActivity extends AppCompatActivity {
-
     ImageButton ibtnAddBook;
     Vector<RelativeLayout> rlay=new Vector<RelativeLayout>();
     Vector<Button> vbtnmain=new Vector<Button>();
