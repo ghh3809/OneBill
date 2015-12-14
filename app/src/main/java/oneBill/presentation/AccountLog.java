@@ -1,5 +1,7 @@
 package oneBill.presentation;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -104,8 +106,21 @@ public class AccountLog extends AppCompatActivity {
         ivDeleteAccountFromLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actioner.DeleteBook(name);
-                startActivity(new Intent(AccountLog.this,MainActivity.class));
+                new AlertDialog.Builder(AccountLog.this)
+                    .setTitle("Alert!")
+                    .setMessage("Are you sure to DELETE the book?")
+                    .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            actioner.DeleteBook(name);
+                            startActivity(new Intent(AccountLog.this,MainActivity.class));
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).show();
             }
         });
     }

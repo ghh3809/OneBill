@@ -1,5 +1,7 @@
 package oneBill.presentation;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -77,7 +79,9 @@ public class Account extends AppCompatActivity {
         ivToClearFromAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Account.this,AccountClear.class));
+                Intent intent1 = new Intent(Account.this,AccountClear.class);
+                intent1.putExtra("name", name);
+                startActivity(intent1);
             }
         });
 
@@ -85,8 +89,21 @@ public class Account extends AppCompatActivity {
         ivDeleteFromAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actioner.DeleteBook(name);
-                startActivity(new Intent(Account.this,MainActivity.class));
+                new AlertDialog.Builder(Account.this)
+                        .setTitle("Alert!")
+                        .setMessage("Are you sure to DELETE the book?")
+                        .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                actioner.DeleteBook(name);
+                                startActivity(new Intent(Account.this,MainActivity.class));
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
             }
         });
 
