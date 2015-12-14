@@ -50,7 +50,7 @@ public class ManageMember extends AppCompatActivity {
         addConfirmButton = (Button) findViewById(R.id.button01Edit);
 
         //获取账本名称
-        //Intent intent = getIntent();
+        Intent intent = getIntent();
         //final String bookName = intent.getStringExtra("bookName");
         bookName = "New Name";
 
