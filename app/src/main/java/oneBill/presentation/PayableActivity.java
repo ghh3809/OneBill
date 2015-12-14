@@ -3,7 +3,6 @@ package oneBill.presentation;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.Iterator;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
@@ -32,10 +33,13 @@ public class PayableActivity extends AppCompatActivity {
     int type;
     String[] person;
     double[] paid;
+    double[] payable;
+    static PayableActivity instance;
 
     double addition;
     double[] additionArray;
     boolean[] isLock;
+    double remainSum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,8 @@ public class PayableActivity extends AppCompatActivity {
         type= intent.getIntExtra("type", 0);
         paid=intent.getDoubleArrayExtra("paid");
         person=intent.getStringArrayExtra("person");
+        payable=new double[person.length];
+        instance=this;
 
         additionArray=new double[person.length];
         isLock=new boolean[person.length];
@@ -59,7 +65,10 @@ public class PayableActivity extends AppCompatActivity {
         for(int j=0;j<person.length;j++) sum=sum+paid[j];
         TextView sum_text= (TextView) findViewById(R.id.sum_text);
         sum_text.setText("总计￥"+String.valueOf(sum));
+        TextView current_sum_text = (TextView) findViewById(R.id.current_sum_text);
+        current_sum_text.setText("总和数￥" + String.valueOf(sum));
         final double final_sum=sum;
+        remainSum=sum;
 
         LinearLayout input_layout= (LinearLayout) findViewById(R.id.input_layout);
 
@@ -73,32 +82,33 @@ public class PayableActivity extends AppCompatActivity {
             text.setTextSize(18);
             text.setGravity(Gravity.CENTER);
 
-            EditText edit=new EditText(this);
+            final EditText edit=new EditText(this);
             edit.setId(i + 1);
-            edit.setText(String.valueOf(sum / person.length));
             edit.setInputType(0x00002002);
-            edit.setBackgroundColor(Color.WHITE);
+            edit.setBackground(getResources().getDrawable(R.drawable.edit_shape));
+            payable[i]=final_sum / person.length;
+            final DecimalFormat df=new DecimalFormat("#.00");
+            edit.setText(String.valueOf(df.format(payable[i])));
             edit.addTextChangedListener(new TextWatcher() {
+                String after;
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
-
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                 }
-
                 @Override
                 public void afterTextChanged(Editable s) {
-                    double[] payable = new double[person.length];
-                    double currentSum = 0;
-                    for (int i = 0; i < person.length; i++) {
-                        EditText edit = (EditText) findViewById(i + 1);
-                        if ("".equals(edit.getText().toString())) payable[i] = 0;
-                        else payable[i] = Double.valueOf(edit.getText().toString());
-                        currentSum = currentSum + payable[i];
+                    remainSum=0;
+                    if("".equals(s.toString())) after="0";
+                    else after=s.toString();
+                    for(int j=0;j<person.length;j++){
+                        if(j==edit.getId()-1) remainSum+=Double.valueOf(after);
+                        else remainSum+=payable[j];
                     }
+                    payable[edit.getId()-1]=Double.valueOf(after);
                     TextView current_sum_text = (TextView) findViewById(R.id.current_sum_text);
-                    current_sum_text.setText("总和数￥" + String.valueOf(currentSum));
+                    current_sum_text.setText("总和数￥" + String.valueOf(df.format(remainSum)));
                 }
             });
 
@@ -123,17 +133,22 @@ public class PayableActivity extends AppCompatActivity {
                         edit.setEnabled(false);
                         v.setBackgroundResource(R.mipmap.lock);
                         isLock[v.getId() - 101] = true;
+                        payable[v.getId() - 101]=Double.valueOf((edit.getText().toString()));
                         double currentSum = final_sum;
                         int numOfNotLock = person.length;
                         for (int j = 0; j < person.length; j++) {
                             if (isLock[j]) {
-                                currentSum -= Double.valueOf(((EditText) findViewById(j + 1)).getText().toString());
+                                currentSum -= payable[j];
                                 numOfNotLock--;
-                            } else currentSum -= additionArray[j];
+                            }
+                            else currentSum -= additionArray[j];
                         }
                         for (int k = 0; k < person.length; k++)
-                            if (!isLock[k])
-                                ((EditText) findViewById(k + 1)).setText(String.valueOf(additionArray[k] + currentSum / numOfNotLock));
+                            if (!isLock[k]){
+                                payable[k]=additionArray[k] + currentSum / numOfNotLock;
+                                ((EditText) findViewById(k + 1)).setText(String.valueOf(df.format(payable[k])));
+                            }
+                    remainSum=final_sum;
                     }
                 }
             });
@@ -165,17 +180,19 @@ public class PayableActivity extends AppCompatActivity {
                             int numOfNotLock=person.length;
                             for(int j=0;j<person.length;j++){
                                 if(isLock[j]) {
-                                    currentSum -= Double.valueOf(((EditText) findViewById(j + 1)).getText().toString());
+                                    currentSum -= payable[j];
                                     numOfNotLock--;
                                 }
-                                currentSum-=additionArray[j];
+                                else currentSum-=additionArray[j];
                             }
                             for(int k=0;k<person.length;k++)
-                                if(!isLock[k])
-                                    ((EditText) findViewById(k+1)).setText(String.valueOf(additionArray[k]+currentSum/numOfNotLock));
+                                if (!isLock[k]){
+                                    payable[k]=additionArray[k] + currentSum / numOfNotLock;
+                                    ((EditText) findViewById(k + 1)).setText(String.valueOf(df.format(payable[k])));
+                                }
+                            remainSum=final_sum;
                         }
                     });
-
                 }
             });
 
@@ -195,6 +212,7 @@ public class PayableActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PayableActivity.this, AddRecordActivity.class);
+                intent.putExtra("bookName",bookName);
                 startActivity(intent);
                 PayableActivity.this.finish();
             }
@@ -202,19 +220,24 @@ public class PayableActivity extends AppCompatActivity {
         findViewById(R.id.preview_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double[] payable = new double[paid.length];
-                for (int i = 0; i < person.length; i++) {
-                    EditText edit = (EditText) findViewById(i + 1);
-                    if ("".equals(edit.getText().toString())) payable[i] = 0;
-                    else payable[i] = Double.valueOf(edit.getText().toString());
-                }
                 Intent intent = new Intent(PayableActivity.this, PreviewActivity.class);
                 intent.putExtra("bookName", bookName);
                 intent.putExtra("type", type);
                 intent.putExtra("person", person);
                 intent.putExtra("paid", paid);
                 intent.putExtra("payable", payable);
-                startActivity(intent);
+                if(remainSum!=final_sum){
+                    Toast warning_toast=new Toast(PayableActivity.this);
+                    TextView warning_text=new TextView(PayableActivity.this);
+                    warning_text.setText("应付输入有误");
+                    warning_text.setTextSize(24);
+                    warning_text.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    warning_toast.setView(warning_text);
+                    warning_toast.setDuration(Toast.LENGTH_LONG);
+                    warning_toast.setGravity(Gravity.CENTER,0,0);
+                    warning_toast.show();
+                }
+                else startActivity(intent);
             }
         });
     }
