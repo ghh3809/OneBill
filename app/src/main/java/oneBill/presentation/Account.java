@@ -85,6 +85,8 @@ public class Account extends AppCompatActivity {
         ivDeleteFromAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                actioner.DeleteBook(name);
+                startActivity(new Intent(Account.this,MainActivity.class));
             }
         });
 
@@ -113,6 +115,13 @@ public class Account extends AppCompatActivity {
 
                     b.putString("name", intent.getStringExtra("name"));
                     b.putInt("id", Integer.parseInt(arraylist1.get(0)));
+                    StringBuilder sb1 = new StringBuilder();
+                    sb1.append(arraylist1.get(1));
+                    sb1.append("   ￥");
+                    sb1.append(arraylist1.get(2));
+                    sb1.append("    ");
+                    sb1.append(arraylist1.get(3));
+                    b.putString("detail", String.valueOf(sb1));
                     i.putExtras(b);
 
                     startActivity(i);
