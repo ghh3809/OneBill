@@ -63,7 +63,7 @@
         android:layout_marginTop="52dp"
         android:hint="￥"
         android:inputType="numberDecimal"
-        android:background="#ffffff"
+        android:background="@drawable/edit_shape"
         android:layout_alignRight="@+id/textView2"
         android:layout_alignEnd="@+id/textView2"
         android:textCursorDrawable="@null"/>

@@ -33,7 +33,7 @@ public class AddBook extends AppCompatActivity {
         ibtnback= (ImageButton) findViewById(R.id.imagebtnback);
         ibtnok= (ImageButton) findViewById(R.id.imagebtnok);
         etaddperson= (EditText) findViewById(R.id.etperson);
-       llayaddperson= (LinearLayout) findViewById(R.id.llaoutperson);
+        llayaddperson= (LinearLayout) findViewById(R.id.llaoutperson);
         ibtnaddperson.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
