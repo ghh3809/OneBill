@@ -3,17 +3,20 @@ package oneBill.presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
+import oneBill.control.Actioner;
+import oneBill.domain.entity.error.DuplicationNameException;
+import oneBill.domain.entity.error.NullException;
 
 public class AddBook extends AppCompatActivity {
     ImageButton ibtnaddperson;
@@ -28,6 +31,11 @@ public class AddBook extends AppCompatActivity {
     RelativeLayout.LayoutParams ibtnlaypa;
     LinearLayout llayaddperson;
     RelativeLayout rlayibtn;
+    private Actioner actioner;
+    String bookname;
+    View.OnClickListener oklistener;
+    Vector<String> addedperson=new Vector<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +45,7 @@ public class AddBook extends AppCompatActivity {
         ibtnok= (ImageButton) findViewById(R.id.imagebtnok);
         etaddperson= (EditText) findViewById(R.id.etperson);
         etname= (EditText) findViewById(R.id.etname);
+        actioner=new Actioner(this);
         llayaddperson= (LinearLayout) findViewById(R.id.llaoutperson);
         ibtnaddperson.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -63,14 +72,52 @@ public class AddBook extends AppCompatActivity {
 
             }
         });
-        ibtnok.setOnClickListener(new View.OnClickListener() {
+        oklistener=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddBook.this, Account.class);
-                Editable editable = etname.getText();
-                intent.putExtra("name",editable.toString());
-                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "点击ok",
+                        Toast.LENGTH_LONG).show();
+                bookname=etname.getText().toString();
+                if (bookname!= "") {
+                    try {
+                        actioner.CreateBook(bookname);
+                    } catch (NullException e) {
+                        System.out.println(e.toString());
+                        e.printStackTrace();
+                    } catch (DuplicationNameException e) {
+                        System.out.println(e.toString());
+                        e.printStackTrace();
+                    }
+                    for(int j=0;j<i;j++){
+                        if(personname.get(j).getText().toString()!="")
+                            try {
+                                actioner.CreateMember(bookname, personname.get(j).getText().toString());
+                            } catch (NullException e) {
+                                e.printStackTrace();
+                            } catch (DuplicationNameException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                    if(etaddperson.getText().toString()!="")
+                        try {
+                            actioner.CreateMember(bookname, etaddperson.getText().toString());
+                        } catch (NullException e) {
+                            e.printStackTrace();
+                        } catch (DuplicationNameException e) {
+                            e.printStackTrace();
+                        }
+                    actioner.CloseDataBase();
+
+                    Intent intent = new Intent(AddBook.this, Account.class);
+                    intent.putExtra("name", bookname);
+
+                    startActivity(intent);
+                    AddBook.this.finish();
+
+
             }
-        });
+        }
+        };
+        ibtnok.setOnClickListener(oklistener);
     }
 }
