@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -34,6 +35,8 @@ public class AddBook extends AppCompatActivity {
     String bookname;
     View.OnClickListener oklistener;
     Vector<String> addedperson=new Vector<String>();
+    boolean nullname=false;
+    boolean duplicatename=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,45 +78,50 @@ public class AddBook extends AppCompatActivity {
         oklistener=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bookname=etname.getText().toString();
-                if (bookname!= "") {
                     try {
+                        bookname=etname.getText().toString();
                         actioner.CreateBook(bookname);
-                    } catch (NullException e) {
-                        System.out.println(e.toString());
-                        e.printStackTrace();
-                    } catch (DuplicationNameException e) {
-                        System.out.println(e.toString());
-                        e.printStackTrace();
-                    }
-                    for(int j=0;j<i;j++){
-                        if(personname.get(j).getText().toString()!="")
+                        for(int j=0;j<i;j++){
+                            if(personname.get(j).getText().toString()!="") {
+                                try {
+                                    actioner.CreateMember(bookname, personname.get(j).getText().toString());
+                                } catch (NullException e) {
+                                    e.printStackTrace();
+                                } catch (DuplicationNameException e) {
+                                    e.printStackTrace();
+                                    duplicatename=true;
+                                }
+                            }
+                            else
+                                nullname=true;
+                        }
+                        if(etaddperson.getText().toString()!="") {
                             try {
-                                actioner.CreateMember(bookname, personname.get(j).getText().toString());
+                                actioner.CreateMember(bookname, etaddperson.getText().toString());
                             } catch (NullException e) {
                                 e.printStackTrace();
+                                nullname=true;
                             } catch (DuplicationNameException e) {
                                 e.printStackTrace();
+                                duplicatename=true;
                             }
-                    }
-                    if(etaddperson.getText().toString()!="")
-                        try {
-                            actioner.CreateMember(bookname, etaddperson.getText().toString());
-                        } catch (NullException e) {
-                            e.printStackTrace();
-                        } catch (DuplicationNameException e) {
-                            e.printStackTrace();
                         }
-                    actioner.CloseDataBase();
-
-                    Intent intent = new Intent(AddBook.this, Account.class);
-                    intent.putExtra("name", bookname);
-
-                    startActivity(intent);
-                    AddBook.this.finish();
-
-
-            }
+                        if(nullname)
+                            Toast.makeText(getApplicationContext(),"参与人员中存在空的人名，已自动忽略",Toast.LENGTH_LONG).show();
+                        if(duplicatename) {
+                            Toast.makeText(getApplicationContext(), "残垣人员出现重名，重名的已自动忽略", Toast.LENGTH_LONG);
+                        }
+                        Intent intent = new Intent(AddBook.this, Account.class);
+                        intent.putExtra("name", bookname);
+                        startActivity(intent);
+                        AddBook.this.finish();
+                    } catch (NullException e) {
+                        Toast.makeText(getApplicationContext(),"账本名不能为空，请输入账本名",Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    } catch (DuplicationNameException e) {
+                        Toast.makeText(getApplicationContext(),"与现有账本重名，请重新命名",Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
         }
         };
         ibtnok.setOnClickListener(oklistener);

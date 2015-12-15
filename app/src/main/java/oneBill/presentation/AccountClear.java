@@ -3,7 +3,6 @@ package oneBill.presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -59,13 +58,16 @@ public class AccountClear extends AppCompatActivity {
         ivToAccountFromClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AccountClear.this, Account.class));
+                Intent intent1 = new Intent(AccountClear.this,Account.class);
+                intent1.putExtra("name", name);
+                startActivity(intent1);
             }
         });
 
         tvNameInClear = (TextView) findViewById(R.id.tvNameInClear);
         tvNameInClear.setText(name);
 
+        linearAccountClear = (LinearLayout) findViewById(R.id.linearAccountClear);
         linearAccountClearConstraint = (LinearLayout) findViewById(R.id.linearAccountClearConstraint);
         tvAddConstraint = (TextView) findViewById(R.id.tvAddConstraint);
         tvAddConstraint.setOnClickListener(new View.OnClickListener() {
@@ -121,9 +123,10 @@ public class AccountClear extends AppCompatActivity {
                 boolean wrongNumber = false;
                 for(int k = 0; k < countet; ++ k){
                     String string = vET.get(k).getText().toString();
-                    for(int t = 0; t < string.length(); ++ t) if(string.charAt(t)!='.') if(!Character.isDigit(string.charAt(t))){
+                    try{
+                        Double amt = Double.parseDouble(string);
+                    }catch (Exception e){
                         wrongNumber = true;
-                        break;
                     }
                 }
 
@@ -131,27 +134,30 @@ public class AccountClear extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Wrong number found",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    /*获得输入的约束条件*/
                     ArrayList<Solution> arraylist = new ArrayList<Solution>();
-                    for(int k = 0; k < countet; ++ k){
-                        Editable ed1, ed2, ed3;
-                        ed1 = (Editable) vSP.get(2 * k).getSelectedItem();
-                        ed2 = (Editable) vSP.get(2 * k + 1).getSelectedItem();
-                        ed3 = vET.get(k).getText();
+                    ArrayList<Solution> arraylistCons = new ArrayList<Solution>();
 
-                        try {
-                            Solution solution = new Solution(ed1.toString(), ed2.toString(), Double.parseDouble(ed3.toString()));
-                            arraylist.add(solution);
-                        }catch (Exception e){
-                            Toast.makeText(getApplicationContext(),"Unable to generate a solution",Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
+                    /*获得输入的约束条件*/
+                    for(int k = 0; k < countet; ++ k) {
+                        String string1, string2, string3;
+                        string1 = vSP.get(2 * k).getSelectedItem().toString();
+                        string2 = vSP.get(2 * k + 1).getSelectedItem().toString();
+                        string3 = vET.get(k).getText().toString();
+
+                        Solution solution = new Solution(string1, string2, Double.parseDouble(string3));
+                        arraylistCons.add(solution);
                     }
 
                     /*获取解决方案*/
-                    linearAccountClear = (LinearLayout) findViewById(R.id.linearAccountClear);
                     try {
-                        arraylist = actioner.SettleRecord(name);
+                        if(arraylistCons.size() == 0) {
+                            System.out.println("No constraints");
+                            arraylist = actioner.SettleRecord(name);
+                        }
+                        else {
+                            System.out.println("With constraints");
+                            arraylist = actioner.SettleRecord(name, arraylistCons);
+                        }
                         numAccountClear = arraylist.size();
                     } catch (UnableToClearException e) {
                         Toast.makeText(getApplicationContext(),"Unable to settle",Toast.LENGTH_SHORT).show();
@@ -167,7 +173,7 @@ public class AccountClear extends AppCompatActivity {
                         stringbuilder.append(solution.getGiver());
                         stringbuilder.append("    给    ");
                         stringbuilder.append(solution.getReceiver());
-                        stringbuilder.append("    给    ");
+                        stringbuilder.append("    ￥    ");
                         stringbuilder.append(solution.getAmount());
                         vTV.get(i).setText(stringbuilder);
 
@@ -183,6 +189,7 @@ public class AccountClear extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onDestroy(){
         super.onDestroy();

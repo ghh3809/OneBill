@@ -57,10 +57,11 @@ public class PayableActivity extends AppCompatActivity {
         }
         double sum=0;
         for(int j=0;j<person.length;j++) sum=sum+paid[j];
+        final DecimalFormat df=new DecimalFormat("#.00");
         TextView sum_text= (TextView) findViewById(R.id.sum_text);
-        sum_text.setText("总计￥"+String.valueOf(sum));
+        sum_text.setText("总计￥"+String.valueOf(df.format(sum)));
         TextView current_sum_text = (TextView) findViewById(R.id.current_sum_text);
-        current_sum_text.setText("总和数￥" + String.valueOf(sum));
+        current_sum_text.setText("总和数￥" + String.valueOf(df.format(sum)));
         final double final_sum=sum;
         remainSum=sum;
 
@@ -81,7 +82,6 @@ public class PayableActivity extends AppCompatActivity {
             edit.setInputType(0x00002002);
             edit.setBackground(getResources().getDrawable(R.drawable.edit_shape));
             payable[i]=final_sum / person.length;
-            final DecimalFormat df=new DecimalFormat("#.00");
             edit.setText(String.valueOf(df.format(payable[i])));
             edit.addTextChangedListener(new TextWatcher() {
                 String after;
@@ -94,7 +94,7 @@ public class PayableActivity extends AppCompatActivity {
                 @Override
                 public void afterTextChanged(Editable s) {
                     remainSum=0;
-                    if("".equals(s.toString())) after="0";
+                    if("".equals(s.toString())||".".equals(s.toString())) after="0";
                     else after=s.toString();
                     for(int j=0;j<person.length;j++){
                         if(j==edit.getId()-1) remainSum+=Double.valueOf(after);
@@ -127,7 +127,8 @@ public class PayableActivity extends AppCompatActivity {
                         edit.setEnabled(false);
                         v.setBackgroundResource(R.mipmap.lock);
                         isLock[v.getId() - 101] = true;
-                        payable[v.getId() - 101]=Double.valueOf((edit.getText().toString()));
+                        if("".equals(edit.getText().toString())||".".equals(edit.getText().toString())) payable[v.getId() - 101]=0;
+                        else payable[v.getId() - 101]=Double.valueOf((edit.getText().toString()));
                         double currentSum = final_sum;
                         int numOfNotLock = person.length;
                         for (int j = 0; j < person.length; j++) {
@@ -164,7 +165,7 @@ public class PayableActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             EditText addition_edit = (EditText) dialogView.findViewById(R.id.addition_text);
-                            if ("".equals(addition_edit.getText().toString())) addition = 0;
+                            if ("".equals(addition_edit.getText().toString())||".".equals(addition_edit.getText().toString())) addition = 0;
                             else addition = Double.valueOf(addition_edit.getText().toString());
                             dialog.dismiss();
 

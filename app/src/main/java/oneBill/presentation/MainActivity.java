@@ -18,6 +18,7 @@ import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> latestconsum=new ArrayList<String>();
     java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#0.00");
     boolean created=false;
+    int maxbooknum=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 */
         existedbook = actioner.GetBook();
         booknum = existedbook.size();
+        maxbooknum=booknum;
         ibtnAddBook= (ImageButton) findViewById(R.id.imagebtnAddBook);
         llaymain= (LinearLayout) findViewById(R.id.llayoutmain);
         mainsv= (ScrollView) findViewById(R.id.mainscrollView);
@@ -144,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,Account.class);
                 intent.putExtra("name",existedbook.get(v.getId()/4));
-                //System.out.println(existedbook.get(v.getId() / 4));
                 startActivity(intent);
             }
         };
@@ -210,44 +212,54 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         existedbook=actioner.GetBook();
         if(existedbook.size()!=booknum){
+            i=existedbook.size()-1;
+            if(existedbook.size()>maxbooknum) {
+                i=maxbooknum;
+                maxbooknum++;
+                rlay.add(i, new RelativeLayout(this));
+                rlaypa.add(3 * i, new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
+                rlaypa.add(3 * i + 1, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                rlaypa.add(3 * i + 2, new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 24), DensityUtil.dip2px(getApplicationContext(), 24)));
+                rlay.get(i).setId(4 * i);
+                tvcolor.add(i, new TextView(this));
+                vbtnmain.add(i, new Button(this));
+                tvcolor.get(i).setId(4 * i + 1);
+                tvcolor.get(i).setText(" ");
+                tvcolor.get(i).setBackgroundColor(randomcolor[i % 4]);
+                vbtnmain.get(i).setId(4 * i + 2);
+                vbtnmain.get(i).setPadding(0, 0, 0, 0);
+                vbtnmain.get(i).setTextColor(getResources().getColor(R.color.darkGreen));
+                vbtnmain.get(i).setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+                vbtnmain.get(i).setText(existedbook.get(i));
+                vbtnmain.get(i).setOnClickListener(bookmain);
+                vibtnmain.add(i, new ImageButton(this));
+                vibtnmain.get(i).setId(4 * i + 3);
+                vibtnmain.get(i).setImageDrawable(getResources().getDrawable(R.drawable.pen_leather));
+                vibtnmain.get(i).setScaleType(ImageView.ScaleType.FIT_XY);
+                vibtnmain.get(i).setBackgroundColor(getResources().getColor(R.color.colorTransparent));
+                vibtnmain.get(i).setOnClickListener(newconsumption);
+                vbtnmain.get(i).setBackgroundColor(getResources().getColor(R.color.colorTransparent));
+                rlaypa.get(3 * i).addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                rlaypa.get(3 * i).addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                rlaypa.get(3 * i).setMargins(0, DensityUtil.dip2px(getApplicationContext(), 4), 0, 0);
+                rlaypa.get(3 * i + 1).addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                rlaypa.get(3 * i + 1).addRule(RelativeLayout.ALIGN_LEFT, tvcolor.get(i).getId());
+                rlaypa.get(3 * i + 1).setMargins(DensityUtil.dip2px(getApplicationContext(), 10), 0, 0, 0);
+                rlaypa.get(3 * i + 2).addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                rlaypa.get(3 * i + 2).addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                rlaypa.get(3 * i + 2).setMargins(0, DensityUtil.dip2px(getApplicationContext(), 15), DensityUtil.dip2px(getApplicationContext(), 10), 0);
+                rlay.get(i).addView(tvcolor.get(i), rlaypa.get(3 * i));
+                rlay.get(i).addView(vbtnmain.get(i), rlaypa.get(3 * i + 1));
+                rlay.get(i).addView(vibtnmain.get(i), rlaypa.get(3 * i + 2));
+                llaymain.addView(rlay.get(i));
+            }
+            else if(existedbook.size()<booknum){
+                llaymain.removeView(rlay.get(booknum-1));
+            }
+            else{
+                llaymain.addView(rlay.get(booknum));
+            }
             booknum=existedbook.size();
-            i=booknum-1;
-            rlay.add(i, new RelativeLayout(this));
-            rlaypa.add(3 * i,  new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
-            rlaypa.add(3 * i+1, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-            rlaypa.add(3 * i + 2, new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 24), DensityUtil.dip2px(getApplicationContext(), 24)));
-            rlay.get(i).setId(4 * i);
-            tvcolor.add(i, new TextView(this));
-            vbtnmain.add(i, new Button(this));
-            tvcolor.get(i).setId(4 * i + 1);
-            tvcolor.get(i).setText(" ");
-            tvcolor.get(i).setBackgroundColor(randomcolor[i % 4]);
-            vbtnmain.get(i).setId(4 * i + 2);
-            vbtnmain.get(i).setPadding(0, 0, 0, 0);
-            vbtnmain.get(i).setTextColor(getResources().getColor(R.color.darkGreen));
-            vbtnmain.get(i).setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-            vbtnmain.get(i).setText(existedbook.get(i));
-            vbtnmain.get(i).setOnClickListener(bookmain);
-            vibtnmain.add(i, new ImageButton(this));
-            vibtnmain.get(i).setId(4 * i + 3);
-            vibtnmain.get(i).setImageDrawable(getResources().getDrawable(R.drawable.pen_leather));
-            vibtnmain.get(i).setScaleType(ImageView.ScaleType.FIT_XY);
-            vibtnmain.get(i).setBackgroundColor(getResources().getColor(R.color.colorTransparent));
-            vibtnmain.get(i).setOnClickListener(newconsumption);
-            vbtnmain.get(i).setBackgroundColor(getResources().getColor(R.color.colorTransparent));
-            rlaypa.get(3 * i).addRule(RelativeLayout.ALIGN_PARENT_TOP);
-            rlaypa.get(3*i).addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-            rlaypa.get(3 * i).setMargins(0, DensityUtil.dip2px(getApplicationContext(), 4), 0, 0);
-            rlaypa.get(3 * i+1).addRule(RelativeLayout.ALIGN_PARENT_TOP);
-            rlaypa.get(3*i+1).addRule(RelativeLayout.ALIGN_LEFT,tvcolor.get(i).getId());
-            rlaypa.get(3 *i+1).setMargins(DensityUtil.dip2px(getApplicationContext(), 10),0,0,0);
-            rlaypa.get(3*i+2).addRule(RelativeLayout.ALIGN_PARENT_TOP);
-            rlaypa.get(3*i+2).addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            rlaypa.get(3 * i + 2).setMargins(0, DensityUtil.dip2px(getApplicationContext(), 15), DensityUtil.dip2px(getApplicationContext(), 10), 0);
-            rlay.get(i).addView(tvcolor.get(i), rlaypa.get(3 * i));
-            rlay.get(i).addView(vbtnmain.get(i), rlaypa.get(3 * i+1));
-            rlay.get(i).addView(vibtnmain.get(i), rlaypa.get(3 * i + 2));
-            llaymain.addView(rlay.get(i));
         }
         if(booknum>0) {
         for(int j=0;j<booknum;j++){
@@ -301,11 +313,10 @@ public class MainActivity extends AppCompatActivity {
             tvamount.setText("¥" + String.valueOf(df.format(actioner.GetSum(existedbook.get(0)))));
     }
     }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        actioner.CloseDataBase();
-    }
+        @Override
+        protected void onDestroy(){
+            super.onDestroy();
+            actioner.CloseDataBase();
+        }
 }
 

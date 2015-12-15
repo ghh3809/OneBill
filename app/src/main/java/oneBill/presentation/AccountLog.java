@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -53,14 +54,15 @@ public class AccountLog extends AppCompatActivity {
 
         for(int i = 0; i < numAccountLog; ++ i){
             vTV.add(i, new TextView(AccountLog.this));
+            DecimalFormat df = new DecimalFormat("#.00");
 
             ArrayList<String> arraylist1 = arraylist.get(i);
             StringBuilder sb = new StringBuilder();
             sb.append(arraylist1.get(0));
-            sb.append("          ");
-            sb.append(arraylist1.get(1));
-            sb.append("               ");
-            sb.append(arraylist1.get(2));
+            sb.append("                    ");
+            sb.append(df.format(Double.parseDouble(arraylist1.get(1))));
+            sb.append("                    ");
+            sb.append(df.format(Double.parseDouble(arraylist1.get(2))));
 
             vTV.get(i).setText(sb);
             linearAccountLog.addView(vTV.get(i));
@@ -70,7 +72,9 @@ public class AccountLog extends AppCompatActivity {
         ivToAccountFromLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AccountLog.this, Account.class));
+                Intent intent1 = new Intent(AccountLog.this,Account.class);
+                intent1.putExtra("name",name);
+                startActivity(intent1);
             }
         });
 
@@ -110,11 +114,11 @@ public class AccountLog extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(AccountLog.this)
                     .setTitle("Alert!")
-                    .setMessage("Are you sure to DELETE the book?")
+                    .setMessage("Are you sure to DELETE this log?")
                     .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            actioner.DeleteBook(name);
+                            actioner.DeleteRecord(id);
                             startActivity(new Intent(AccountLog.this,MainActivity.class));
                         }
                     })
@@ -126,9 +130,11 @@ public class AccountLog extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onDestroy(){
         super.onDestroy();
+
         actioner.CloseDataBase();
     }
 }
