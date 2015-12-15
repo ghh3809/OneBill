@@ -88,7 +88,7 @@ public class AddRecordActivity extends AppCompatActivity {
                     for (int i = 0; i < person.length; i++) {
                         double[] paid = new double[person.length];
                         EditText edit = (EditText) findViewById(i + 1);
-                        if ("".equals(edit.getText().toString())) paid[i] = 0;
+                        if ("".equals(edit.getText().toString())||".".equals(edit.getText().toString())) paid[i] = 0;
                         else paid[i] = Double.valueOf(edit.getText().toString());
                         sum = sum + paid[i];
                     }
@@ -113,41 +113,41 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.setAlpha((float) 1.0);
-                accom_button.setAlpha((float)0.5);
                 trans_button.setAlpha((float)0.5);
                 play_button.setAlpha((float)0.5);
+                accom_button.setAlpha((float)0.5);
                 other_button.setAlpha((float)0.5);
                 type=1;
-            }
-        });
-        accom_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                food_button.setAlpha((float)0.5);
-                v.setAlpha((float) 1.0);
-                trans_button.setAlpha((float)0.5);
-                play_button.setAlpha((float)0.5);
-                other_button.setAlpha((float)0.5);
-                type=2;
             }
         });
         trans_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 food_button.setAlpha((float)0.5);
-                accom_button.setAlpha((float)0.5);
                 v.setAlpha((float) 1.0);
                 play_button.setAlpha((float)0.5);
+                accom_button.setAlpha((float)0.5);
                 other_button.setAlpha((float)0.5);
-                type=3;
+                type=2;
             }
         });
         play_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 food_button.setAlpha((float)0.5);
+                trans_button.setAlpha((float) 1.0);
+                v.setAlpha((float)0.5);
                 accom_button.setAlpha((float)0.5);
+                other_button.setAlpha((float)0.5);
+                type=3;
+            }
+        });
+        accom_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                food_button.setAlpha((float)0.5);
                 trans_button.setAlpha((float)0.5);
+                play_button.setAlpha((float)0.5);
                 v.setAlpha((float) 1.0);
                 other_button.setAlpha((float)0.5);
                 type=4;
@@ -157,9 +157,9 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 food_button.setAlpha((float)0.5);
-                accom_button.setAlpha((float)0.5);
                 trans_button.setAlpha((float)0.5);
                 play_button.setAlpha((float)0.5);
+                accom_button.setAlpha((float)0.5);
                 v.setAlpha((float) 1.0);
                 type=5;
             }
@@ -168,8 +168,8 @@ public class AddRecordActivity extends AppCompatActivity {
         findViewById(R.id.back_to_book_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                change the intent activity
-                Intent intent=new Intent(AddRecordActivity.this,MainActivity.class);
+                Intent intent=new Intent(AddRecordActivity.this,Account.class);
+                intent.putExtra("name",bookName);
                 startActivity(intent);
                 AddRecordActivity.this.finish();
             }
@@ -181,7 +181,7 @@ public class AddRecordActivity extends AppCompatActivity {
                     double[] paid=new double[person.length];
                     for(int i=0;i<person.length;i++){
                         EditText edit= (EditText) findViewById(i+1);
-                        if("".equals(edit.getText().toString())) paid[i]=0;
+                        if("".equals(edit.getText().toString())||".".equals(edit.getText().toString())) paid[i]=0;
                         else paid[i]=Double.valueOf(edit.getText().toString());
                     }
                     Intent intent=new Intent(AddRecordActivity.this,PayableActivity.class);
@@ -197,9 +197,12 @@ public class AddRecordActivity extends AppCompatActivity {
                     Spinner lender_spinner= (Spinner) findViewById(R.id.spinner2);
                     String lender=lender_spinner.getSelectedItem().toString();
                     EditText edit= (EditText) findViewById(R.id.editText);
-                    double amount=Double.valueOf(edit.getText().toString());
+                    double amount;
+                    if ("".equals(edit.getText().toString())||".".equals(edit.getText().toString())) amount = 0;
+                    else amount=Double.valueOf(edit.getText().toString());
                     actioner.CreateLoanRecord(bookName,lender,borrower,amount);
-                    Intent intent=new Intent(AddRecordActivity.this,MainActivity.class);
+                    Intent intent=new Intent(AddRecordActivity.this,Account.class);
+                    intent.putExtra("name",bookName);
                     startActivity(intent);
                     AddRecordActivity.this.finish();
                 }

@@ -18,6 +18,7 @@ import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         actioner=new Actioner(this);
+
         //正式测试内容（请将以下代码复制到activity里进行测试，且请只运行一次！！！否则请把数据库删了重来……）
 /*       try{
             //创建账本My Book1
@@ -302,15 +304,8 @@ public class MainActivity extends AppCompatActivity {
     }
     }
 
-    @Override
-<<<<<<< Updated upstream
     protected void onDestroy(){
         super.onDestroy();
-=======
-    protected void onDestroy() {
-        super.onDestroy();
-
->>>>>>> Stashed changes
         actioner.CloseDataBase();
     }
 }

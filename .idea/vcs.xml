@@ -6,5 +6,15 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+=======
+=======
+    <mapping directory="" vcs="" />
+>>>>>>> a3fb4526341af86d1450688d0e7dab7462a16e5b
+>>>>>>> d8bdc47b23a79b430cf05deddb73353acb05c002
+>>>>>>> feature_o
   </component>
 </project>
