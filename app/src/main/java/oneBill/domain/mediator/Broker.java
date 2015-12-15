@@ -112,7 +112,7 @@ public class Broker {
         ArrayList<ArrayList<String>> logs = new ArrayList<ArrayList<String>>();
         while(c.moveToNext()) {
             ArrayList<String> log = new ArrayList<String>();
-            log.add(0, c.getString(c.getColumnIndex("Time")));
+            log.add(0, c.getString(c.getColumnIndex("Time")).substring(0, 16));
             log.add(1, String.valueOf(c.getDouble(c.getColumnIndex("Amount"))));
             log.add(2, c.getString(c.getColumnIndex("Type")));
             logs.add(log);
