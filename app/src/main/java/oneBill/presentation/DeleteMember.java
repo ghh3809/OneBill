@@ -102,7 +102,12 @@ public class DeleteMember extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO: 添加清帐函数
                 //Actioner actioner = new Actioner(this);
-                actioner.SettlePerson(bookName,deleteName,withName);
+                if (deleteBill==0){
+                    actioner.DeleteMember(bookName,deleteName);
+                }
+                else{
+                    actioner.SettlePerson(bookName,deleteName,withName);
+                }
                 // TODO: 添加跳转到账本首页
                 Intent intent = new Intent(DeleteMember.this, Account.class);
                 intent.putExtra("bookName",bookName);
