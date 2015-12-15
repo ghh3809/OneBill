@@ -104,9 +104,9 @@ public class DeleteMember extends AppCompatActivity {
                 //Actioner actioner = new Actioner(this);
                 actioner.SettlePerson(bookName,deleteName,withName);
                 // TODO: 添加跳转到账本首页
-                //Intent intent = new Intent(DeleteMember.this, Book.class);
-                //intent.putExtra("bookName",bookName);
-                //startActivity(intent);
+                Intent intent = new Intent(DeleteMember.this, Account.class);
+                intent.putExtra("bookName",bookName);
+                startActivity(intent);
                 Toast.makeText(DeleteMember.this, "Confirm delete the member "+withName, Toast.LENGTH_SHORT).show();
             }
         });

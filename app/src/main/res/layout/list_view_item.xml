@@ -24,7 +24,7 @@
         android:layout_weight="0.5"
         android:layout_marginTop="@dimen/up_margin_small"/>
     <ImageButton
-        android:src="@mipmap/trash"
+        android:src="@mipmap/usher_minus"
         android:layout_width="@dimen/icon"
         android:layout_height="@dimen/icon"
         android:scaleType="fitXY"

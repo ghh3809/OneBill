@@ -58,6 +58,14 @@ public class ManageMember extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(bookName);
 
+        ImageButton goBack = (ImageButton) findViewById(R.id.imageButton);
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ManageMember.this.finish();
+            }
+        });
+
         //显示ListView
         initListAllPersons();
         showByMyBaseAdapter();
@@ -126,7 +134,8 @@ public class ManageMember extends AppCompatActivity {
         catch (NullException e){
             Toast.makeText(ManageMember.this,"人名不能为空，请重新添加",Toast.LENGTH_SHORT).show();
         }
-        names.add(value);
+        names = actioner.GetMember(bookName);
+        //names.add(value);
         if (names.size() == bills.size() + 1) {
             bills.add("应收￥0.00");
             Bills.add(0.0);
