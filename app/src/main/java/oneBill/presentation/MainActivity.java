@@ -303,8 +303,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+<<<<<<< Updated upstream
     protected void onDestroy(){
         super.onDestroy();
+=======
+    protected void onDestroy() {
+        super.onDestroy();
+
+>>>>>>> Stashed changes
         actioner.CloseDataBase();
     }
 }

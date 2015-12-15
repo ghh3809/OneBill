@@ -110,11 +110,11 @@ public class AccountLog extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(AccountLog.this)
                     .setTitle("Alert!")
-                    .setMessage("Are you sure to DELETE the book?")
+                    .setMessage("Are you sure to DELETE this log?")
                     .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            actioner.DeleteBook(name);
+                            actioner.DeleteRecord(id);
                             startActivity(new Intent(AccountLog.this,MainActivity.class));
                         }
                     })
@@ -126,9 +126,17 @@ public class AccountLog extends AppCompatActivity {
             }
         });
     }
+<<<<<<< Updated upstream
     @Override
     protected void onDestroy(){
         super.onDestroy();
+=======
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+>>>>>>> Stashed changes
         actioner.CloseDataBase();
     }
 }
