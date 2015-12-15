@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -68,9 +69,12 @@ public class PreviewActivity extends AppCompatActivity {
                 Intent intent = new Intent(PreviewActivity.this, MainActivity.class);
                 startActivity(intent);
                 PreviewActivity.this.finish();
+                PayableActivity.instance.finish();
+                AddRecordActivity.instance.finish();
             }
         });
 
+        DecimalFormat df=new DecimalFormat("#.00");
         for(int i=0;i<person.length;i++){
             LinearLayout panel=new LinearLayout(this);
             panel.setOrientation(LinearLayout.HORIZONTAL);
@@ -87,7 +91,7 @@ public class PreviewActivity extends AppCompatActivity {
             }
             text[0].setText(person[i]);
             text[1].setText(String.valueOf(paid[i]));
-            text[2].setText(String.valueOf(payable[i]));
+            text[2].setText(String.valueOf(df.format(payable[i])));
         }
     }
 

@@ -1,5 +1,6 @@
 package oneBill.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
@@ -12,12 +13,16 @@ import android.widget.RelativeLayout;
 import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
+import oneBill.control.Actioner;
+import oneBill.domain.entity.error.DuplicationNameException;
+import oneBill.domain.entity.error.NullException;
 
 public class AddBook extends AppCompatActivity {
     ImageButton ibtnaddperson;
     ImageButton ibtnback;
     ImageButton ibtnok;
     EditText etaddperson;
+    EditText etname;
     Vector<EditText> personname=new Vector<EditText>();
     int i=0;//输入人员的个数
     String person;
@@ -25,6 +30,11 @@ public class AddBook extends AppCompatActivity {
     RelativeLayout.LayoutParams ibtnlaypa;
     LinearLayout llayaddperson;
     RelativeLayout rlayibtn;
+    private Actioner actioner;
+    String bookname;
+    View.OnClickListener oklistener;
+    Vector<String> addedperson=new Vector<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +43,9 @@ public class AddBook extends AppCompatActivity {
         ibtnback= (ImageButton) findViewById(R.id.imagebtnback);
         ibtnok= (ImageButton) findViewById(R.id.imagebtnok);
         etaddperson= (EditText) findViewById(R.id.etperson);
-       llayaddperson= (LinearLayout) findViewById(R.id.llaoutperson);
+        etname= (EditText) findViewById(R.id.etname);
+        actioner=new Actioner(this);
+        llayaddperson= (LinearLayout) findViewById(R.id.llaoutperson);
         ibtnaddperson.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -55,16 +67,56 @@ public class AddBook extends AppCompatActivity {
         ibtnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent= new Intent(AddBook.this,MainActivity.class);
+                startActivity(intent);
                 AddBook.this.finish();
 
             }
         });
-        ibtnok.setOnClickListener(new View.OnClickListener() {
+        oklistener=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //commit
+                bookname=etname.getText().toString();
+                if (bookname!= "") {
+                    try {
+                        actioner.CreateBook(bookname);
+                    } catch (NullException e) {
+                        System.out.println(e.toString());
+                        e.printStackTrace();
+                    } catch (DuplicationNameException e) {
+                        System.out.println(e.toString());
+                        e.printStackTrace();
+                    }
+                    for(int j=0;j<i;j++){
+                        if(personname.get(j).getText().toString()!="")
+                            try {
+                                actioner.CreateMember(bookname, personname.get(j).getText().toString());
+                            } catch (NullException e) {
+                                e.printStackTrace();
+                            } catch (DuplicationNameException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                    if(etaddperson.getText().toString()!="")
+                        try {
+                            actioner.CreateMember(bookname, etaddperson.getText().toString());
+                        } catch (NullException e) {
+                            e.printStackTrace();
+                        } catch (DuplicationNameException e) {
+                            e.printStackTrace();
+                        }
+                    actioner.CloseDataBase();
+
+                    Intent intent = new Intent(AddBook.this, Account.class);
+                    intent.putExtra("name", bookname);
+
+                    startActivity(intent);
+                    AddBook.this.finish();
+
 
             }
-        });
+        }
+        };
+        ibtnok.setOnClickListener(oklistener);
     }
 }

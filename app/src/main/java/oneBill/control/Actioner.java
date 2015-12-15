@@ -246,5 +246,4 @@ public class Actioner {
     public ArrayList<String> GetType() {
         return br.GetType();
     }
-
 }
