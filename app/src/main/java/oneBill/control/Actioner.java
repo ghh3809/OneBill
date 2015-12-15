@@ -86,17 +86,6 @@ public class Actioner {
     }
 
     /**
-     * 账本更名.
-     * <p>此函数可以将账本名改变。如果有重名现象，则抛出异常。<br>
-     * @param _oldName 旧账本名
-     * @param _newName 新账本名
-     * @throws DuplicationNameException 当出现重名现象时，抛出此异常
-     */
-    public void SetName(String _oldName, String _newName) throws DuplicationNameException {
-        br.SetName(_oldName, _newName);
-    }
-
-    /**
      * 删除成员.
      * <p>从该账本中删除对应的成员。注意此处的删除并非真正删除，而是成员列表中不再有此人。但是过去的记录中依然可以看到此人的记录，但无法增加新的记录。新加成员时，也不可与其重名。<br>
      * @param _bookName 要删除成员的账本名称

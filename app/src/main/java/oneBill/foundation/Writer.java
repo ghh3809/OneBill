@@ -25,7 +25,7 @@ public class Writer {
     }
 
     public void AddBook(String _bookName) {
-        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss:SSS");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String nowTime = formatter.format(curDate);
         ContentValues cv = new ContentValues();
@@ -53,7 +53,7 @@ public class Writer {
     }
 
     public void AddLog(int _id, String _type, String _bookName, double _amount) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String nowTime = formatter.format(curDate);
         ContentValues cv = new ContentValues();
@@ -128,7 +128,7 @@ public class Writer {
     }
 
     public void UpdateBookTime(String _bookName) {
-        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss:SSS");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String nowTime = formatter.format(curDate);
         ContentValues cv = new ContentValues();

@@ -34,6 +34,7 @@ import android.widget.Toast;
 import oneBill.control.Actioner;
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.domain.entity.error.DuplicationNameException;
+import oneBill.domain.entity.error.NullException;
 
 public class ManageMember extends AppCompatActivity {
 
@@ -126,25 +127,24 @@ public class ManageMember extends AppCompatActivity {
         addConfirmButton.setVisibility(View.INVISIBLE);
         //更新ListView的内容
         //TODO 这句似乎没用...
-        if (value == "") {
-            Toast.makeText(ManageMember.this, "人名不能为空，请重新添加", Toast.LENGTH_SHORT).show();
-        } else {
-            Actioner actioner = new Actioner(this);
-            try{
-                actioner.CreateMember(bookName,value);
-            }
-            catch (DuplicationNameException e){
-                Toast.makeText(ManageMember.this,"添加成员出现错误，请重新添加",Toast.LENGTH_SHORT).show();
-            }
-            names.add(value);
-            if (names.size() == bills.size() + 1) {
-                bills.add("应收￥0.00");
-                Bills.add(0.0);
-                //动态刷新
-                ((BaseAdapter) adapter).notifyDataSetChanged();
-            } else
-                Toast.makeText(ManageMember.this, "添加成员错误，请重新添加", Toast.LENGTH_SHORT).show();
+        Actioner actioner = new Actioner(this);
+        try{
+            actioner.CreateMember(bookName,value);
         }
+        catch (DuplicationNameException e){
+            Toast.makeText(ManageMember.this,"添加成员出现错误，请重新添加",Toast.LENGTH_SHORT).show();
+        }
+        catch (NullException e){
+            Toast.makeText(ManageMember.this,"人名不能为空，请重新添加",Toast.LENGTH_SHORT).show();
+        }
+        names.add(value);
+        if (names.size() == bills.size() + 1) {
+            bills.add("应收￥0.00");
+            Bills.add(0.0);
+            //动态刷新
+            ((BaseAdapter) adapter).notifyDataSetChanged();
+        } else
+            Toast.makeText(ManageMember.this, "添加成员错误，请重新添加", Toast.LENGTH_SHORT).show();
     }
 
     /**

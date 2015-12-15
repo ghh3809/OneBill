@@ -18,7 +18,7 @@ public class Reader {
     }
 
     public Cursor QueryBook() {
-        Cursor c = db.rawQuery("SELECT * FROM book ORDER BY ChangeTime", null);
+        Cursor c = db.rawQuery("SELECT * FROM book ORDER BY ChangeTime DESC", null);
         return c;
     }
 
