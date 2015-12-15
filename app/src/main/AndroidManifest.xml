@@ -17,11 +17,13 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="oneBill.presentation.ManageMember"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_manage_member"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
             android:name="oneBill.presentation.PreviewActivity"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_preview" >
         </activity>
         <activity
@@ -36,14 +38,17 @@
         </activity>
         <activity
             android:name="oneBill.presentation.AddBook"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="oneBill.presentation.DeleteMember"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_delete_member"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
             android:name="oneBill.presentation.MainActivity"
+            android:launchMode="singleTask"
             android:label="activity_main"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>

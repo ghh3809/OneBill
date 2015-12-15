@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private Actioner actioner;
     ArrayList<String> existedbook=new ArrayList<String>();
     int i;//bookindex
+    String type;//消费类型
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e){
             e.printStackTrace();
         }
-        */
+*/
         existedbook = actioner.GetBook();
         booknum = existedbook.size();
         ibtnAddBook= (ImageButton) findViewById(R.id.imagebtnAddBook);
@@ -166,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
             vbtnmain.get(i).setPadding(0, 0, 0, 0);
             vbtnmain.get(i).setTextColor(getResources().getColor(R.color.darkGreen));
             vbtnmain.get(i).setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-
             vbtnmain.get(i).setOnClickListener(bookmain);
             vibtnmain.add(i, new ImageButton(this));
             vibtnmain.get(i).setId(4 * i + 3);
@@ -210,19 +210,7 @@ public class MainActivity extends AppCompatActivity {
             rlay.get(newestbook).addView(tvamount, lp1);
             rlay.get(newestbook).addView(tvtime,  lp2);
             rlay.get(newestbook).addView(tvblank, lp3);
-
-
-
     }
-
-    public void manageMember(){
-        Intent intent = new Intent(MainActivity.this, ManageMember.class);
-        String bookName = "My Book1";
-        intent.putExtra("bookName",bookName);
-        startActivity(intent);
-        startActivity(intent);
-    }
-
 
     @Override
     protected void onResume() {
@@ -231,9 +219,29 @@ public class MainActivity extends AppCompatActivity {
         for(int j=0;j<i;j++){
             vbtnmain.get(j).setText(existedbook.get(j));
         }
-        tvtime.setText(actioner.GetLatestRecord(existedbook.get(0)).get(0)+"   ¥"+
+        switch (actioner.GetLatestRecord(existedbook.get(0)).get(2)) {
+            case "FOOD":
+                type="吃喝";
+                break;
+            case "TRANS":
+                type="交通";
+                break;
+            case "PLAY":
+                type="娱乐";
+                break;
+            case "ACCOM":
+                type="住宿";
+                break;
+            case "OTHER":
+                type="其他";
+                break;
+            default:
+                type="其他";
+                break;
+        }
+        tvtime.setText("最近消费:   "+actioner.GetLatestRecord(existedbook.get(0)).get(0)+"   ¥"+
                 actioner.GetLatestRecord(existedbook.get(0)).get(1)+
-                "  "+actioner.GetLatestRecord(existedbook.get(0)).get(2));
+                "  "+type);
         if(existedbook.size()>booknum){
             booknum=existedbook.size();
             rlay.add(i, new RelativeLayout(this));

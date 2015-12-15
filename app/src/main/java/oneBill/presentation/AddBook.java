@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -68,6 +67,8 @@ public class AddBook extends AppCompatActivity {
         ibtnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent= new Intent(AddBook.this,MainActivity.class);
+                startActivity(intent);
                 AddBook.this.finish();
 
             }
@@ -75,8 +76,6 @@ public class AddBook extends AppCompatActivity {
         oklistener=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "点击ok",
-                        Toast.LENGTH_LONG).show();
                 bookname=etname.getText().toString();
                 if (bookname!= "") {
                     try {
