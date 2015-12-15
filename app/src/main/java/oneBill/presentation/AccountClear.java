@@ -76,6 +76,7 @@ public class AccountClear extends AppCompatActivity {
 
                 vSP.add(countsp, new Spinner(AccountClear.this));
                 vSP.get(countsp).setId(countsp);
+                vSP.get(countsp).setMinimumWidth(280);
                 vSP.get(countsp).setDropDownWidth(280);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(AccountClear.this,android.R.layout.simple_list_item_multiple_choice,person);
                 vSP.get(countsp).setAdapter(adapter);
@@ -87,6 +88,7 @@ public class AccountClear extends AppCompatActivity {
 
                 vSP.add(countsp, new Spinner(AccountClear.this));
                 vSP.get(countsp).setId(countsp);
+                vSP.get(countsp).setMinimumWidth(280);
                 vSP.get(countsp).setDropDownWidth(280);
                 ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(AccountClear.this,android.R.layout.simple_list_item_multiple_choice,person);
                 vSP.get(countsp).setAdapter(adapter1);

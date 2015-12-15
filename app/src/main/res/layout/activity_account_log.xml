@@ -92,7 +92,7 @@
 
     <TextView
         android:textSize="18sp"
-        android:text="成员              实付              应付"
+        android:text="成员          实付          应付"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

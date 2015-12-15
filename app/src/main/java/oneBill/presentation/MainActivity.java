@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,Account.class);
                 intent.putExtra("name",existedbook.get(v.getId()/4));
-                System.out.println(existedbook.get(v.getId() / 4));
+                //System.out.println(existedbook.get(v.getId() / 4));
                 startActivity(intent);
             }
         };
