@@ -65,8 +65,8 @@ public class PreviewActivity extends AppCompatActivity {
                 } catch (AmountMismatchException e) {
                     e.printStackTrace();
                 }
-//                change the intent activity
-                Intent intent = new Intent(PreviewActivity.this, MainActivity.class);
+                Intent intent = new Intent(PreviewActivity.this, Account.class);
+                intent.putExtra("name",bookName);
                 startActivity(intent);
                 PreviewActivity.this.finish();
                 PayableActivity.instance.finish();

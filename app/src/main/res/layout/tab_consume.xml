@@ -24,8 +24,8 @@ android:background="@drawable/background">
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/accom_button"
-            android:src="@mipmap/house"
+            android:id="@+id/trans_button"
+            android:src="@mipmap/car"
             android:layout_weight="1"
             android:alpha="0.5">
         </ImageButton>
@@ -35,16 +35,16 @@ android:background="@drawable/background">
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/trans_button"
-        android:src="@mipmap/car"
+        android:id="@+id/play_button"
+        android:src="@mipmap/joystick"
         android:alpha="0.5"
         android:layout_weight="1"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/play_button"
-            android:src="@mipmap/joystick"
+            android:id="@+id/accom_button"
+            android:src="@mipmap/house"
             android:alpha="0.5"
             android:layout_weight="1"/>
 

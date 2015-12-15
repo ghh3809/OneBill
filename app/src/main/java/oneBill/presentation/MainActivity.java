@@ -13,10 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.domain.entity.error.DuplicationNameException;
+import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,AddRecordActivity.class);
-                intent.putExtra("bookName","New Name");
+                intent.putExtra("bookName",actioner.GetBook().get((v.getId()-3)/4));
                 startActivity(intent);
             }
         };
@@ -137,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             lp2.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             lp3.addRule(RelativeLayout.BELOW, tvtime.getId());
             lp3.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-            lp3.setMargins(0,DensityUtil.dip2px(getApplicationContext(), 5),0,DensityUtil.dip2px(getApplicationContext(), 20));
+            lp3.setMargins(0, DensityUtil.dip2px(getApplicationContext(), 5), 0, DensityUtil.dip2px(getApplicationContext(), 20));
             rlay.get(newestbook).addView(tvamount, lp1);
             rlay.get(newestbook).addView(tvtime,  lp2);
             rlay.get(newestbook).addView(tvblank, lp3);
