@@ -304,8 +304,9 @@ public class MainActivity extends AppCompatActivity {
     }
     }
 
-    protected void onDestroy(){
-        super.onDestroy();
+
+    @Override
+    protected void onDestroy() {
         actioner.CloseDataBase();
     }
 }

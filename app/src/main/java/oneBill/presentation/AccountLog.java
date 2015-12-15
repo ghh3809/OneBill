@@ -128,8 +128,12 @@ public class AccountLog extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy(){
         super.onDestroy();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2006ea2d25a0f546162ee09f73ee4ca93b49b267
         actioner.CloseDataBase();
     }
 }
