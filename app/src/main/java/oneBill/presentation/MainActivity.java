@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     String type;//消费类型
     ArrayList<String> latestconsum=new ArrayList<String>();
     java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
+    boolean created=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         }
             tvblank.setText("");
         tvblank.setBackgroundColor(getResources().getColor(R.color.colorLine));
-        tvamount.setId(newestbook + 1000);
+            tvamount.setId(newestbook + 1000);
             tvtime.setId(newestbook + 1001);
         tvamount.setTextColor(getResources().getColor(R.color.colorText));
             tvtime.setTextColor(getResources().getColor(R.color.colorText));
@@ -202,62 +203,13 @@ public class MainActivity extends AppCompatActivity {
             tvtime.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         tvamount.setPadding(DensityUtil.dip2px(getApplicationContext(), 10), 0, 0, 0);
             tvtime.setPadding(DensityUtil.dip2px(getApplicationContext(), 10), 0, 0, 0);
-
-        lp1.addRule(RelativeLayout.BELOW, vbtnmain.get(newestbook).getId());
-            lp1.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-            lp2.addRule(RelativeLayout.BELOW, tvamount.getId());
-            lp2.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-            lp3.addRule(RelativeLayout.BELOW, tvtime.getId());
-            lp3.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-            lp3.setMargins(0,DensityUtil.dip2px(getApplicationContext(), 5),0,DensityUtil.dip2px(getApplicationContext(), 20));
-            rlay.get(newestbook).addView(tvamount, lp1);
-            rlay.get(newestbook).addView(tvtime,  lp2);
-            rlay.get(newestbook).addView(tvblank, lp3);
-    }
+        }
 
     @Override
     protected void onResume() {
         super.onResume();
         existedbook=actioner.GetBook();
-        for(int j=0;j<i;j++){
-            vbtnmain.get(j).setText(existedbook.get(j));
-        }
-        try {
-            latestconsum = actioner.GetLatestRecord(existedbook.get(0));
-            switch (latestconsum.get(2)) {
-                case "FOOD":
-                    type = "吃喝";
-                    break;
-                case "TRANS":
-                    type = "交通";
-                    break;
-                case "PLAY":
-                    type = "娱乐";
-                    break;
-                case "ACCOM":
-                    type = "住宿";
-                    break;
-                case "OTHER":
-                    type = "其他";
-                    break;
-                default:
-                    type = "其他";
-                    break;
-            }
-        }
-            catch (NullException e) {
-                latestconsum.add(0,"####");
-                latestconsum.add(1,"0");
-                latestconsum.add(2,"新建账本");
-                type="新建账本";
-        }
-
-        tvtime.setText("最近消费:   " + latestconsum.get(0) + "   ¥" +
-                df.format(Double.parseDouble(latestconsum.get(1))) +
-                "  " + type);
-        tvamount.setText("¥"+String.valueOf(df.format(actioner.GetSum(existedbook.get(0)))));
-        if(existedbook.size()>booknum){
-            i++;
+        if(existedbook.size()!=booknum){
             booknum=existedbook.size();
             rlay.add(i, new RelativeLayout(this));
             rlaypa.add(3 * i,  new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
@@ -296,6 +248,57 @@ public class MainActivity extends AppCompatActivity {
             rlay.get(i).addView(vibtnmain.get(i), rlaypa.get(3 * i + 2));
             llaymain.addView(rlay.get(i));
         }
+        if(booknum>0) {
+        for(int j=0;j<booknum;j++){
+            vbtnmain.get(j).setText(existedbook.get(j));
+        }
+        try {
+            latestconsum = actioner.GetLatestRecord(existedbook.get(0));
+            switch (latestconsum.get(2)) {
+                case "FOOD":
+                    type = "吃喝";
+                    break;
+                case "TRANS":
+                    type = "交通";
+                    break;
+                case "PLAY":
+                    type = "娱乐";
+                    break;
+                case "ACCOM":
+                    type = "住宿";
+                    break;
+                case "OTHER":
+                    type = "其他";
+                    break;
+                default:
+                    type = "其他";
+                    break;
+            }
+        }
+            catch (NullException e) {
+                latestconsum.add(0, "####");
+                latestconsum.add(1, "0");
+                latestconsum.add(2, "新建账本");
+                type = "新建账本";
+            }
+            if(!created) {
+                lp1.addRule(RelativeLayout.BELOW, vbtnmain.get(0).getId());
+                lp1.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                lp2.addRule(RelativeLayout.BELOW, tvamount.getId());
+                lp2.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                lp3.addRule(RelativeLayout.BELOW, tvtime.getId());
+                lp3.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                lp3.setMargins(0, DensityUtil.dip2px(getApplicationContext(), 5), 0, DensityUtil.dip2px(getApplicationContext(), 20));
+                rlay.get(0).addView(tvamount, lp1);
+                rlay.get(0).addView(tvtime, lp2);
+                rlay.get(0).addView(tvblank, lp3);
+                created=true;
+            }
+            tvtime.setText("最近消费:   " + latestconsum.get(0) + "   ¥" +
+                    df.format(Double.parseDouble(latestconsum.get(1))) +
+                    "  " + type);
+            tvamount.setText("¥" + String.valueOf(df.format(actioner.GetSum(existedbook.get(0)))));
+    }
     }
 }
 

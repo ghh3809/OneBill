@@ -45,6 +45,7 @@ public class AddBook extends AppCompatActivity {
         etaddperson= (EditText) findViewById(R.id.etperson);
         etname= (EditText) findViewById(R.id.etname);
         actioner=new Actioner(this);
+        etname.setText(actioner.GetDefaultName());
         llayaddperson= (LinearLayout) findViewById(R.id.llaoutperson);
         ibtnaddperson.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -69,8 +70,6 @@ public class AddBook extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent= new Intent(AddBook.this,MainActivity.class);
                 startActivity(intent);
-                AddBook.this.finish();
-
             }
         });
         oklistener=new View.OnClickListener() {

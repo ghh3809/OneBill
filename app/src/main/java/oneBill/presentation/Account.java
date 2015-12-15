@@ -96,7 +96,8 @@ public class Account extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 actioner.DeleteBook(name);
-                                startActivity(new Intent(Account.this,MainActivity.class));
+                                startActivity(new Intent(Account.this, MainActivity.class));
+                                Account.this.finish();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
