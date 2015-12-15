@@ -18,6 +18,7 @@ import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton ibtnAddBook;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> existedbook=new ArrayList<String>();
     int i;//bookindex
     String type;//消费类型
+    ArrayList<String> latestconsum=new ArrayList<String>();
+    java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,35 +222,42 @@ public class MainActivity extends AppCompatActivity {
         for(int j=0;j<i;j++){
             vbtnmain.get(j).setText(existedbook.get(j));
         }
-        i++;
-      //  System.out.println("**********************************"+actioner.GetLatestRecord(existedbook.get(1)).get(2));
- //       if(actioner.GetLatestRecord(existedbook.get(0))==null)
- //           System.out.println("**********************************"+"新建账本");
- /*       switch (actioner.GetLatestRecord(existedbook.get(0)).get(2)) {
-            case "FOOD":
-                type="吃喝";
-                break;
-            case "TRANS":
-                type="交通";
-                break;
-            case "PLAY":
-                type="娱乐";
-                break;
-            case "ACCOM":
-                type="住宿";
-                break;
-            case "OTHER":
-                type="其他";
-                break;
-            default:
-                type="其他";
-                break;
+        try {
+            latestconsum = actioner.GetLatestRecord(existedbook.get(0));
+            switch (latestconsum.get(2)) {
+                case "FOOD":
+                    type = "吃喝";
+                    break;
+                case "TRANS":
+                    type = "交通";
+                    break;
+                case "PLAY":
+                    type = "娱乐";
+                    break;
+                case "ACCOM":
+                    type = "住宿";
+                    break;
+                case "OTHER":
+                    type = "其他";
+                    break;
+                default:
+                    type = "其他";
+                    break;
+            }
         }
-        tvtime.setText("最近消费:   "+actioner.GetLatestRecord(existedbook.get(0)).get(0)+"   ¥"+
-                actioner.GetLatestRecord(existedbook.get(0)).get(1)+
-                "  "+type);
-        tvamount.setText(String.valueOf(actioner.GetSum(existedbook.get(0))));*/
+            catch (NullException e) {
+                latestconsum.add(0,"####");
+                latestconsum.add(1,"0");
+                latestconsum.add(2,"新建账本");
+                type="新建账本";
+        }
+
+        tvtime.setText("最近消费:   " + latestconsum.get(0) + "   ¥" +
+                df.format(Double.parseDouble(latestconsum.get(1))) +
+                "  " + type);
+        tvamount.setText("¥"+String.valueOf(df.format(actioner.GetSum(existedbook.get(0)))));
         if(existedbook.size()>booknum){
+            i++;
             booknum=existedbook.size();
             rlay.add(i, new RelativeLayout(this));
             rlaypa.add(3 * i,  new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
