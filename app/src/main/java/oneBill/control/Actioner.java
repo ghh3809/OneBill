@@ -121,7 +121,8 @@ public class Actioner {
      * @param _bookName 要获取记录的账本
      * @return 返回账本记录
      */
-    public ArrayList<String> GetLatestRecord(String _bookName) {
+    public ArrayList<String> GetLatestRecord(String _bookName) throws NullException {
+        if (br.GetConsumRecord(_bookName).size() == 0) throw new NullException();
         return br.GetConsumRecord(_bookName).get(0);
     }
 
