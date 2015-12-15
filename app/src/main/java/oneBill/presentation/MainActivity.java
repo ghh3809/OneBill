@@ -18,9 +18,6 @@ import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
-import oneBill.domain.entity.error.DuplicationNameException;
-import oneBill.domain.entity.Solution;
-import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton ibtnAddBook;
@@ -143,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,Account.class);
                 intent.putExtra("name",existedbook.get(v.getId()/4));
-                System.out.println(existedbook.get(v.getId() / 4));
+                //System.out.println(existedbook.get(v.getId() / 4));
                 startActivity(intent);
             }
         };

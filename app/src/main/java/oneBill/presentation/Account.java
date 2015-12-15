@@ -132,6 +132,7 @@ public class Account extends AppCompatActivity {
 
                     b.putString("name", intent.getStringExtra("name"));
                     b.putInt("id", Integer.parseInt(arraylist1.get(0)));
+
                     StringBuilder sb1 = new StringBuilder();
                     sb1.append(arraylist1.get(1));
                     sb1.append("   ￥");
