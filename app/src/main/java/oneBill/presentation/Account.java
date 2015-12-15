@@ -112,6 +112,7 @@ public class Account extends AppCompatActivity {
         numAccount = arraylist.size();
         linearAccount = (LinearLayout) findViewById(R.id.linearAccount);
         for(int i = 0;i < numAccount;++ i) {
+            final int num = i;  //传给ClickListener的final参数
             vTV.add(i, new TextView(Account.this));
             vTV.get(i).setId(i);
 
@@ -128,18 +129,20 @@ public class Account extends AppCompatActivity {
             vTV.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ArrayList<String> arrayList = arraylist.get(num);
+
                     Intent i = new Intent(Account.this, AccountLog.class);
                     Bundle b = new Bundle();
 
-                    b.putString("name", intent.getStringExtra("name"));
-                    b.putInt("id", Integer.parseInt(arraylist1.get(0)));
+                    b.putString("name", name);
+                    b.putInt("id", Integer.parseInt(arrayList.get(0)));
 
                     StringBuilder sb1 = new StringBuilder();
-                    sb1.append(arraylist1.get(1));
+                    sb1.append(arrayList.get(1));
                     sb1.append("   ￥");
-                    sb1.append(arraylist1.get(2));
+                    sb1.append(arrayList.get(2));
                     sb1.append("    ");
-                    sb1.append(arraylist1.get(3));
+                    sb1.append(arrayList.get(3));
                     b.putString("detail", String.valueOf(sb1));
                     i.putExtras(b);
 
