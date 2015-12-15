@@ -118,4 +118,9 @@ public class AddBook extends AppCompatActivity {
         };
         ibtnok.setOnClickListener(oklistener);
     }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        actioner.CloseDataBase();
+    }
 }

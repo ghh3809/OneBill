@@ -90,4 +90,9 @@ public class PreviewActivity extends AppCompatActivity {
             text[2].setText(String.valueOf(df.format(payable[i])));
         }
     }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        actioner.CloseDataBase();
+    }
 }

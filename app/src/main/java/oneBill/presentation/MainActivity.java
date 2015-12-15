@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     int i;//bookindex
     String type;//消费类型
     ArrayList<String> latestconsum=new ArrayList<String>();
-    java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
+    java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#0.00");
     boolean created=false;
 
     @Override
@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
         existedbook=actioner.GetBook();
         if(existedbook.size()!=booknum){
             booknum=existedbook.size();
+            i=booknum-1;
             rlay.add(i, new RelativeLayout(this));
             rlaypa.add(3 * i,  new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
             rlaypa.add(3 * i+1, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
@@ -277,9 +278,9 @@ public class MainActivity extends AppCompatActivity {
         }
             catch (NullException e) {
                 latestconsum.add(0, "####");
-                latestconsum.add(1, "0");
-                latestconsum.add(2, "新建账本");
-                type = "新建账本";
+                latestconsum.add(1, "0.0");
+                latestconsum.add(2, "暂无任何消费");
+                type = "暂无任何消费";
             }
             if(!created) {
                 lp1.addRule(RelativeLayout.BELOW, vbtnmain.get(0).getId());
@@ -299,6 +300,12 @@ public class MainActivity extends AppCompatActivity {
                     "  " + type);
             tvamount.setText("¥" + String.valueOf(df.format(actioner.GetSum(existedbook.get(0)))));
     }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        actioner.CloseDataBase();
     }
 }
 

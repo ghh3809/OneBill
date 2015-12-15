@@ -126,4 +126,9 @@ public class AccountLog extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        actioner.CloseDataBase();
+    }
 }

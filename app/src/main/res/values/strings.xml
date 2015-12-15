@@ -13,8 +13,6 @@
 
     <string name="title_activity_manage_member_scroll">ManageMemberScroll</string>
     <string name="title_activity_account">Account</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_account_log">AccountLog</string>
     <string name="title_activity_account_clear">AccountClear</string>
 

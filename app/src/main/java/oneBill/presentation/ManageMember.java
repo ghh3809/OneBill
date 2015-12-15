@@ -37,12 +37,12 @@ public class ManageMember extends AppCompatActivity {
     EditText editTextPersonName = null;
     Button addButton = null;
     Button addConfirmButton = null;
-
+    Actioner actioner;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_member);
-
+        actioner= new Actioner(this);
         //获取组件
         listView01 = (ListView) findViewById(R.id.listView01);
         editTextPersonName = (EditText) findViewById(R.id.editText01Edit);
@@ -51,8 +51,8 @@ public class ManageMember extends AppCompatActivity {
 
         //获取账本名称
         Intent intent = getIntent();
-        //final String bookName = intent.getStringExtra("bookName");
-        bookName = "New Name";
+        final String bookName = intent.getStringExtra("bookName");
+        //bookName = "New Name";
 
         //显示账本名称
         TextView textView = (TextView) findViewById(R.id.textView);
@@ -72,10 +72,15 @@ public class ManageMember extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        actioner.CloseDataBase();
+    }
     public void initListAllPersons() {
         //从数据库获取names和bills
 
-        Actioner actioner = new Actioner(this);
+
 
         names = actioner.GetMember(bookName);
         Bills = actioner.QueryNetAmount(bookName);

@@ -149,4 +149,9 @@ public class Account extends AppCompatActivity {
             linearAccount.addView(vTV.get(i));
         }
     }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        actioner.CloseDataBase();
+    }
 }
