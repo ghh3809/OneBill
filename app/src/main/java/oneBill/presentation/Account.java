@@ -152,17 +152,11 @@ public class Account extends AppCompatActivity {
             linearAccount.addView(vTV.get(i));
         }
     }
-<<<<<<< Updated upstream
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-=======
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
->>>>>>> Stashed changes
         actioner.CloseDataBase();
     }
 }
