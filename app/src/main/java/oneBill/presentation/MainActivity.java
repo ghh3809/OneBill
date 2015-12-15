@@ -18,9 +18,6 @@ import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
-import oneBill.domain.entity.error.DuplicationNameException;
-import oneBill.domain.entity.Solution;
-import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton ibtnAddBook;
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         actioner=new Actioner(this);
         //正式测试内容（请将以下代码复制到activity里进行测试，且请只运行一次！！！否则请把数据库删了重来……）
-/*        try{
+/*       try{
             //创建账本My Book1
             actioner.CreateBook("My Book1");
             //添加成员
@@ -93,13 +90,13 @@ public class MainActivity extends AppCompatActivity {
             payable3.add(92.3);
             payable3.add(91.2);
             payable3.add(90.1);
-            actioner.CreateConsumRecord("New Name", 1, paid3, payable3);
-            ArrayList<ArrayList<String>> a = actioner.GetRecord("New Name");
+            actioner.CreateConsumRecord("My Book1", 1, paid3, payable3);
+            ArrayList<ArrayList<String>> a = actioner.GetRecord("My Book1");
             System.out.println("*******************************" + a.get(0).get(0));
             //删除消费记录3
             actioner.DeleteRecord(3);
             //添加借款记录4
-            actioner.CreateLoanRecord("New Name", "Ketty", "Jack", 18.0);
+            actioner.CreateLoanRecord("My Book1", "Ketty", "Jack", 18.0);
             //创建账本My Book2
             actioner.CreateBook("My Book2");
             //添加成员
@@ -202,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
             tvtime.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         tvamount.setPadding(DensityUtil.dip2px(getApplicationContext(), 10), 0, 0, 0);
             tvtime.setPadding(DensityUtil.dip2px(getApplicationContext(), 10), 0, 0, 0);
-        tvamount.setText(String.valueOf(actioner.GetSum(existedbook.get(newestbook))));
+
         lp1.addRule(RelativeLayout.BELOW, vbtnmain.get(newestbook).getId());
             lp1.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             lp2.addRule(RelativeLayout.BELOW, tvamount.getId());
@@ -213,80 +210,6 @@ public class MainActivity extends AppCompatActivity {
             rlay.get(newestbook).addView(tvamount, lp1);
             rlay.get(newestbook).addView(tvtime,  lp2);
             rlay.get(newestbook).addView(tvblank, lp3);
-
-        //正式测试内容（请将以下代码复制到activity里进行测试，且请只运行一次！！！否则请把数据库删了重来……）
-
-        Actioner actioner = new Actioner(this);
-        try{
-//            //创建账本My Book1
-//            actioner.CreateBook("My Book1");
-//            //添加成员
-//            actioner.CreateMember("My Book1", "Andy");
-//            actioner.CreateMember("My Book1", "Ketty");
-//            actioner.CreateMember("My Book1", "Jack");
-//            actioner.CreateMember("My Book1", "Judy");
-//            //删除成员
-//            actioner.DeleteMember("My Book1", "Andy");
-//            //重设账本名
-//            actioner.SetName("My Book1", "New Name");
-//            //添加消费记录1
-//            ArrayList<Double> paid1 = new ArrayList<Double>();
-//            ArrayList<Double> payable1 = new ArrayList<Double>();
-//            paid1.add(12.26);
-//            paid1.add(10.0);
-//            paid1.add(5.0);
-//            payable1.add(20.0);
-//            payable1.add(7.26);
-//            payable1.add(0.0);
-//            actioner.CreateConsumRecord("New Name", 1, paid1, payable1);
-//            //添加消费记录2
-//            ArrayList<Double> paid2 = new ArrayList<Double>();
-//            ArrayList<Double> payable2 = new ArrayList<Double>();
-//            paid2.add(1.0);
-//            paid2.add(2.0);
-//            paid2.add(3.0);
-//            payable2.add(2.0);
-//            payable2.add(2.0);
-//            payable2.add(2.0);
-//            actioner.CreateConsumRecord("New Name", 1, paid2, payable2);
-            //添加消费记录3
-//            ArrayList<Double> paid3 = new ArrayList<Double>();
-//            ArrayList<Double> payable3 = new ArrayList<Double>();
-//            paid3.add(90.1);
-//            paid3.add(91.2);
-//            paid3.add(92.3);
-//            payable3.add(92.3);
-//            payable3.add(91.2);
-//            payable3.add(90.1);
-//            actioner.CreateConsumRecord("New Name", 1, paid3, payable3);
-//            ArrayList<ArrayList<String>> a = actioner.GetRecord("New Name");
-//            System.out.println("*******************************" + a.get(0).get(1) + "************************");
-//            //删除消费记录3
-//            actioner.DeleteRecord(3);
-//            //添加借款记录4
-//            actioner.CreateLoanRecord("New Name", "Ketty", "Jack", 18.0);
-//            //创建账本My Book2
-//            actioner.CreateBook("My Book2");
-//            //添加成员
-//            actioner.CreateMember("My Book2", "Andy");
-            //关闭数据库（大家一定不要忘了这一步哇不然运行会报错的！）
-//            actioner.CreateBook("Book 3");
-//            actioner.CreateConsumRecord();
-//            System.out.println("******************************" + actioner.GetBook().get(0));
-            actioner.CloseDataBase();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-
-    public void manageMember(){
-        Intent intent = new Intent(MainActivity.this, ManageMember.class);
-        String bookName = "My Book1";
-        intent.putExtra("bookName",bookName);
-        startActivity(intent);
-        startActivity(intent);
     }
 
     @Override
@@ -296,7 +219,11 @@ public class MainActivity extends AppCompatActivity {
         for(int j=0;j<i;j++){
             vbtnmain.get(j).setText(existedbook.get(j));
         }
-        switch (actioner.GetLatestRecord(existedbook.get(0)).get(2)) {
+        i++;
+      //  System.out.println("**********************************"+actioner.GetLatestRecord(existedbook.get(1)).get(2));
+ //       if(actioner.GetLatestRecord(existedbook.get(0))==null)
+ //           System.out.println("**********************************"+"新建账本");
+ /*       switch (actioner.GetLatestRecord(existedbook.get(0)).get(2)) {
             case "FOOD":
                 type="吃喝";
                 break;
@@ -319,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
         tvtime.setText("最近消费:   "+actioner.GetLatestRecord(existedbook.get(0)).get(0)+"   ¥"+
                 actioner.GetLatestRecord(existedbook.get(0)).get(1)+
                 "  "+type);
+        tvamount.setText(String.valueOf(actioner.GetSum(existedbook.get(0))));*/
         if(existedbook.size()>booknum){
             booknum=existedbook.size();
             rlay.add(i, new RelativeLayout(this));
@@ -358,23 +286,6 @@ public class MainActivity extends AppCompatActivity {
             rlay.get(i).addView(vibtnmain.get(i), rlaypa.get(3 * i + 2));
             llaymain.addView(rlay.get(i));
         }
-        /*
-        if(newestbook!=oldbook){
-            rlay.get(oldbook).removeView(tvamount);
-            rlay.get(oldbook).removeView(tvtime);
-            rlay.get(oldbook).removeView(tvblank);
-            lp1.addRule(RelativeLayout.BELOW, vbtnmain.get(newestbook).getId());
-            lp1.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-            lp2.addRule(RelativeLayout.BELOW, tvamount.getId());
-            lp2.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-            lp3.addRule(RelativeLayout.BELOW, tvtime.getId());
-            lp3.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-            rlay.get(newestbook).addView(tvamount, lp1);
-            rlay.get(newestbook).addView(tvtime,lp2);
-            rlay.get(newestbook).addView(tvblank,lp3);
-            oldbook=newestbook;
-        }
-        */
     }
 }
 
