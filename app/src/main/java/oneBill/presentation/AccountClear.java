@@ -58,13 +58,16 @@ public class AccountClear extends AppCompatActivity {
         ivToAccountFromClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AccountClear.this, Account.class));
+                Intent intent1 = new Intent(AccountClear.this,Account.class);
+                intent1.putExtra("name", name);
+                startActivity(intent1);
             }
         });
 
         tvNameInClear = (TextView) findViewById(R.id.tvNameInClear);
         tvNameInClear.setText(name);
 
+        linearAccountClear = (LinearLayout) findViewById(R.id.linearAccountClear);
         linearAccountClearConstraint = (LinearLayout) findViewById(R.id.linearAccountClearConstraint);
         tvAddConstraint = (TextView) findViewById(R.id.tvAddConstraint);
         tvAddConstraint.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +123,6 @@ public class AccountClear extends AppCompatActivity {
                 boolean wrongNumber = false;
                 for(int k = 0; k < countet; ++ k){
                     String string = vET.get(k).getText().toString();
-
                     try{
                         Double amt = Double.parseDouble(string);
                     }catch (Exception e){
@@ -132,9 +134,10 @@ public class AccountClear extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Wrong number found",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    /*获得输入的约束条件*/
                     ArrayList<Solution> arraylist = new ArrayList<Solution>();
                     ArrayList<Solution> arraylistCons = new ArrayList<Solution>();
+
+                    /*获得输入的约束条件*/
                     for(int k = 0; k < countet; ++ k){
                         String string1, string2, string3;
                         string1 = vSP.get(2 * k).getSelectedItem().toString();
@@ -151,15 +154,14 @@ public class AccountClear extends AppCompatActivity {
                     }
 
                     /*获取解决方案*/
-                    linearAccountClear = (LinearLayout) findViewById(R.id.linearAccountClear);
                     try {
-                        if(arraylistCons.size() == 0){
-                            System.out.println("no constraints");
+                        if(arraylistCons.size() == 0) {
+                            System.out.println("No constraints");
                             arraylist = actioner.SettleRecord(name);
                         }
-                        else{
-                            System.out.println("with constraints");
-                            arraylist = actioner.SettleRecord(name,arraylistCons);
+                        else {
+                            System.out.println("With constraints");
+                            arraylist = actioner.SettleRecord(name, arraylistCons);
                         }
                         numAccountClear = arraylist.size();
                     } catch (UnableToClearException e) {
@@ -176,7 +178,7 @@ public class AccountClear extends AppCompatActivity {
                         stringbuilder.append(solution.getGiver());
                         stringbuilder.append("    给    ");
                         stringbuilder.append(solution.getReceiver());
-                        stringbuilder.append("    给    ");
+                        stringbuilder.append("    ￥    ");
                         stringbuilder.append(solution.getAmount());
                         vTV.get(i).setText(stringbuilder);
 
