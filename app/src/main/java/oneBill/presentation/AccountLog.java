@@ -27,7 +27,6 @@ public class AccountLog extends AppCompatActivity {
     int id;
     int numAccountLog;
     ArrayList<ArrayList<String>> arraylist;
-    ArrayList<String> arraylist1;
     Vector<TextView> vTV = new Vector<TextView>();
 
     @Override
@@ -42,6 +41,7 @@ public class AccountLog extends AppCompatActivity {
         id = bundle.getInt("id");
         detail = bundle.getString("detail");
 
+        linearAccountLog = (LinearLayout) findViewById(R.id.linearAccountLog);
         tvNameInLog = (TextView) findViewById(R.id.tvNameInLog);
         tvNameInLog.setText(name);
 
@@ -50,16 +50,16 @@ public class AccountLog extends AppCompatActivity {
 
         arraylist = actioner.GetDetail(id);
         numAccountLog = arraylist.size();
-        System.out.println(numAccountLog);
+
         for(int i = 0; i < numAccountLog; ++ i){
             vTV.add(i, new TextView(AccountLog.this));
 
-            arraylist1 = arraylist.get(i);
+            ArrayList<String> arraylist1 = arraylist.get(i);
             StringBuilder sb = new StringBuilder();
             sb.append(arraylist1.get(0));
-            sb.append("      ");
+            sb.append("          ");
             sb.append(arraylist1.get(1));
-            sb.append("      ");
+            sb.append("               ");
             sb.append(arraylist1.get(2));
 
             vTV.get(i).setText(sb);
@@ -98,7 +98,9 @@ public class AccountLog extends AppCompatActivity {
         ivToClearFromLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AccountLog.this,AccountClear.class));
+                Intent intent1 = new Intent(AccountLog.this,AccountClear.class);
+                intent1.putExtra("name", name);
+                startActivity(intent1);
             }
         });
 
