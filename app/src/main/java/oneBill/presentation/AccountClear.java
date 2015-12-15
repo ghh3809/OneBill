@@ -138,19 +138,14 @@ public class AccountClear extends AppCompatActivity {
                     ArrayList<Solution> arraylistCons = new ArrayList<Solution>();
 
                     /*获得输入的约束条件*/
-                    for(int k = 0; k < countet; ++ k){
+                    for(int k = 0; k < countet; ++ k) {
                         String string1, string2, string3;
                         string1 = vSP.get(2 * k).getSelectedItem().toString();
                         string2 = vSP.get(2 * k + 1).getSelectedItem().toString();
                         string3 = vET.get(k).getText().toString();
 
-                        try {
-                            Solution solution = new Solution(string1, string2, Double.parseDouble(string3));
-                            arraylistCons.add(solution);
-                        }catch (Exception e){
-                            Toast.makeText(getApplicationContext(),"Unable to generate a solution",Toast.LENGTH_SHORT).show();
-                            e.printStackTrace();
-                        }
+                        Solution solution = new Solution(string1, string2, Double.parseDouble(string3));
+                        arraylistCons.add(solution);
                     }
 
                     /*获取解决方案*/

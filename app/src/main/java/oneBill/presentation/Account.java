@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -44,8 +45,10 @@ public class Account extends AppCompatActivity {
         tvNameInAccount = (TextView) findViewById(R.id.tvNameInAccount);
         tvNameInAccount.setText(name);
 
+        DecimalFormat df = new DecimalFormat("#.00");
+        Double amt = actioner.GetSum(name);
         tvAccount = (TextView) findViewById(R.id.tvAccount);
-        tvAccount.setText(Double.toString( actioner.GetSum(name) ));
+        tvAccount.setText(df.format(amt));
 
         ivToMainFromAccount = (ImageView) findViewById(R.id.ivToMainFromAccount);
         ivToMainFromAccount.setOnClickListener(new View.OnClickListener() {
@@ -117,13 +120,15 @@ public class Account extends AppCompatActivity {
             vTV.get(i).setId(i);
 
             arraylist1 = arraylist.get(i);  //获取第i条记录
+            Double amt1 = Double.parseDouble(arraylist1.get(2));
+            DecimalFormat df1 = new DecimalFormat("#.00");
 
             StringBuilder sb = new StringBuilder();
             sb.append(arraylist1.get(1));
             sb.append("    ");
             sb.append(arraylist1.get(3));
             sb.append("                          ");
-            sb.append(arraylist1.get(2));
+            sb.append(df1.format(amt1));
             vTV.get(i).setText(sb);
 
             vTV.get(i).setOnClickListener(new View.OnClickListener() {
@@ -137,10 +142,13 @@ public class Account extends AppCompatActivity {
                     b.putString("name", name);
                     b.putInt("id", Integer.parseInt(arrayList.get(0)));
 
+                    Double amt = Double.parseDouble(arrayList.get(2));
+                    DecimalFormat df = new DecimalFormat("#.00");
+
                     StringBuilder sb1 = new StringBuilder();
                     sb1.append(arrayList.get(1));
                     sb1.append("   ￥");
-                    sb1.append(arrayList.get(2));
+                    sb1.append(df.format(amt));
                     sb1.append("    ");
                     sb1.append(arrayList.get(3));
                     b.putString("detail", String.valueOf(sb1));
