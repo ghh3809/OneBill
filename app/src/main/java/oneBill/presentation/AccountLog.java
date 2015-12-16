@@ -65,7 +65,7 @@ public class AccountLog extends AppCompatActivity {
             vTV.add(3 * i + 1, new TextView(AccountLog.this));
             vTV.add(3 * i + 2, new TextView(AccountLog.this));
 
-            DecimalFormat df = new DecimalFormat("#.00");
+            DecimalFormat df = new DecimalFormat("#0.00");
 
             ArrayList<String> arraylist1 = arraylist.get(i);
             StringBuilder sb = new StringBuilder();

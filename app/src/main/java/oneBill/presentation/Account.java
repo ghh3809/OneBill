@@ -45,7 +45,7 @@ public class Account extends AppCompatActivity {
         tvNameInAccount = (TextView) findViewById(R.id.tvNameInAccount);
         tvNameInAccount.setText(name);
 
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("#0.00");
         Double amt = actioner.GetSum(name);
         tvAccount = (TextView) findViewById(R.id.tvAccount);
         tvAccount.setText(df.format(amt));
@@ -134,7 +134,7 @@ public class Account extends AppCompatActivity {
             vTV.get(3*i+2).setId(3*i+2);
 
             Double amt1 = Double.parseDouble(arraylist1.get(2));
-            DecimalFormat df1 = new DecimalFormat("#.00");
+            DecimalFormat df1 = new DecimalFormat("#0.00");
 
             vTV.get(3*i).setText(arraylist1.get(1));
             vTV.get(3*i+1).setText(arraylist1.get(3));
@@ -161,7 +161,7 @@ public class Account extends AppCompatActivity {
                     b.putInt("id", Integer.parseInt(arrayList.get(0)));
 
                     Double amt = Double.parseDouble(arrayList.get(2));
-                    DecimalFormat df = new DecimalFormat("#.00");
+                    DecimalFormat df = new DecimalFormat("#0.00");
 
                     StringBuilder sb1 = new StringBuilder();
                     sb1.append(arrayList.get(1));
