@@ -128,8 +128,8 @@ public class AccountLog extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(AccountLog.this)
                     .setTitle("Alert!")
-                    .setMessage("Are you sure to DELETE this log?")
-                    .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                    .setMessage("确认删除此记录?")
+                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             actioner.DeleteRecord(id);
@@ -138,7 +138,7 @@ public class AccountLog extends AppCompatActivity {
                             startActivity(intent1);
                         }
                     })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
