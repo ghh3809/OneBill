@@ -82,44 +82,38 @@ public class AddBook extends AppCompatActivity {
                         bookname=etname.getText().toString();
                         actioner.CreateBook(bookname);
                         for(int j=0;j<i;j++){
-                            if(personname.get(j).getText().toString()!="") {
                                 try {
                                     actioner.CreateMember(bookname, personname.get(j).getText().toString());
                                 } catch (NullException e) {
+                                    nullname=true;
                                     e.printStackTrace();
                                 } catch (DuplicationNameException e) {
-                                    e.printStackTrace();
                                     duplicatename=true;
+                                    e.printStackTrace();
                                 }
-                            }
-                            else
-                                nullname=true;
                         }
-                        if(etaddperson.getText().toString()!="") {
                             try {
                                 actioner.CreateMember(bookname, etaddperson.getText().toString());
                             } catch (NullException e) {
-                                e.printStackTrace();
                                 nullname=true;
-                            } catch (DuplicationNameException e) {
                                 e.printStackTrace();
+                            } catch (DuplicationNameException e) {
                                 duplicatename=true;
+                                e.printStackTrace();
                             }
-                        }
                         if(nullname)
-                            Toast.makeText(getApplicationContext(),"参与人员中存在空的人名，已自动忽略",Toast.LENGTH_LONG).show();
-                        if(duplicatename) {
-                            Toast.makeText(getApplicationContext(), "残垣人员出现重名，重名的已自动忽略", Toast.LENGTH_LONG);
-                        }
+                            Toast.makeText(getApplicationContext(),"参与人员中存在空的人名，已自动忽略",Toast.LENGTH_SHORT).show();
+                        if(duplicatename)
+                            Toast.makeText(getApplicationContext(), "参与人员出现重名，重名的已自动忽略", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AddBook.this, Account.class);
                         intent.putExtra("name", bookname);
                         startActivity(intent);
                         AddBook.this.finish();
                     } catch (NullException e) {
-                        Toast.makeText(getApplicationContext(),"账本名不能为空，请输入账本名",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"账本名不能为空，请输入账本名",Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     } catch (DuplicationNameException e) {
-                        Toast.makeText(getApplicationContext(),"与现有账本重名，请重新命名",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"与现有账本重名，请重新命名",Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
         }
