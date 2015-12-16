@@ -9,7 +9,7 @@
     tools:context="oneBill.presentation.PreviewActivity"
     android:orientation="vertical"
     android:id="@+id/root"
-    android:background="@drawable/background"
+    android:background="@drawable/ic_background"
     android:isScrollContainer="true">
 
     <RelativeLayout

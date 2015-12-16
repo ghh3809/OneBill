@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     ScrollView mainsv;
     int booknum = 0;
     int newestbook = 0;
-    int oldbook = 0;
     TextView tvamount;
     TextView tvtime;
     TextView tvblank;
