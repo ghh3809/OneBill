@@ -63,7 +63,7 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(Account.this, AddRecordActivity.class);
-                intent1.putExtra("bookName",intent.getStringExtra("name"));
+                intent1.putExtra("bookName", name);
                 startActivity(intent1);
             }
         });
@@ -73,7 +73,7 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(Account.this, ManageMember.class);
-                intent1.putExtra("bookName",intent.getStringExtra("name"));
+                intent1.putExtra("bookName",name);
                 startActivity(intent1);
             }
         });

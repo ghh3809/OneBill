@@ -51,7 +51,7 @@ public class ManageMember extends AppCompatActivity {
 
         //获取账本名称
         Intent intent = getIntent();
-        final String bookName = intent.getStringExtra("bookName");
+        bookName = intent.getStringExtra("bookName");
         //bookName = "New Name";
 
         //显示账本名称
@@ -76,11 +76,10 @@ public class ManageMember extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         actioner.CloseDataBase();
+        ManageMember.this.finish();
     }
     public void initListAllPersons() {
         //从数据库获取names和bills
-
-
 
         names = actioner.GetMember(bookName);
         Bills = actioner.QueryNetAmount(bookName);
@@ -131,16 +130,20 @@ public class ManageMember extends AppCompatActivity {
         //TODO 这句似乎没用...
         Actioner actioner = new Actioner(this);
         try{
-            actioner.CreateMember(bookName,value);
+            actioner.CreateMember(bookName, value);
         }
         catch (DuplicationNameException e){
-            Toast.makeText(ManageMember.this,"添加成员出现错误，请重新添加",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ManageMember.this,"添加成员重复，请重新添加",Toast.LENGTH_SHORT).show();
         }
         catch (NullException e){
             Toast.makeText(ManageMember.this,"人名不能为空，请重新添加",Toast.LENGTH_SHORT).show();
         }
-        names = actioner.GetMember(bookName);
-        //names.add(value);
+
+        ArrayList<String> newNames = actioner.GetMember(bookName);
+        //if (!names.get(names.size()-1).equals(newNames.get(names.size()-1))) {
+        names.add(newNames.get(newNames.size() - 1));
+        //}
+
         if (names.size() == bills.size() + 1) {
             bills.add("应收￥0.00");
             Bills.add(0.0);
@@ -171,7 +174,7 @@ public class ManageMember extends AppCompatActivity {
         String deleteName=names.get(pos);
         Double deleteBill=Bills.get(pos);
         Intent intent = new Intent(ManageMember.this, DeleteMember.class);
-        intent.putExtra("bookName",bookName);
+        intent.putExtra("bookName", bookName);
         intent.putExtra("deleteName", deleteName);
         intent.putExtra("deleteBill", deleteBill);
         startActivity(intent);
