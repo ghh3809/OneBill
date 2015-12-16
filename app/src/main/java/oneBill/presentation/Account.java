@@ -125,6 +125,28 @@ public class Account extends AppCompatActivity {
         for(int i = 0;i < numAccount;++ i) {
             final int num = i;  //传给ClickListener的final参数
             arraylist1 = arraylist.get(i);  //获取第i条记录
+            String type;
+            //把类型转换成中文
+            switch (arraylist1.get(3)){
+                case "FOOD":
+                    type = "吃喝";
+                    break;
+                case "TRANS":
+                    type = "交通";
+                    break;
+                case "PLAY":
+                    type = "娱乐";
+                    break;
+                case "ACCOM":
+                    type = "住宿";
+                    break;
+                case "OTHER":
+                    type = "其他";
+                    break;
+                default:
+                    type = "其他";
+                    break;
+            }
 
             vTV.add(3 * i, new TextView(Account.this));   //三个TextView分别记录时间、类型、消费金额
             vTV.get(3*i).setId(3*i);
@@ -137,7 +159,7 @@ public class Account extends AppCompatActivity {
             DecimalFormat df1 = new DecimalFormat("#0.00");
 
             vTV.get(3*i).setText(arraylist1.get(1));
-            vTV.get(3*i+1).setText(arraylist1.get(3));
+            vTV.get(3*i+1).setText(type);
             vTV.get(3*i+2).setText(df1.format(amt1));
 
             linearTime.addView(vTV.get(3 * i));
@@ -153,6 +175,28 @@ public class Account extends AppCompatActivity {
                 public void onClick(View v) {
                     System.out.println(num);
                     ArrayList<String> arrayList = arraylist.get(num);
+                    String type;
+                    //把类型转换成中文
+                    switch (arrayList.get(3)){
+                        case "FOOD":
+                            type = "吃喝";
+                            break;
+                        case "TRANS":
+                            type = "交通";
+                            break;
+                        case "PLAY":
+                            type = "娱乐";
+                            break;
+                        case "ACCOM":
+                            type = "住宿";
+                            break;
+                        case "OTHER":
+                            type = "其他";
+                            break;
+                        default:
+                            type = "其他";
+                            break;
+                    }
 
                     Intent i = new Intent(Account.this, AccountLog.class);
                     Bundle b = new Bundle();
@@ -168,7 +212,7 @@ public class Account extends AppCompatActivity {
                     sb1.append("   ￥");
                     sb1.append(df.format(amt));
                     sb1.append("    ");
-                    sb1.append(arrayList.get(3));
+                    sb1.append(type);
                     b.putString("detail", String.valueOf(sb1));
                     i.putExtras(b);
 
