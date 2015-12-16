@@ -18,76 +18,75 @@ import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
-import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.domain.entity.error.NullException;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton ibtnAddBook;
-    Vector<RelativeLayout> rlay=new Vector<RelativeLayout>();
-    Vector<Button> vbtnmain=new Vector<Button>();
-    Vector<ImageButton> vibtnmain=new Vector<ImageButton>();
-    Vector<RelativeLayout.LayoutParams> rlaypa=new Vector<RelativeLayout.LayoutParams>();
-    Vector<TextView>  tvcolor=new Vector<TextView>();
+    Vector<RelativeLayout> rlay = new Vector<RelativeLayout>();
+    Vector<Button> vbtnmain = new Vector<Button>();
+    Vector<ImageButton> vibtnmain = new Vector<ImageButton>();
+    Vector<RelativeLayout.LayoutParams> rlaypa = new Vector<RelativeLayout.LayoutParams>();
+    Vector<TextView> tvcolor = new Vector<TextView>();
     LinearLayout llaymain;
     ScrollView mainsv;
-    int booknum=0;
-    int newestbook=0;
-    int oldbook=0;
+    int booknum = 0;
+    int newestbook = 0;
+    int oldbook = 0;
     TextView tvamount;
     TextView tvtime;
     TextView tvblank;
-    int [] randomcolor=new int [4];
+    int[] randomcolor = new int[4];
     RelativeLayout.LayoutParams lp1;
-    RelativeLayout.LayoutParams lp2 ;
+    RelativeLayout.LayoutParams lp2;
     RelativeLayout.LayoutParams lp3;
     View.OnClickListener newconsumption;
     View.OnClickListener bookmain;
     private Actioner actioner;
-    ArrayList<String> existedbook=new ArrayList<String>();
+    ArrayList<String> existedbook = new ArrayList<String>();
     int i;//bookindex
     String type;//消费类型
-    ArrayList<String> latestconsum=new ArrayList<String>();
-    java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#0.00");
-    boolean created=false;
-    int maxbooknum=0;
+    ArrayList<String> latestconsum = new ArrayList<String>();
+    java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");
+    boolean created = false;
+    int maxbooknum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        actioner=new Actioner(this);
+        actioner = new Actioner(this);
         existedbook = actioner.GetBook();
         booknum = existedbook.size();
-        maxbooknum=booknum;
-        ibtnAddBook= (ImageButton) findViewById(R.id.imagebtnAddBook);
-        llaymain= (LinearLayout) findViewById(R.id.llayoutmain);
-        mainsv= (ScrollView) findViewById(R.id.mainscrollView);
+        maxbooknum = booknum;
+        ibtnAddBook = (ImageButton) findViewById(R.id.imagebtnAddBook);
+        llaymain = (LinearLayout) findViewById(R.id.llayoutmain);
+        mainsv = (ScrollView) findViewById(R.id.mainscrollView);
         lp1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT
-                ,RelativeLayout.LayoutParams.WRAP_CONTENT);
+                , RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT
-                ,RelativeLayout.LayoutParams.WRAP_CONTENT);
+                , RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT
-                ,DensityUtil.dip2px(getApplicationContext(), 1));
-        tvamount=new TextView(this);
-        tvtime=new TextView(this);
-        tvblank=new TextView(this);
-        randomcolor[0]=getResources().getColor(R.color.darkGreen);
-        randomcolor[1]=getResources().getColor(R.color.lightGreen);
-        randomcolor[2]=getResources().getColor(R.color.darkBrown);
-        randomcolor[3]=getResources().getColor(R.color.lightBrown);
-        newconsumption=new View.OnClickListener() {
+                , DensityUtil.dip2px(getApplicationContext(), 1));
+        tvamount = new TextView(this);
+        tvtime = new TextView(this);
+        tvblank = new TextView(this);
+        randomcolor[0] = getResources().getColor(R.color.darkGreen);
+        randomcolor[1] = getResources().getColor(R.color.lightGreen);
+        randomcolor[2] = getResources().getColor(R.color.darkBrown);
+        randomcolor[3] = getResources().getColor(R.color.lightBrown);
+        newconsumption = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,AddRecordActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddRecordActivity.class);
                 intent.putExtra("bookName", existedbook.get(v.getId() / 4));
                 startActivity(intent);
             }
         };
-        bookmain=new View.OnClickListener() {
+        bookmain = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,Account.class);
-                intent.putExtra("name",existedbook.get(v.getId()/4));
+                Intent intent = new Intent(MainActivity.this, Account.class);
+                intent.putExtra("name", existedbook.get(v.getId() / 4));
                 startActivity(intent);
             }
         };
@@ -99,10 +98,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        for(i=0;i<booknum;i++) {
+        for (i = 0; i < booknum; i++) {
             rlay.add(i, new RelativeLayout(this));
-            rlaypa.add(3 * i,  new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
-            rlaypa.add(3 * i+1, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            rlaypa.add(3 * i, new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
+            rlaypa.add(3 * i + 1, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
             rlaypa.add(3 * i + 2, new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 24), DensityUtil.dip2px(getApplicationContext(), 24)));
             rlay.get(i).setId(4 * i);
             tvcolor.add(i, new TextView(this));
@@ -123,39 +122,39 @@ public class MainActivity extends AppCompatActivity {
             vibtnmain.get(i).setOnClickListener(newconsumption);
             vbtnmain.get(i).setBackgroundColor(getResources().getColor(R.color.colorTransparent));
             rlaypa.get(3 * i).addRule(RelativeLayout.ALIGN_PARENT_TOP);
-            rlaypa.get(3*i).addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            rlaypa.get(3 * i).addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             rlaypa.get(3 * i).setMargins(0, DensityUtil.dip2px(getApplicationContext(), 4), 0, 0);
-            rlaypa.get(3 * i+1).addRule(RelativeLayout.ALIGN_PARENT_TOP);
-            rlaypa.get(3*i+1).addRule(RelativeLayout.ALIGN_LEFT,tvcolor.get(i).getId());
-            rlaypa.get(3 *i+1).setMargins(DensityUtil.dip2px(getApplicationContext(), 10),0,0,0);
-            rlaypa.get(3*i+2).addRule(RelativeLayout.ALIGN_PARENT_TOP);
-            rlaypa.get(3*i+2).addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            rlaypa.get(3 * i + 1).addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            rlaypa.get(3 * i + 1).addRule(RelativeLayout.ALIGN_LEFT, tvcolor.get(i).getId());
+            rlaypa.get(3 * i + 1).setMargins(DensityUtil.dip2px(getApplicationContext(), 10), 0, 0, 0);
+            rlaypa.get(3 * i + 2).addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            rlaypa.get(3 * i + 2).addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             rlaypa.get(3 * i + 2).setMargins(0, DensityUtil.dip2px(getApplicationContext(), 15), DensityUtil.dip2px(getApplicationContext(), 10), 0);
             rlay.get(i).addView(tvcolor.get(i), rlaypa.get(3 * i));
-            rlay.get(i).addView(vbtnmain.get(i), rlaypa.get(3 * i+1));
+            rlay.get(i).addView(vbtnmain.get(i), rlaypa.get(3 * i + 1));
             rlay.get(i).addView(vibtnmain.get(i), rlaypa.get(3 * i + 2));
             llaymain.addView(rlay.get(i));
         }
-            tvblank.setText("");
+        tvblank.setText("");
         tvblank.setBackgroundColor(getResources().getColor(R.color.colorLine));
-            tvamount.setId(newestbook + 1000);
-            tvtime.setId(newestbook + 1001);
+        tvamount.setId(newestbook + 1000);
+        tvtime.setId(newestbook + 1001);
         tvamount.setTextColor(getResources().getColor(R.color.colorText));
-            tvtime.setTextColor(getResources().getColor(R.color.colorText));
+        tvtime.setTextColor(getResources().getColor(R.color.colorText));
         tvamount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);
-            tvtime.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        tvtime.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         tvamount.setPadding(DensityUtil.dip2px(getApplicationContext(), 10), 0, 0, 0);
-            tvtime.setPadding(DensityUtil.dip2px(getApplicationContext(), 10), 0, 0, 0);
-        }
+        tvtime.setPadding(DensityUtil.dip2px(getApplicationContext(), 10), 0, 0, 0);
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        existedbook=actioner.GetBook();
-        if(existedbook.size()!=booknum){
-            i=existedbook.size()-1;
-            if(existedbook.size()>maxbooknum) {
-                i=maxbooknum;
+        existedbook = actioner.GetBook();
+        if (existedbook.size() != booknum) {
+            i = existedbook.size() - 1;
+            if (existedbook.size() > maxbooknum) {
+                i = maxbooknum;
                 maxbooknum++;
                 rlay.add(i, new RelativeLayout(this));
                 rlaypa.add(3 * i, new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
@@ -193,49 +192,46 @@ public class MainActivity extends AppCompatActivity {
                 rlay.get(i).addView(vbtnmain.get(i), rlaypa.get(3 * i + 1));
                 rlay.get(i).addView(vibtnmain.get(i), rlaypa.get(3 * i + 2));
                 llaymain.addView(rlay.get(i));
-            }
-            else if(existedbook.size()<booknum){
-                llaymain.removeView(rlay.get(booknum-1));
-            }
-            else{
+            } else if (existedbook.size() < booknum) {
+                llaymain.removeView(rlay.get(booknum - 1));
+            } else {
                 llaymain.addView(rlay.get(booknum));
             }
-            booknum=existedbook.size();
+            booknum = existedbook.size();
         }
-        if(booknum>0) {
-        for(int j=0;j<booknum;j++){
-            vbtnmain.get(j).setText(existedbook.get(j));
-        }
-        try {
-            latestconsum = actioner.GetLatestRecord(existedbook.get(0));
-            switch (latestconsum.get(2)) {
-                case "FOOD":
-                    type = "吃喝";
-                    break;
-                case "TRANS":
-                    type = "交通";
-                    break;
-                case "PLAY":
-                    type = "娱乐";
-                    break;
-                case "ACCOM":
-                    type = "住宿";
-                    break;
-                case "OTHER":
-                    type = "其他";
-                    break;
-                default:
-                    type = "其他";
-                    break;
+        if (booknum > 0) {
+            for (int j = 0; j < booknum; j++) {
+                vbtnmain.get(j).setText(existedbook.get(j));
             }
-        }
-            catch (NullException e) {
+            try {
+                latestconsum = actioner.GetLatestRecord(existedbook.get(0));
+                switch (latestconsum.get(2)) {
+                    case "FOOD":
+                        type = "吃喝";
+                        break;
+                    case "TRANS":
+                        type = "交通";
+                        break;
+                    case "PLAY":
+                        type = "娱乐";
+                        break;
+                    case "ACCOM":
+                        type = "住宿";
+                        break;
+                    case "OTHER":
+                        type = "其他";
+                        break;
+                    default:
+                        type = "其他";
+                        break;
+                }
+            } catch (NullException e) {
                 latestconsum.add(0, "####");
                 latestconsum.add(1, "0.0");
                 latestconsum.add(2, "暂无任何消费");
                 type = "暂无任何消费";
             }
-            if(!created) {
+            if (!created) {
                 lp1.addRule(RelativeLayout.BELOW, vbtnmain.get(0).getId());
                 lp1.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 lp2.addRule(RelativeLayout.BELOW, tvamount.getId());
@@ -246,18 +242,19 @@ public class MainActivity extends AppCompatActivity {
                 rlay.get(0).addView(tvamount, lp1);
                 rlay.get(0).addView(tvtime, lp2);
                 rlay.get(0).addView(tvblank, lp3);
-                created=true;
+                created = true;
             }
             tvtime.setText("最近消费:   " + latestconsum.get(0) + "   ¥" +
                     df.format(Double.parseDouble(latestconsum.get(1))) +
                     "  " + type);
             tvamount.setText("¥" + String.valueOf(df.format(actioner.GetSum(existedbook.get(0)))));
-    }
-    }
-        @Override
-        protected void onDestroy(){
-            super.onDestroy();
-            actioner.CloseDataBase();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        actioner.CloseDataBase();
+    }
 }
 
