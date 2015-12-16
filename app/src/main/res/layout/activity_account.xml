@@ -29,24 +29,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="  账本"
-                android:textSize="25sp"/>
+                android:textSize="25sp"
+                android:textColor="@color/darkGreen"/>
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv1"
-            android:layout_below="@id/linear1"
-            android:layout_width="match_parent"
-            android:layout_height="10sp" />
 
         <LinearLayout
             android:id="@+id/linear2"
-            android:layout_below="@id/iv1"
+            android:layout_below="@id/linear1"
+            android:layout_marginTop="@dimen/up_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:background="#000"
+                android:background="@color/lightGreen"
                 android:text=""
                 android:layout_width="10sp"
                 android:layout_height="90sp" />
@@ -59,6 +55,7 @@
                 <TextView
                     android:text="  总计消费"
                     android:textSize="18sp"
+                    android:textColor="@color/colorText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -73,41 +70,39 @@
 
                     <TextView
                         android:textSize="40sp"
-                        android:text="    ￥    "
+                        android:text="  ￥ "
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorText"/>
 
                     <TextView
                         android:id="@+id/tvAccount"
                         android:textSize="40sp"
                         android:text="0.00"
+                        android:textColor="@color/colorText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv2"
-            android:layout_below="@id/linear2"
-            android:layout_width="match_parent"
-            android:layout_height="8sp" />
-
         <LinearLayout
             android:id="@+id/linear3"
-            android:layout_below="@+id/iv2"
+            android:layout_below="@+id/linear2"
+            android:layout_marginTop="@dimen/up_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:background="#000"
+                android:background="@color/lightGreen"
                 android:layout_width="10sp"
                 android:layout_height="30sp" />
 
             <TextView
                 android:textSize="18sp"
                 android:text="  消费记录"
+                android:textColor="@color/colorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -122,6 +117,7 @@
             <TextView
                 android:textSize="18sp"
                 android:text="时间"
+                android:textColor="@color/colorText"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -129,6 +125,7 @@
             <TextView
                 android:textSize="18sp"
                 android:text="类型"
+                android:textColor="@color/colorText"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -136,6 +133,7 @@
             <TextView
                 android:textSize="18sp"
                 android:text="消费"
+                android:textColor="@color/colorText"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -148,16 +146,16 @@
             android:fadingEdge="vertical"
             android:layout_width="fill_parent"
             android:layout_height="240sp"
-            android:background="#40ffffff">
+            android:background="@color/colorWhiteAlpha">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="#40ffffff">
+                android:background="@color/colorWhiteAlpha">
 
                 <LinearLayout
-                    android:background="#40ffffff"
+                    android:background="@color/colorWhiteAlpha"
                     android:id="@+id/linearTime"
                     android:layout_weight="1"
                     android:layout_width="fill_parent"
@@ -166,7 +164,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:background="#40ffffff"
+                    android:background="@color/colorWhiteAlpha"
                     android:id="@+id/linearType"
                     android:layout_weight="1"
                     android:layout_width="fill_parent"
@@ -175,7 +173,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:background="#40ffffff"
+                    android:background="@color/colorWhiteAlpha"
                     android:id="@+id/linearCons"
                     android:layout_weight="1"
                     android:layout_width="fill_parent"
