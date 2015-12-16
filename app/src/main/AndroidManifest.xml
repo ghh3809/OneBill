@@ -49,7 +49,7 @@
         <activity
             android:name="oneBill.presentation.MainActivity"
             android:launchMode="singleTask"
-            android:label="activity_main"
+            android:label="一叶账目"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
