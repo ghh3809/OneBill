@@ -66,7 +66,6 @@ public class Account extends AppCompatActivity {
                 Intent intent1 = new Intent(Account.this, AddRecordActivity.class);
                 intent1.putExtra("bookName", name);
                 startActivity(intent1);
-                Account.this.finish();
             }
         });
 
@@ -77,7 +76,6 @@ public class Account extends AppCompatActivity {
                 Intent intent1 = new Intent(Account.this, ManageMember.class);
                 intent1.putExtra("bookName",name);
                 startActivity(intent1);
-                Account.this.finish();
             }
         });
 
@@ -88,7 +86,6 @@ public class Account extends AppCompatActivity {
                 Intent intent1 = new Intent(Account.this,AccountClear.class);
                 intent1.putExtra("name", name);
                 startActivity(intent1);
-                Account.this.finish();
             }
         });
 
@@ -172,7 +169,6 @@ public class Account extends AppCompatActivity {
                     i.putExtras(b);
 
                     startActivity(i);
-                    Account.this.finish();
                 }
             });
         }

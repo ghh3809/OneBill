@@ -128,9 +128,7 @@ public class AccountLog extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             actioner.DeleteRecord(id);
-                            Intent intent = new Intent(AccountLog.this,Account.class);
-                            intent.putExtra("name",name);
-                            startActivity(intent);
+                            startActivity(new Intent(AccountLog.this,MainActivity.class));
                             AccountLog.this.finish();
                         }
                     })
