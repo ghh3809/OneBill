@@ -185,7 +185,7 @@ public class Broker {
     public void SettlePerson(String _bookName, String _person, String _trader) {
         double net = QueryNetAmount(_bookName, _person);
         if(net > 0) CreateLoanRecord(_bookName, _trader, _person, net);
-        else if(net < 0) CreateLoanRecord(_bookName, _person, _trader, net);
+        else if(net < 0) CreateLoanRecord(_bookName, _person, _trader, -net);
         DeleteMember(_bookName, _person);
     }
 
