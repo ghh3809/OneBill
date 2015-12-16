@@ -12,6 +12,7 @@
     <SOURCES>
       <root url="jar://C:/android-sdk_r24.3.4-windows/android-sdk-windows/extras/android/m2repository/com/android/support/support-v4/23.0.1/support-v4-23.0.1-sources.jar!/" />
       <root url="jar://E:/software/android-sdk_r24.3.4-windows/android-sdk-windows/extras/android/m2repository/com/android/support/support-v4/23.0.1/support-v4-23.0.1-sources.jar!/" />
+      <root url="jar://D:/Program Files/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.0.1/support-v4-23.0.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

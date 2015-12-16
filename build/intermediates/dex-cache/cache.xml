@@ -2,39 +2,39 @@
 <items version="2" >
 
     <item
-        jar="C:\android-sdk_r24.3.4-windows\android-sdk-windows\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="C:\English\software-engineering\OneBill\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-530a8a771db1282c494c2ed6bc216e3a1cdb9b6e.jar" />
-    </item>
-    <item
-        jar="C:\English\software-engineering\OneBill\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="C:\English\software-engineering\OneBill\app\build\intermediates\pre-dexed\debug\classes-f066e3fc4cb4c8a555ddc4194125e3b80be7fda9.jar" />
-    </item>
-    <item
-        jar="C:\English\software-engineering\OneBill\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="C:\English\software-engineering\OneBill\app\build\intermediates\pre-dexed\debug\classes-fda455e3cfb2e1e70184f442c480ef9b713242ae.jar" />
-    </item>
-    <item
-        jar="C:\English\software-engineering\OneBill\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="C:\English\software-engineering\OneBill\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-1157411cb49928ee755450d12be800fc8664e24f.jar" />
-    </item>
-    <item
-        jar="C:\English\software-engineering\OneBill\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
+        jar="D:\Workspace\GitHub\OneBill\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
-        <dex dex="C:\English\software-engineering\OneBill\app\build\intermediates\pre-dexed\debug\classes-866850a286e8846ab5ccaffac96f064e277acb92.jar" />
+        <dex dex="D:\Workspace\GitHub\OneBill\app\build\intermediates\pre-dexed\debug\classes-172cc1791de9499027141bca5b72fb485d8d0ab0.jar" />
+    </item>
+    <item
+        jar="D:\Workspace\GitHub\OneBill\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="D:\Workspace\GitHub\OneBill\app\build\intermediates\pre-dexed\debug\classes-10b86ff770bdd194499267c3145d883123699329.jar" />
+    </item>
+    <item
+        jar="D:\Workspace\GitHub\OneBill\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="D:\Workspace\GitHub\OneBill\app\build\intermediates\pre-dexed\debug\classes-92396a2afd4abc6a7788d463176749032531d0ce.jar" />
+    </item>
+    <item
+        jar="D:\Program Files\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="D:\Workspace\GitHub\OneBill\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-ce5f242bba79c38b083ec9bf47c572b6ad6aec6e.jar" />
+    </item>
+    <item
+        jar="D:\Workspace\GitHub\OneBill\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="D:\Workspace\GitHub\OneBill\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-728ea360089d3c0ba4c984b6a8bbcaa7d7700305.jar" />
     </item>
 
 </items>

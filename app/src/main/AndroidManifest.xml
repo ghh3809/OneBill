@@ -59,6 +59,7 @@
         </activity>
         <activity
             android:name="oneBill.presentation.Account"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_account">
         </activity>
         <activity

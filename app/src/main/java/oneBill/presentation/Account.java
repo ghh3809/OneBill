@@ -30,7 +30,7 @@ public class Account extends AppCompatActivity {
     ArrayList<ArrayList<String>> arraylist;
     ArrayList<String> arraylist1;
     int numAccount;
-    LinearLayout linearAccount;
+    LinearLayout linearTime,linearType,linearCons;
     Vector<TextView> vTV = new Vector<TextView>();
 
     @Override
@@ -55,6 +55,7 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Account.this, MainActivity.class));
+                Account.this.finish();
             }
         });
 
@@ -65,6 +66,7 @@ public class Account extends AppCompatActivity {
                 Intent intent1 = new Intent(Account.this, AddRecordActivity.class);
                 intent1.putExtra("bookName", name);
                 startActivity(intent1);
+                Account.this.finish();
             }
         });
 
@@ -75,6 +77,7 @@ public class Account extends AppCompatActivity {
                 Intent intent1 = new Intent(Account.this, ManageMember.class);
                 intent1.putExtra("bookName",name);
                 startActivity(intent1);
+                Account.this.finish();
             }
         });
 
@@ -85,6 +88,7 @@ public class Account extends AppCompatActivity {
                 Intent intent1 = new Intent(Account.this,AccountClear.class);
                 intent1.putExtra("name", name);
                 startActivity(intent1);
+                Account.this.finish();
             }
         });
 
@@ -113,27 +117,40 @@ public class Account extends AppCompatActivity {
 
         arraylist = actioner.GetRecord(name);   //获取记录
         numAccount = arraylist.size();
-        linearAccount = (LinearLayout) findViewById(R.id.linearAccount);
+        linearTime = (LinearLayout) findViewById(R.id.linearTime);
+        linearType = (LinearLayout) findViewById(R.id.linearType);
+        linearCons = (LinearLayout) findViewById(R.id.linearCons);
+
         for(int i = 0;i < numAccount;++ i) {
             final int num = i;  //传给ClickListener的final参数
-            vTV.add(i, new TextView(Account.this));
-            vTV.get(i).setId(i);
-
             arraylist1 = arraylist.get(i);  //获取第i条记录
+
+            vTV.add(3*i, new TextView(Account.this));   //三个TextView分别记录时间、类型、消费金额
+            vTV.get(3*i).setId(3*i);
+            vTV.add(3*i+1, new TextView(Account.this));
+            vTV.get(3*i+1).setId(3*i+1);
+            vTV.add(3*i+2, new TextView(Account.this));
+            vTV.get(3*i+2).setId(3*i+2);
+
             Double amt1 = Double.parseDouble(arraylist1.get(2));
             DecimalFormat df1 = new DecimalFormat("#.00");
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(arraylist1.get(1));
-            sb.append("    ");
-            sb.append(arraylist1.get(3));
-            sb.append("                          ");
-            sb.append(df1.format(amt1));
-            vTV.get(i).setText(sb);
+            vTV.get(3*i).setText(arraylist1.get(1));
+            vTV.get(3*i+1).setText(arraylist1.get(3));
+            vTV.get(3*i+2).setText(df1.format(amt1));
+
+            linearTime.addView(vTV.get(3 * i));
+            linearType.addView(vTV.get(3 * i + 1));
+            linearCons.addView(vTV.get(3 * i + 2));
+        }
+
+        for(int i = 0; i < 3 * numAccount; ++ i){
+            final int num = i / 3;
 
             vTV.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    System.out.println(num);
                     ArrayList<String> arrayList = arraylist.get(num);
 
                     Intent i = new Intent(Account.this, AccountLog.class);
@@ -155,9 +172,9 @@ public class Account extends AppCompatActivity {
                     i.putExtras(b);
 
                     startActivity(i);
+                    Account.this.finish();
                 }
             });
-            linearAccount.addView(vTV.get(i));
         }
     }
 

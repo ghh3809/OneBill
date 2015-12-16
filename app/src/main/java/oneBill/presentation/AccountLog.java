@@ -22,7 +22,7 @@ public class AccountLog extends AppCompatActivity {
     TextView tvNameInLog;
     TextView tvAccountLog;
     ImageView ivToAccountFromLog,ivAddLogFromLog,ivToMemberFromLog,ivToClearFromLog,ivDeleteAccountFromLog;
-    LinearLayout linearAccountLog;
+    LinearLayout linearMember,linearPaid,linearPayable;
     String name;
     String detail;
     int id;
@@ -42,7 +42,10 @@ public class AccountLog extends AppCompatActivity {
         id = bundle.getInt("id");
         detail = bundle.getString("detail");
 
-        linearAccountLog = (LinearLayout) findViewById(R.id.linearAccountLog);
+        linearMember = (LinearLayout) findViewById(R.id.linearMember);
+        linearPaid = (LinearLayout) findViewById(R.id.linearPaid);
+        linearPayable = (LinearLayout) findViewById(R.id.linearPayable);
+
         tvNameInLog = (TextView) findViewById(R.id.tvNameInLog);
         tvNameInLog.setText(name);
 
@@ -53,19 +56,21 @@ public class AccountLog extends AppCompatActivity {
         numAccountLog = arraylist.size();
 
         for(int i = 0; i < numAccountLog; ++ i){
-            vTV.add(i, new TextView(AccountLog.this));
+            vTV.add(3 * i, new TextView(AccountLog.this));
+            vTV.add(3 * i + 1, new TextView(AccountLog.this));
+            vTV.add(3 * i + 2, new TextView(AccountLog.this));
+
             DecimalFormat df = new DecimalFormat("#.00");
 
             ArrayList<String> arraylist1 = arraylist.get(i);
             StringBuilder sb = new StringBuilder();
-            sb.append(arraylist1.get(0));
-            sb.append("                    ");
-            sb.append(df.format(Double.parseDouble(arraylist1.get(1))));
-            sb.append("                    ");
-            sb.append(df.format(Double.parseDouble(arraylist1.get(2))));
+            vTV.get(3 * i).setText(arraylist1.get(0));
+            vTV.get(3 * i + 1).setText(df.format(Double.parseDouble(arraylist1.get(1))));
+            vTV.get(3 * i + 2).setText(df.format(Double.parseDouble(arraylist1.get(2))));
 
-            vTV.get(i).setText(sb);
-            linearAccountLog.addView(vTV.get(i));
+            linearMember.addView(vTV.get(3 * i));
+            linearPaid.addView(vTV.get(3 * i + 1));
+            linearPayable.addView(vTV.get(3 * i + 2));
         }
 
         ivToAccountFromLog = (ImageView) findViewById(R.id.ivToAccountFromLog);
@@ -75,6 +80,7 @@ public class AccountLog extends AppCompatActivity {
                 Intent intent1 = new Intent(AccountLog.this,Account.class);
                 intent1.putExtra("name",name);
                 startActivity(intent1);
+                AccountLog.this.finish();
             }
         });
 
@@ -85,6 +91,7 @@ public class AccountLog extends AppCompatActivity {
                 Intent intent1 = new Intent(AccountLog.this, AddRecordActivity.class);
                 intent1.putExtra("bookName",intent.getStringExtra("name"));
                 startActivity(intent1);
+                AccountLog.this.finish();
             }
         });
 
@@ -95,6 +102,7 @@ public class AccountLog extends AppCompatActivity {
                 Intent intent1 = new Intent(AccountLog.this, ManageMember.class);
                 intent1.putExtra("bookName",intent.getStringExtra("name"));
                 startActivity(intent1);
+                AccountLog.this.finish();
             }
         });
 
@@ -105,6 +113,7 @@ public class AccountLog extends AppCompatActivity {
                 Intent intent1 = new Intent(AccountLog.this,AccountClear.class);
                 intent1.putExtra("name", name);
                 startActivity(intent1);
+                AccountLog.this.finish();
             }
         });
 
@@ -119,7 +128,10 @@ public class AccountLog extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             actioner.DeleteRecord(id);
-                            startActivity(new Intent(AccountLog.this,MainActivity.class));
+                            Intent intent = new Intent(AccountLog.this,Account.class);
+                            intent.putExtra("name",name);
+                            startActivity(intent);
+                            AccountLog.this.finish();
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {

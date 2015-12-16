@@ -136,12 +136,37 @@
         android:background="#40ffffff">
 
         <LinearLayout
-            android:id="@+id/linearAccount"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#40ffffff">
 
+            <LinearLayout
+                android:background="#40ffffff"
+                android:id="@+id/linearTime"
+                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="#40ffffff"
+                android:id="@+id/linearType"
+                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="#40ffffff"
+                android:id="@+id/linearCons"
+                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -186,28 +211,32 @@
 
         <TextView
             android:textSize="16sp"
-            android:text="       记账"
+            android:gravity="center_horizontal"
+            android:text="  记账"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent" />
 
         <TextView
             android:textSize="16sp"
-            android:text="       人员"
+            android:gravity="center_horizontal"
+            android:text="  人员"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent" />
 
         <TextView
             android:textSize="16sp"
-            android:text="         清账"
+            android:gravity="center_horizontal"
+            android:text="  清账"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent" />
 
         <TextView
             android:textSize="16sp"
-            android:text="          删除"
+            android:gravity="center_horizontal"
+            android:text="  删除"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent" />
