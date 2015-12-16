@@ -34,8 +34,14 @@ public class Account extends AppCompatActivity {
     Vector<TextView> vTV = new Vector<TextView>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onDestroy() {
+        super.onDestroy();
+        actioner.CloseDataBase();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setContentView(R.layout.activity_account);
 
         actioner = new Actioner(this);
@@ -172,11 +178,5 @@ public class Account extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        actioner.CloseDataBase();
     }
 }

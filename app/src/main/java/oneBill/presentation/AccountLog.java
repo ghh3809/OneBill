@@ -31,8 +31,15 @@ public class AccountLog extends AppCompatActivity {
     Vector<TextView> vTV = new Vector<TextView>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onDestroy(){
+        super.onDestroy();
+
+        actioner.CloseDataBase();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setContentView(R.layout.activity_account_log);
 
         actioner = new Actioner(this);
@@ -122,29 +129,21 @@ public class AccountLog extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(AccountLog.this)
-                    .setTitle("Alert!")
-                    .setMessage("Are you sure to DELETE this log?")
-                    .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            actioner.DeleteRecord(id);
-                            startActivity(new Intent(AccountLog.this,MainActivity.class));
-                            AccountLog.this.finish();
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    }).show();
+                        .setTitle("Alert!")
+                        .setMessage("Are you sure to DELETE this log?")
+                        .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                actioner.DeleteRecord(id);
+                                startActivity(new Intent(AccountLog.this,Account.class));
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
             }
         });
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-
-        actioner.CloseDataBase();
     }
 }

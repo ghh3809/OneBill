@@ -1,7 +1,6 @@
 package oneBill.presentation;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -39,8 +38,14 @@ public class AccountClear extends AppCompatActivity {
     int countll = 0, countsp = 0, countet = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onDestroy(){
+        super.onDestroy();
+        actioner.CloseDataBase();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setContentView(R.layout.activity_account_clear);
 
         actioner = new Actioner(this);
@@ -132,7 +137,7 @@ public class AccountClear extends AppCompatActivity {
                 }
 
                 if(wrongNumber){
-                    Toast.makeText(getApplicationContext(),"Wrong number found",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Wrong number found", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     ArrayList<Solution> arraylist = new ArrayList<Solution>();
@@ -189,11 +194,5 @@ public class AccountClear extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        actioner.CloseDataBase();
     }
 }
