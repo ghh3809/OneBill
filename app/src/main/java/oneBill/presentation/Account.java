@@ -95,8 +95,8 @@ public class Account extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(Account.this)
                         .setTitle("Alert!")
-                        .setMessage("Are you sure to DELETE the book?")
-                        .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                        .setMessage("确认删除此帐本?")
+                        .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 actioner.DeleteBook(name);
@@ -104,7 +104,7 @@ public class Account extends AppCompatActivity {
                                 Account.this.finish();
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }

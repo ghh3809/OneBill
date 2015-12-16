@@ -137,7 +137,7 @@ public class AccountClear extends AppCompatActivity {
                 }
 
                 if(wrongNumber){
-                    Toast.makeText(getApplicationContext(), "Wrong number found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "请输入正确金额", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     ArrayList<Solution> arraylist = new ArrayList<Solution>();
@@ -166,7 +166,7 @@ public class AccountClear extends AppCompatActivity {
                         }
                         numAccountClear = arraylist.size();
                     } catch (UnableToClearException e) {
-                        Toast.makeText(getApplicationContext(),"Unable to settle",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"无需清帐、或约束过多，请检查",Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
 
