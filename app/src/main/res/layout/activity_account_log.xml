@@ -172,14 +172,14 @@
             <ImageView
                 android:id="@+id/ivAddLogFromLog"
                 android:layout_weight="1"
-                android:src="@mipmap/plus_full"
+                android:src="@mipmap/pen_leather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/ivToMemberFromLog"
                 android:layout_weight="1"
-                android:src="@mipmap/usher"
+                android:src="@mipmap/ushers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

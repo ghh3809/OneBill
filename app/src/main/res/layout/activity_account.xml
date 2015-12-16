@@ -198,14 +198,14 @@
 
                 <ImageView
                     android:id="@+id/ivAddLogFromAccount"
-                    android:src="@mipmap/plus_full"
+                    android:src="@mipmap/pen_leather"
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="30sp" />
 
                 <ImageView
                     android:id="@+id/ivToMemberFromAccount"
-                    android:src="@mipmap/usher"
+                    android:src="@mipmap/ushers"
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="30sp" />
