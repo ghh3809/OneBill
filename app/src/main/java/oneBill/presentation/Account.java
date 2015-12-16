@@ -124,13 +124,17 @@ public class Account extends AppCompatActivity {
         linearType = (LinearLayout) findViewById(R.id.linearType);
         linearCons = (LinearLayout) findViewById(R.id.linearCons);
 
+        linearTime.setPadding(10,10,10,10);
+        linearType.setPadding(10,10,10,10);
+        linearCons.setPadding(10,10,10,10);
+
         for(int i = 0;i < numAccount;++ i) {
             final int num = i;  //传给ClickListener的final参数
             arraylist1 = arraylist.get(i);  //获取第i条记录
 
-            vTV.add(3*i, new TextView(Account.this));   //三个TextView分别记录时间、类型、消费金额
+            vTV.add(3 * i, new TextView(Account.this));   //三个TextView分别记录时间、类型、消费金额
             vTV.get(3*i).setId(3*i);
-            vTV.add(3*i+1, new TextView(Account.this));
+            vTV.add(3 * i + 1, new TextView(Account.this));
             vTV.get(3*i+1).setId(3*i+1);
             vTV.add(3*i+2, new TextView(Account.this));
             vTV.get(3*i+2).setId(3*i+2);
