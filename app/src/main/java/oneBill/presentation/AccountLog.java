@@ -30,12 +30,6 @@ public class AccountLog extends AppCompatActivity {
     ArrayList<ArrayList<String>> arraylist;
     Vector<TextView> vTV = new Vector<TextView>();
 
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-
-        actioner.CloseDataBase();
-    }
 
     @Override
     protected void onResume() {
@@ -133,21 +127,27 @@ public class AccountLog extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(AccountLog.this)
-                        .setTitle("Alert!")
-                        .setMessage("Are you sure to DELETE this log?")
-                        .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                actioner.DeleteRecord(id);
-                                startActivity(new Intent(AccountLog.this,Account.class));
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        }).show();
+                    .setTitle("Alert!")
+                    .setMessage("Are you sure to DELETE this log?")
+                    .setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            actioner.DeleteRecord(id);
+                            startActivity(new Intent(AccountLog.this,MainActivity.class));
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).show();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        actioner.CloseDataBase();
     }
 }
