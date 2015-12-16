@@ -53,6 +53,10 @@ public class AccountLog extends AppCompatActivity {
         linearPaid = (LinearLayout) findViewById(R.id.linearPaid);
         linearPayable = (LinearLayout) findViewById(R.id.linearPayable);
 
+        linearMember.setPadding(10,10,10,10);
+        linearPaid.setPadding(10,10,10,10);
+        linearPayable.setPadding(10,10,10,10);
+
         tvNameInLog = (TextView) findViewById(R.id.tvNameInLog);
         tvNameInLog.setText(name);
 

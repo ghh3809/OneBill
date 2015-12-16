@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -9,6 +9,7 @@
     android:background="@drawable/background">
 
     <LinearLayout
+        android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="30sp"
         android:orientation="horizontal">
@@ -27,7 +28,15 @@
             android:textSize="25sp"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_below="@id/linear1"
+        android:layout_width="fill_parent"
+        android:layout_height="10sp" />
+
     <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_below="@id/tv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -64,10 +73,14 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/iv2"
+        android:layout_below="@id/linear2"
         android:layout_width="match_parent"
         android:layout_height="8sp" />
 
     <LinearLayout
+        android:id="@+id/linear3"
+        android:layout_below="@id/iv2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -90,17 +103,27 @@
         </LinearLayout>
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/iv3"
+        android:layout_width="fill_parent"
+        android:layout_height="10sp"
+        android:layout_below="@id/linear3"/>
+
     <TextView
+        android:id="@+id/tv2"
+        android:layout_below="@id/iv3"
         android:textSize="18sp"
         android:text="成员                   实付                  应付"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <ScrollView
+        android:id="@+id/scroll"
+        android:layout_below="@id/tv2"
         android:scrollbars="vertical"
         android:fadingEdge="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="280sp"
+        android:layout_height="240sp"
         android:background="#40ffffff">
 
         <LinearLayout
@@ -138,75 +161,85 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="25sp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/ivAddLogFromLog"
-            android:layout_weight="1"
-            android:src="@mipmap/plus_full"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/ivToMemberFromLog"
-            android:layout_weight="1"
-            android:src="@mipmap/usher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/ivToClearFromLog"
-            android:layout_weight="1"
-            android:src="@mipmap/paper_plane"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/ivDeleteAccountFromLog"
-            android:layout_weight="1"
-            android:src="@mipmap/trash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/relativeBottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:text="  记账"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" />
+        <LinearLayout
+            android:id="@+id/linearTV"
+            android:layout_width="match_parent"
+            android:layout_height="25sp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:text="  人员"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" />
+            <ImageView
+                android:id="@+id/ivAddLogFromLog"
+                android:layout_weight="1"
+                android:src="@mipmap/plus_full"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:text="  清账"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" />
+            <ImageView
+                android:id="@+id/ivToMemberFromLog"
+                android:layout_weight="1"
+                android:src="@mipmap/usher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:text="  删除"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" />
-    </LinearLayout>
-</LinearLayout>
+            <ImageView
+                android:id="@+id/ivToClearFromLog"
+                android:layout_weight="1"
+                android:src="@mipmap/paper_plane"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/ivDeleteAccountFromLog"
+                android:layout_weight="1"
+                android:src="@mipmap/trash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/linearTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textSize="16sp"
+                android:gravity="center_horizontal"
+                android:text="  记账"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" />
+
+            <TextView
+                android:textSize="16sp"
+                android:gravity="center_horizontal"
+                android:text="  人员"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" />
+
+            <TextView
+                android:textSize="16sp"
+                android:gravity="center_horizontal"
+                android:text="  清账"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" />
+
+            <TextView
+                android:textSize="16sp"
+                android:gravity="center_horizontal"
+                android:text="  删除"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
