@@ -135,8 +135,8 @@ public class AddRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 food_button.setAlpha((float)0.5);
-                trans_button.setAlpha((float) 1.0);
-                v.setAlpha((float)0.5);
+                trans_button.setAlpha((float) 0.5);
+                v.setAlpha((float)1.0);
                 accom_button.setAlpha((float)0.5);
                 other_button.setAlpha((float)0.5);
                 type=3;
@@ -192,9 +192,9 @@ public class AddRecordActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else{
-                    Spinner borrower_spinner=(Spinner)findViewById(R.id.spinner);
+                    Spinner borrower_spinner=(Spinner)findViewById(R.id.spinner2);
                     String borrower=borrower_spinner.getSelectedItem().toString();
-                    Spinner lender_spinner= (Spinner) findViewById(R.id.spinner2);
+                    Spinner lender_spinner= (Spinner) findViewById(R.id.spinner);
                     String lender=lender_spinner.getSelectedItem().toString();
                     EditText edit= (EditText) findViewById(R.id.editText);
                     double amount;

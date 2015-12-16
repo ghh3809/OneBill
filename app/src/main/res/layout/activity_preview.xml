@@ -28,20 +28,20 @@
             android:text="账本"
             android:textSize="22sp"
             />
-        <TextView
-            android:id="@+id/confirmt_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="确认"
-            android:textSize="22sp"
-            />
         <Button
             android:id="@+id/confirm_button"
             android:layout_width="24sp"
             android:layout_height="24sp"
-            android:layout_toLeftOf="@id/confirmt_text"
+            android:layout_alignParentRight="true"
             android:background="@mipmap/arror_head_right"
+            />
+        <TextView
+            android:id="@+id/confirmt_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/confirm_button"
+            android:text="确认"
+            android:textSize="22sp"
             />
     </RelativeLayout>
 

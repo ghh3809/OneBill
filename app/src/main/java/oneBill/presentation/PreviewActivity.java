@@ -70,7 +70,7 @@ public class PreviewActivity extends AppCompatActivity {
             }
         });
 
-        DecimalFormat df=new DecimalFormat("#.00");
+        DecimalFormat df=new DecimalFormat("#0.00");
         for(int i=0;i<person.length;i++){
             LinearLayout panel=new LinearLayout(this);
             panel.setOrientation(LinearLayout.HORIZONTAL);

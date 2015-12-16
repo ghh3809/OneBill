@@ -159,7 +159,7 @@ public class SettleModify {
                 minPayer=pVecDym.get(pVecDymName.indexOf(mostLimit));
             }
 
-            if (maxPayer.getPaid() > -minPayer.getPaid()) {
+            if (maxPayer.getPaid() > -minPayer.getPaid()+0.01) {
                 maxPayer.setPaid(maxPayer.getPaid() + minPayer.getPaid());
                 Person newGiver = pVec
                         .get(pVecName.indexOf(minPayer.getName()));
@@ -171,7 +171,7 @@ public class SettleModify {
                 pVecDymName.remove(minPayer.getName());
                 pVecDym.remove(minPayer);
                 settlePerson(pointVec.get(pointVecName.indexOf(minPayer.getName())), pointVec, pointVecName);
-            } else if (maxPayer.getPaid() < -minPayer.getPaid()) {
+            } else if (maxPayer.getPaid()+0.01 < -minPayer.getPaid()) {
                 minPayer.setPaid(maxPayer.getPaid() + minPayer.getPaid());
                 Person newGiver = pVec
                         .get(pVecName.indexOf(minPayer.getName()));

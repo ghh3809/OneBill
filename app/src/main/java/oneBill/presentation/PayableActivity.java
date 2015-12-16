@@ -57,7 +57,7 @@ public class PayableActivity extends AppCompatActivity {
         }
         double sum=0;
         for(int j=0;j<person.length;j++) sum=sum+paid[j];
-        final DecimalFormat df=new DecimalFormat("#.00");
+        final DecimalFormat df=new DecimalFormat("#0.00");
         TextView sum_text= (TextView) findViewById(R.id.sum_text);
         sum_text.setText("总计￥"+String.valueOf(df.format(sum)));
         TextView current_sum_text = (TextView) findViewById(R.id.current_sum_text);
