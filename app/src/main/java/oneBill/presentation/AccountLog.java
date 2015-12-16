@@ -133,7 +133,9 @@ public class AccountLog extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             actioner.DeleteRecord(id);
-                            startActivity(new Intent(AccountLog.this,MainActivity.class));
+                            Intent intent1 = new Intent(AccountLog.this,Account.class);
+                            intent1.putExtra("name",name);
+                            startActivity(intent1);
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
