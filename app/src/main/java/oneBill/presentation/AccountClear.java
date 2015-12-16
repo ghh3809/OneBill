@@ -61,6 +61,7 @@ public class AccountClear extends AppCompatActivity {
                 Intent intent1 = new Intent(AccountClear.this,Account.class);
                 intent1.putExtra("name", name);
                 startActivity(intent1);
+                AccountClear.this.finish();
             }
         });
 
