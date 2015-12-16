@@ -100,9 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
         for (i = 0; i < booknum; i++) {
             rlay.add(i, new RelativeLayout(this));
-            rlaypa.add(3 * i, new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
-            rlaypa.add(3 * i + 1, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-            rlaypa.add(3 * i + 2, new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 24), DensityUtil.dip2px(getApplicationContext(), 24)));
             rlay.get(i).setId(4 * i);
             tvcolor.add(i, new TextView(this));
             vbtnmain.add(i, new Button(this));
@@ -116,11 +113,14 @@ public class MainActivity extends AppCompatActivity {
             vbtnmain.get(i).setOnClickListener(bookmain);
             vibtnmain.add(i, new ImageButton(this));
             vibtnmain.get(i).setId(4 * i + 3);
-            vibtnmain.get(i).setImageDrawable(getResources().getDrawable(R.drawable.pen_leather));
+            vibtnmain.get(i).setImageDrawable(getResources().getDrawable(R.drawable.ic_pen));
             vibtnmain.get(i).setScaleType(ImageView.ScaleType.FIT_XY);
             vibtnmain.get(i).setBackgroundColor(getResources().getColor(R.color.colorTransparent));
             vibtnmain.get(i).setOnClickListener(newconsumption);
             vbtnmain.get(i).setBackgroundColor(getResources().getColor(R.color.colorTransparent));
+            rlaypa.add(3 * i, new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 8), DensityUtil.dip2px(getApplicationContext(), 40)));
+            rlaypa.add(3 * i + 1, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            rlaypa.add(3 * i + 2, new RelativeLayout.LayoutParams(DensityUtil.dip2px(getApplicationContext(), 24), DensityUtil.dip2px(getApplicationContext(), 36)));
             rlaypa.get(3 * i).addRule(RelativeLayout.ALIGN_PARENT_TOP);
             rlaypa.get(3 * i).addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             rlaypa.get(3 * i).setMargins(0, DensityUtil.dip2px(getApplicationContext(), 4), 0, 0);

@@ -128,7 +128,6 @@ public class ManageMember extends AppCompatActivity {
         addConfirmButton.setVisibility(View.INVISIBLE);
         //更新ListView的内容
         //TODO 这句似乎没用...
-        Actioner actioner = new Actioner(this);
         try{
             actioner.CreateMember(bookName, value);
         }
