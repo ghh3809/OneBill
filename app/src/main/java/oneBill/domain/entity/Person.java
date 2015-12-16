@@ -7,7 +7,7 @@ public class Person {
     private String name;
     private double paid;
 
-    public Person(String name,double paid){
+    public Person(String name, double paid){
         this.name=name;
         this.paid=paid;
     }

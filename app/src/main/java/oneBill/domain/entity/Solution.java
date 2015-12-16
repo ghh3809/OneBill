@@ -16,6 +16,13 @@ public class Solution {
         this.amount = amount;
     }
 
+    public Solution(Solution solu) {
+        this.giver=solu.giver;
+        this.receiver=solu.receiver;
+        this.amount=solu.amount;
+    }
+
+
     /**
      * 获取给出者.
      * @return 给出者姓名
