@@ -33,7 +33,8 @@ public class Actioner {
      */
     public void CreateBook(String _bookName) throws NullException, DuplicationNameException {
         if (_bookName.trim().equals("")) throw new NullException();
-        br.CreateBook(_bookName);
+        String bookname = _bookName.trim();
+        br.CreateBook(bookname);
     }
 
     /**
@@ -72,7 +73,8 @@ public class Actioner {
      */
     public void CreateMember(String _bookName, String _person) throws NullException, DuplicationNameException {
         if (_person.trim().equals("")) throw new NullException();
-        br.CreateMember(_bookName, _person);
+        String person = _person.trim();
+        br.CreateMember(_bookName, person);
     }
 
     /**
@@ -228,7 +230,7 @@ public class Actioner {
      * @throws UnableToClearException UnableToClearException 无法清账时，抛出此错误
      */
     public ArrayList<Solution> SettleRecord(String _bookName, ArrayList<Solution> constrint) throws UnableToClearException {
-        return br.SettleRecord(_bookName, new ArrayList<Solution>());
+        return br.SettleRecord(_bookName, constrint);
     }
 
     /**

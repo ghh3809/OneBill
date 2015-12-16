@@ -140,9 +140,9 @@ public class ManageMember extends AppCompatActivity {
         }
 
         ArrayList<String> newNames = actioner.GetMember(bookName);
-        //if (!names.get(names.size()-1).equals(newNames.get(names.size()-1))) {
-        names.add(newNames.get(newNames.size() - 1));
-        //}
+        if (names.size() != newNames.size()) {
+            names.add(newNames.get(newNames.size() - 1));
+        }
 
         if (names.size() == bills.size() + 1) {
             bills.add("应收￥0.00");
