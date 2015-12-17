@@ -18,8 +18,7 @@
         <activity
             android:name="oneBill.presentation.ManageMember"
             android:launchMode="singleTask"
-            android:label="@string/title_activity_manage_member"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:label="@string/title_activity_manage_member">
         </activity>
         <activity
             android:name="oneBill.presentation.PreviewActivity"
@@ -38,13 +37,11 @@
         </activity>
         <activity
             android:name="oneBill.presentation.AddBook"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleTask"/>
         <activity
             android:name="oneBill.presentation.DeleteMember"
             android:launchMode="singleTask"
-            android:label="@string/title_activity_delete_member"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:label="@string/title_activity_delete_member" >
         </activity>
         <activity
             android:name="oneBill.presentation.MainActivity"

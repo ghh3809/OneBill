@@ -152,8 +152,8 @@ public class ManageMember extends AppCompatActivity {
             Bills.add(0.0);
             //动态刷新
             ((BaseAdapter) adapter).notifyDataSetChanged();
-        } else
-            Toast.makeText(ManageMember.this, "添加成员错误，请重新添加", Toast.LENGTH_SHORT).show();
+        } else;
+            //Toast.makeText(ManageMember.this, "添加成员错误，请重新添加", Toast.LENGTH_SHORT).show();
     }
 
     /**
