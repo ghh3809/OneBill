@@ -61,7 +61,7 @@ public class DeleteMember extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 withName = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DeleteMember.this, "你点击的是：" + withName, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(DeleteMember.this, "你点击的是：" + withName, Toast.LENGTH_SHORT).show();
             }
 
             public void onNothingSelected(AdapterView<?> parent) {}

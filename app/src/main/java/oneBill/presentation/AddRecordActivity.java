@@ -52,10 +52,13 @@ public class AddRecordActivity extends AppCompatActivity {
         tabHost.addTab(tab2);
 
         Spinner spinner=(Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter =new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice,person);
+        ArrayAdapter<String> adapter =new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,person);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         Spinner spinner2=(Spinner)findViewById(R.id.spinner2);
-        ArrayAdapter<String> adapter2 =new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice,person);
+        ArrayAdapter<String> adapter2 =new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,person);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //ArrayAdapter<String> adapter2 =new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice,person);
         spinner2.setAdapter(adapter2);
 
         LinearLayout input_layout= (LinearLayout) findViewById(R.id.input_layout);
