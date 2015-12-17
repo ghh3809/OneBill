@@ -56,7 +56,7 @@ public class SettleModify {
 
     public static boolean hasLimit(String giver,String receiver,String[][] limit){
         for(int j=0;j<limit[0].length;j++){
-            if((giver==limit[0][j]&&receiver==limit[1][j])||(giver==limit[1][j]&&receiver==limit[0][j])){
+            if((giver.equals(limit[0][j])&&receiver.equals(limit[1][j]))||(giver.equals(limit[1][j])&&receiver.equals(limit[0][j]))){
                 return true;
             }
         }
@@ -101,6 +101,20 @@ public class SettleModify {
                 pVecDym.remove(receiver);
             }
             i++;
+        }
+
+        ArrayList<Person> pVecToDelete=new ArrayList<Person>();
+        Iterator<Person> pVecDymIterator=pVecDym.iterator();
+        while(pVecDymIterator.hasNext()){
+            Person person=pVecDymIterator.next();
+            if(Math.abs(person.getPaid())<0.01)
+                pVecToDelete.add(person);
+        }
+        Iterator<Person> pVecToDeleteIterator=pVecToDelete.iterator();
+        while(pVecToDeleteIterator.hasNext()){
+            Person person=pVecToDeleteIterator.next();
+            pVecDymName.remove(person.getName());
+            pVecDym.remove(person);
         }
 
         Iterator<Person> settleZeroIterator = pVecDym.iterator();
