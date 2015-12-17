@@ -157,11 +157,9 @@ public class AccountClear extends AppCompatActivity {
                     /*获取解决方案*/
                     try {
                         if(arraylistCons.size() == 0) {
-                            System.out.println("No constraints");
                             arraylist = actioner.SettleRecord(name);
                         }
                         else {
-                            System.out.println("With constraints");
                             arraylist = actioner.SettleRecord(name, arraylistCons);
                         }
                         numAccountClear = arraylist.size();
@@ -192,6 +190,7 @@ public class AccountClear extends AppCompatActivity {
                         linearAccountClearConstraint.removeView(vLL.get(k));
                     countll = 0;
                     countet = 0;
+                    countsp = 0;
                 }
             }
         });
