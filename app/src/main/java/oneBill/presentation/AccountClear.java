@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
@@ -28,7 +28,7 @@ public class AccountClear extends AppCompatActivity {
     int numAccountClear = 0;
     ImageView ivToAccountFromClear;
     TextView tvNameInClear,tvAddConstraint;
-    Button btnSolve;
+    TextView tvSolve;
     LinearLayout linearAccountClear;
     LinearLayout linearAccountClearConstraint;
     Vector<TextView> vTV = new Vector<TextView>();
@@ -116,8 +116,8 @@ public class AccountClear extends AppCompatActivity {
             }
         });
 
-        btnSolve = (Button) findViewById(R.id.btnSolve);
-        btnSolve.setOnClickListener(new View.OnClickListener() {
+        tvSolve = (TextView) findViewById(R.id.tvSolve);
+        tvSolve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {;
                 /*先把已有的解决方案清空*/
@@ -174,13 +174,14 @@ public class AccountClear extends AppCompatActivity {
                     for(int i = 0; i < numAccountClear; ++ i){
                         vTV.add(i, new TextView(AccountClear.this));
 
+                        DecimalFormat df = new DecimalFormat("#0.00");
                         StringBuilder stringbuilder = new StringBuilder();
                         Solution solution = arraylist.get(i);
                         stringbuilder.append(solution.getGiver());
                         stringbuilder.append("    给    ");
                         stringbuilder.append(solution.getReceiver());
                         stringbuilder.append("    ￥    ");
-                        stringbuilder.append(solution.getAmount());
+                        stringbuilder.append(df.format(solution.getAmount()));
                         vTV.get(i).setText(stringbuilder);
 
                         linearAccountClear.addView(vTV.get(i));

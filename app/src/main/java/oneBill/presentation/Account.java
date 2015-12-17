@@ -140,8 +140,8 @@ public class Account extends AppCompatActivity {
                 case "ACCOM":
                     type = "住宿";
                     break;
-                case "OTHER":
-                    type = "其他";
+                case "LOAN":
+                    type = "借款";
                     break;
                 default:
                     type = "其他";
@@ -190,8 +190,8 @@ public class Account extends AppCompatActivity {
                         case "ACCOM":
                             type = "住宿";
                             break;
-                        case "OTHER":
-                            type = "其他";
+                        case "LOAN":
+                            type = "借款";
                             break;
                         default:
                             type = "其他";
