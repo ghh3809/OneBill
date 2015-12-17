@@ -56,7 +56,7 @@ public class SettleModify {
 
     public static boolean hasLimit(String giver,String receiver,String[][] limit){
         for(int j=0;j<limit[0].length;j++){
-            if(giver==limit[0][j]&&receiver==limit[1][j]){
+            if((giver==limit[0][j]&&receiver==limit[1][j])||(giver==limit[1][j]&&receiver==limit[0][j])){
                 return true;
             }
         }
@@ -96,7 +96,7 @@ public class SettleModify {
             }
             Person receiver= pVecDym.get(pVecDymName.indexOf(receiverName));
             receiver.setPaid(receiver.getPaid() - solu.getAmount());
-            if(Math.abs(receiver.getPaid())<=0.01){
+            if(Math.abs(receiver.getPaid())<0.01){
                 pVecDymName.remove(receiver.getName());
                 pVecDym.remove(receiver);
             }
