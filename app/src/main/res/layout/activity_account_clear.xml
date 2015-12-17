@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -9,6 +9,7 @@
     android:background="@drawable/ic_background">
 
     <LinearLayout
+        android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="30sp"
         android:orientation="horizontal">
@@ -28,10 +29,13 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/iv1"
+        android:layout_below="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="10sp" />
 
     <Button
+        android:layout_below="@id/iv1"
         android:id="@+id/btnSolve"
         android:textSize="20sp"
         android:text="获取方案"
@@ -39,15 +43,19 @@
         android:layout_height="wrap_content" />
 
     <ImageView
+        android:id="@+id/iv2"
+        android:layout_below="@id/btnSolve"
         android:layout_width="match_parent"
         android:layout_height="5sp" />
 
     <ScrollView
+        android:id="@+id/scroll1"
+        android:layout_below="@id/iv2"
         android:background="#40ffffff"
         android:scrollbars="vertical"
         android:fadingEdge="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="250sp">
+        android:layout_height="200sp">
 
         <LinearLayout
             android:id="@+id/linearAccountClear"
@@ -60,15 +68,19 @@
     </ScrollView>
 
     <ImageView
+        android:id="@+id/iv3"
+        android:layout_below="@+id/scroll1"
         android:layout_width="match_parent"
         android:layout_height="10sp" />
 
     <ScrollView
+        android:id="@+id/scroll2"
+        android:layout_below="@id/iv3"
         android:background="#40ffffff"
         android:scrollbars="vertical"
         android:fadingEdge="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="100sp">
+        android:layout_height="180sp">
 
         <LinearLayout
             android:id="@+id/linearAccountClearConstraint"
@@ -80,11 +92,8 @@
         </LinearLayout>
     </ScrollView>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="10sp" />
-
     <TextView
+        android:layout_alignParentBottom="true"
         android:id="@+id/tvAddConstraint"
         android:background="#40ffffff"
         android:textSize="18sp"
@@ -92,4 +101,4 @@
         android:text="+增加约束"
         android:layout_width="match_parent"
         android:layout_height="25sp" />
-</LinearLayout>
+</RelativeLayout>

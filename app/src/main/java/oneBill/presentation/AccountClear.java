@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
@@ -174,13 +175,14 @@ public class AccountClear extends AppCompatActivity {
                     for(int i = 0; i < numAccountClear; ++ i){
                         vTV.add(i, new TextView(AccountClear.this));
 
+                        DecimalFormat df = new DecimalFormat("#0.00");
                         StringBuilder stringbuilder = new StringBuilder();
                         Solution solution = arraylist.get(i);
                         stringbuilder.append(solution.getGiver());
                         stringbuilder.append("    给    ");
                         stringbuilder.append(solution.getReceiver());
                         stringbuilder.append("    ￥    ");
-                        stringbuilder.append(solution.getAmount());
+                        stringbuilder.append(df.format(solution.getAmount()));
                         vTV.get(i).setText(stringbuilder);
 
                         linearAccountClear.addView(vTV.get(i));
