@@ -36,20 +36,12 @@ public class Writer {
         db.insert("Book", null, cv);
     }
 
-    public void AddPerson(String _bookName ,ArrayList<String> _persons) {
-        db.beginTransaction();
-        try {
-            for (String person : _persons) {
-                db.execSQL("INSERT INTO person VALUES(?, ?, ?)", new String[]{person, _bookName, "1"});
-            }
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
-    }
-
     public void AddPerson(String _bookName, String _person) {
         db.execSQL("INSERT INTO person VALUES(?, ?, ?)", new String[]{_person, _bookName, "1"});
+    }
+
+    public void UpdatePerson(String _bookName, String _person) {
+        db.execSQL("UPDATE person SET IsExist = 1 WHERE BookName = ? AND Name = ?", new String[]{_bookName, _person});
     }
 
     public void AddLog(int _id, String _type, String _bookName, double _amount) {

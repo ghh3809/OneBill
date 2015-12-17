@@ -12,6 +12,7 @@ import oneBill.domain.entity.Solution;
 import oneBill.domain.entity.Type;
 import oneBill.domain.entity.error.AmountMismatchException;
 import oneBill.domain.entity.error.DuplicationNameException;
+import oneBill.domain.entity.error.MemberReturnException;
 import oneBill.domain.entity.error.UnableToClearException;
 import oneBill.foundation.Reader;
 import oneBill.foundation.Writer;
@@ -55,9 +56,20 @@ public class Broker {
         writer.DeleteBook(_bookName);
     }
 
-    public void CreateMember(String _bookName, String _person) throws DuplicationNameException {
-        Cursor c = reader.QueryAllPerson(_bookName);
+    public void CreateMember(String _bookName, String _person) throws DuplicationNameException, MemberReturnException {
+        Cursor c = reader.QueryDeletedPerson(_bookName);
         ArrayList<String> persons = new ArrayList<String>();
+        while(c.moveToNext()) {
+            persons.add(c.getString(c.getColumnIndex("Name")));
+        }
+        for(int i = 0; i < persons.size(); i ++) {
+            if(persons.get(i).equals(_person)) {
+                writer.UpdatePerson(_bookName, _person);
+                throw new MemberReturnException();
+            }
+        }
+        c = reader.QueryPerson(_bookName);
+        persons = new ArrayList<String>();
         while(c.moveToNext()) {
             persons.add(c.getString(c.getColumnIndex("Name")));
         }
@@ -66,6 +78,11 @@ public class Broker {
         }
         writer.AddPerson(_bookName, _person);
         writer.UpdateBookTime(_bookName);
+
+    }
+
+    public void ReturnMember(String _bookName, String _person) {
+
     }
 
     public ArrayList<String> GetMember(String _bookName) {
