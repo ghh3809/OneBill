@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +28,7 @@ public class AccountClear extends AppCompatActivity {
     int numAccountClear = 0;
     ImageView ivToAccountFromClear;
     TextView tvNameInClear,tvAddConstraint;
-    Button btnSolve;
+    TextView tvSolve;
     LinearLayout linearAccountClear;
     LinearLayout linearAccountClearConstraint;
     Vector<TextView> vTV = new Vector<TextView>();
@@ -117,8 +116,8 @@ public class AccountClear extends AppCompatActivity {
             }
         });
 
-        btnSolve = (Button) findViewById(R.id.btnSolve);
-        btnSolve.setOnClickListener(new View.OnClickListener() {
+        tvSolve = (TextView) findViewById(R.id.tvSolve);
+        tvSolve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {;
                 /*先把已有的解决方案清空*/
