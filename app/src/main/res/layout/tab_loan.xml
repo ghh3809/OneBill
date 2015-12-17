@@ -19,9 +19,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
         android:layout_alignTop="@+id/imageView"
-        android:layout_toLeftOf="@+id/imageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toLeftOf="@+id/imageView" />
 
     <TextView
         android:layout_width="wrap_content"

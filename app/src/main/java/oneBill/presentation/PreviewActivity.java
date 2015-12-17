@@ -37,6 +37,12 @@ public class PreviewActivity extends AppCompatActivity {
         payable=intent.getDoubleArrayExtra("payable");
         person=intent.getStringArrayExtra("person");
 
+        DecimalFormat df=new DecimalFormat("#0.00");
+        double sum=0;
+        for(int j=0;j<person.length;j++) sum=sum+paid[j];
+        TextView amount_text=(TextView)findViewById(R.id.amount_text);
+        amount_text.setText("￥"+String.valueOf(df.format(sum)));
+
         LinearLayout display_layout= (LinearLayout) findViewById(R.id.display_layout);
 
         findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
@@ -70,7 +76,6 @@ public class PreviewActivity extends AppCompatActivity {
             }
         });
 
-        DecimalFormat df=new DecimalFormat("#0.00");
         for(int i=0;i<person.length;i++){
             LinearLayout panel=new LinearLayout(this);
             panel.setOrientation(LinearLayout.HORIZONTAL);

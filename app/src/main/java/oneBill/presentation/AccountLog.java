@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -126,23 +127,44 @@ public class AccountLog extends AppCompatActivity {
         ivDeleteAccountFromLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(AccountLog.this)
-                    .setTitle("Alert!")
-                    .setMessage("确认删除此记录?")
-                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            actioner.DeleteRecord(id);
-                            Intent intent1 = new Intent(AccountLog.this,Account.class);
-                            intent1.putExtra("name",name);
-                            startActivity(intent1);
-                        }
-                    })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    }).show();
+                //先判断记录中所有成员是不是都存在，如果不是不可删除（deletable = false）
+                boolean deletable = true;
+                ArrayList<String> namelist = actioner.GetMember(name);
+                ArrayList<ArrayList<String>> loglist = actioner.GetDetail(id);
+                for(int i = 0; i < loglist.size(); ++ i){
+                    String logperson = loglist.get(i).get(0);
+                    boolean exist = false;
+
+                    for(int j = 0; j < namelist.size(); ++ j) if(logperson.equals(namelist.get(j)))
+                        exist = true;
+
+                    if(!exist){
+                        deletable = false;
+                        break;
+                    }
+                }
+
+                if(!deletable){
+                    Toast.makeText(getApplicationContext(),"记录中有成员离开，无法删除",Toast.LENGTH_SHORT).show();
+                }else {
+                    new AlertDialog.Builder(AccountLog.this)
+                            .setTitle("Alert!")
+                            .setMessage("确认删除此记录?")
+                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    actioner.DeleteRecord(id);
+                                    Intent intent1 = new Intent(AccountLog.this, Account.class);
+                                    intent1.putExtra("name", name);
+                                    startActivity(intent1);
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
+                }
             }
         });
     }

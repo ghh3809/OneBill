@@ -33,7 +33,10 @@ public class PayableActivity extends AppCompatActivity {
     double addition;
     double[] additionArray;
     boolean[] isLock;
+    double final_sum;
     double remainSum;
+    boolean isOperating;
+    boolean hasNegative;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +65,10 @@ public class PayableActivity extends AppCompatActivity {
         sum_text.setText("总计￥"+String.valueOf(df.format(sum)));
         TextView current_sum_text = (TextView) findViewById(R.id.current_sum_text);
         current_sum_text.setText("总和数￥" + String.valueOf(df.format(sum)));
-        final double final_sum=sum;
+        final_sum=sum;
         remainSum=sum;
+        isOperating=false;
+        hasNegative=false;
 
         LinearLayout input_layout= (LinearLayout) findViewById(R.id.input_layout);
 
@@ -93,16 +98,23 @@ public class PayableActivity extends AppCompatActivity {
                 }
                 @Override
                 public void afterTextChanged(Editable s) {
-                    remainSum=0;
-                    if("".equals(s.toString())||".".equals(s.toString())) after="0";
-                    else after=s.toString();
-                    for(int j=0;j<person.length;j++){
-                        if(j==edit.getId()-1) remainSum+=Double.valueOf(after);
-                        else remainSum+=payable[j];
+                    if(isOperating){
+                        remainSum=final_sum;
+                        TextView current_sum_text = (TextView) findViewById(R.id.current_sum_text);
+                        current_sum_text.setText("总和数￥" + String.valueOf(df.format(remainSum)));
                     }
-                    payable[edit.getId()-1]=Double.valueOf(after);
-                    TextView current_sum_text = (TextView) findViewById(R.id.current_sum_text);
-                    current_sum_text.setText("总和数￥" + String.valueOf(df.format(remainSum)));
+                    else{
+                        remainSum=0;
+                        if("".equals(s.toString())||".".equals(s.toString())) after="0";
+                        else after=s.toString();
+                        for(int j=0;j<person.length;j++){
+                            if(j==edit.getId()-1) remainSum+=Double.valueOf(after);
+                            else remainSum+=payable[j];
+                        }
+                        payable[edit.getId()-1]=Double.valueOf(after);
+                        TextView current_sum_text = (TextView) findViewById(R.id.current_sum_text);
+                        current_sum_text.setText("总和数￥" + String.valueOf(df.format(remainSum)));
+                    }
                 }
             });
 
@@ -117,6 +129,7 @@ public class PayableActivity extends AppCompatActivity {
             lockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    isOperating=true;
                     if (isLock[v.getId() - 101]) {
                         EditText edit = (EditText) findViewById(v.getId() - 100);
                         edit.setEnabled(true);
@@ -141,10 +154,16 @@ public class PayableActivity extends AppCompatActivity {
                         for (int k = 0; k < person.length; k++)
                             if (!isLock[k]){
                                 payable[k]=additionArray[k] + currentSum / numOfNotLock;
+                                if(payable[k]<0) hasNegative=true;
                                 ((EditText) findViewById(k + 1)).setText(String.valueOf(df.format(payable[k])));
                             }
-                    remainSum=final_sum;
+                        remainSum=final_sum;
                     }
+                    if(hasNegative){
+                        PayableActivity.this.initialize();
+                        PayableActivity.this.warning();
+                    }
+                    isOperating=false;
                 }
             });
 
@@ -164,6 +183,7 @@ public class PayableActivity extends AppCompatActivity {
                     dialogView.findViewById(R.id.comfirm_add_button).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            isOperating=true;
                             EditText addition_edit = (EditText) dialogView.findViewById(R.id.addition_text);
                             if ("".equals(addition_edit.getText().toString())||".".equals(addition_edit.getText().toString())) addition = 0;
                             else addition = Double.valueOf(addition_edit.getText().toString());
@@ -183,9 +203,15 @@ public class PayableActivity extends AppCompatActivity {
                             for(int k=0;k<person.length;k++)
                                 if (!isLock[k]){
                                     payable[k]=additionArray[k] + currentSum / numOfNotLock;
+                                    if(payable[k]<0) hasNegative=true;
                                     ((EditText) findViewById(k + 1)).setText(String.valueOf(df.format(payable[k])));
                                 }
+                            if(hasNegative){
+                                PayableActivity.this.initialize();
+                                PayableActivity.this.warning();
+                            }
                             remainSum=final_sum;
+                            isOperating=false;
                         }
                     });
                 }
@@ -221,17 +247,7 @@ public class PayableActivity extends AppCompatActivity {
                 intent.putExtra("person", person);
                 intent.putExtra("paid", paid);
                 intent.putExtra("payable", payable);
-                if(remainSum!=final_sum){
-                    Toast warning_toast=new Toast(PayableActivity.this);
-                    TextView warning_text=new TextView(PayableActivity.this);
-                    warning_text.setText("应付输入有误");
-                    warning_text.setTextSize(24);
-                    warning_text.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    warning_toast.setView(warning_text);
-                    warning_toast.setDuration(Toast.LENGTH_LONG);
-                    warning_toast.setGravity(Gravity.CENTER,0,0);
-                    warning_toast.show();
-                }
+                if(remainSum!=final_sum) PayableActivity.this.warning();
                 else startActivity(intent);
             }
         });
@@ -240,5 +256,31 @@ public class PayableActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         actioner.CloseDataBase();
+    }
+
+    protected void initialize(){
+        DecimalFormat df=new DecimalFormat("#0.00");
+        for(int i=0;i<person.length;i++){
+            additionArray[i]=0;
+            isLock[i]=false;
+            payable[i]=final_sum/person.length;
+            EditText edit= (EditText) findViewById(i+1);
+            edit.setText(String.valueOf(df.format(payable[i])));
+            edit.setEnabled(true);
+            findViewById(101 + i).setBackgroundResource(R.mipmap.unlock);
+        }
+        hasNegative=false;
+    }
+
+    protected void warning(){
+        Toast warning_toast=new Toast(PayableActivity.this);
+        TextView warning_text=new TextView(PayableActivity.this);
+        warning_text.setText("应付输入有误");
+        warning_text.setTextSize(22);
+        warning_text.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        warning_toast.setView(warning_text);
+        warning_toast.setDuration(Toast.LENGTH_SHORT);
+        warning_toast.setGravity(Gravity.CENTER,0,0);
+        warning_toast.show();
     }
 }

@@ -16,6 +16,7 @@ import java.util.Vector;
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
 import oneBill.domain.entity.error.DuplicationNameException;
+import oneBill.domain.entity.error.MemberReturnException;
 import oneBill.domain.entity.error.NullException;
 
 public class AddBook extends AppCompatActivity {
@@ -90,7 +91,7 @@ public class AddBook extends AppCompatActivity {
                                 } catch (DuplicationNameException e) {
                                     duplicatename=true;
                                     e.printStackTrace();
-                                }
+                                } catch (MemberReturnException e) {}
                         }
                             try {
                                 actioner.CreateMember(bookname, etaddperson.getText().toString());
@@ -100,7 +101,7 @@ public class AddBook extends AppCompatActivity {
                             } catch (DuplicationNameException e) {
                                 duplicatename=true;
                                 e.printStackTrace();
-                            }
+                            } catch (MemberReturnException e) {}
                         if(nullname)
                             Toast.makeText(getApplicationContext(),"参与人员中存在空的人名，已自动忽略",Toast.LENGTH_SHORT).show();
                         if(duplicatename)

@@ -22,8 +22,8 @@ public class Reader {
         return c;
     }
 
-    public Cursor QueryAllPerson(String _bookName) {
-        Cursor c = db.rawQuery("SELECT * FROM person WHERE BookName = ?", new String[]{_bookName});
+    public Cursor QueryDeletedPerson(String _bookName) {
+        Cursor c = db.rawQuery("SELECT * FROM person WHERE BookName = ? AND IsExist = 0", new String[]{_bookName});
         return c;
     }
 

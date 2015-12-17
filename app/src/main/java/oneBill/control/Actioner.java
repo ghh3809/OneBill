@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import oneBill.domain.entity.Solution;
 import oneBill.domain.entity.error.AmountMismatchException;
 import oneBill.domain.entity.error.DuplicationNameException;
+import oneBill.domain.entity.error.MemberReturnException;
 import oneBill.domain.entity.error.NullException;
 import oneBill.domain.entity.error.UnableToClearException;
 import oneBill.domain.mediator.Broker;
@@ -71,7 +72,7 @@ public class Actioner {
      * @param _person 要创建成员的姓名
      * @throws DuplicationNameException 当与已有成员出现重名时，抛出此异常
      */
-    public void CreateMember(String _bookName, String _person) throws NullException, DuplicationNameException {
+    public void CreateMember(String _bookName, String _person) throws NullException, DuplicationNameException, MemberReturnException {
         if (_person.trim().equals("")) throw new NullException();
         String person = _person.trim();
         br.CreateMember(_bookName, person);
@@ -160,6 +161,7 @@ public class Actioner {
      * @param _amount 借款金额
      */
     public void CreateLoanRecord(String _bookName, String _lender, String _borrower, double _amount) {
+        if (_lender.equals(_borrower)) return;
         if (_amount > 0) br.CreateLoanRecord(_bookName, _lender, _borrower, _amount);
         else if (_amount < 0) br.CreateLoanRecord(_bookName, _borrower, _lender, -_amount);
     }
@@ -241,12 +243,4 @@ public class Actioner {
         br.CloseDataBase();
     }
 
-    /**
-     * 返回消费/借贷类型.
-     * 返回消费或者借贷的类型列表，包括FOOD, TRANS, PLAY, ACCOM, OTHER, LOAN几种。
-     * @return 类型列表
-     */
-    public ArrayList<String> GetType() {
-        return br.GetType();
-    }
 }

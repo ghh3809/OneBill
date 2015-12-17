@@ -5,55 +5,48 @@ import java.util.ArrayList;
 
 import oneBill.domain.entity.error.UnableToClearException;
 
-/**
- * Created by 豪豪 on 2015/12/16.
- */
 public class SettleModify {
     public SettleModify() {
     }
 
-    public class Point {
+    public class Point{
         public String name;
         public ArrayList<String> neighbor;
-
         public Point(String name) {
-            this.name = name;
-            this.neighbor = new ArrayList<String>();
+            this.name=name;
+            this.neighbor=new ArrayList<String>();
         }
     }
 
-    public static void settlePerson(Point point, ArrayList<Point> pointVec,
-                                    ArrayList<String> pointVecName) {
+    public static void settlePerson(Point point,ArrayList<Point> pointVec,ArrayList<String> pointVecName){
         pointVec.remove(point);
         pointVecName.remove(point.name);
-        Iterator<Point> poIterator = pointVec.iterator();
-        while (poIterator.hasNext())
+        Iterator<Point> poIterator=pointVec.iterator();
+        while(poIterator.hasNext())
             poIterator.next().neighbor.remove(point.name);
     }
 
     public static String findMostLimit(ArrayList<Point> pointVec) {
-        int degree = pointVec.size();
-        String mostLimit = null;
-        Iterator<Point> poIterator = pointVec.iterator();
-        while (poIterator.hasNext()) {
-            Point thePoint = poIterator.next();
-            if (degree > thePoint.neighbor.size()) {
-                degree = thePoint.neighbor.size();
-                mostLimit = thePoint.name;
+        int degree=pointVec.size();
+        String mostLimit=null;
+        Iterator<Point> poIterator=pointVec.iterator();
+        while(poIterator.hasNext()){
+            Point thePoint=poIterator.next();
+            if(degree>thePoint.neighbor.size()){
+                degree=thePoint.neighbor.size();
+                mostLimit=thePoint.name;
             }
         }
         return mostLimit;
     }
 
-    public static String findMostLimitNeighbor(Point point,
-                                               ArrayList<Point> pointVec) {
-        int degree = pointVec.size();
-        String mostNeighbor = null;
+    public static String findMostLimitNeighbor(Point point,ArrayList<Point> pointVec) {
+        int degree=pointVec.size();
+        String mostNeighbor=null;
         Iterator<Point> poIterator = pointVec.iterator();
         while (poIterator.hasNext()) {
             Point thePoint = poIterator.next();
-            if (degree > thePoint.neighbor.size()
-                    && point.neighbor.indexOf(thePoint.name) != -1) {
+            if (degree > thePoint.neighbor.size()&& point.neighbor.indexOf(thePoint.name) != -1) {
                 degree = thePoint.neighbor.size();
                 mostNeighbor = thePoint.name;
             }
@@ -61,13 +54,23 @@ public class SettleModify {
         return mostNeighbor;
     }
 
-    public ArrayList<Solution> SettleTest(ArrayList<Person> pVec, ArrayList<Solution> sVec) throws UnableToClearException {
-        ArrayList<Person> pVecDym;
+    public static boolean hasLimit(String giver,String receiver,String[][] limit){
+        for(int j=0;j<limit[0].length;j++){
+            if(giver==limit[0][j]&&receiver==limit[1][j]){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<Solution> SettleTest(ArrayList<Person> pVec,ArrayList<Solution> sVec) throws UnableToClearException{
+        ArrayList<Person> pVecDym = new ArrayList<Person>();
         ArrayList<String> pVecName = new ArrayList<String>();
-        ArrayList<String> pVecDymName;
-        ArrayList<Solution> sVecDym;
+        ArrayList<String> pVecDymName = new ArrayList<String>();
+        ArrayList<Solution> sVecDym = new ArrayList<Solution>();
         ArrayList<Point> pointVec = new ArrayList<Point>();
         ArrayList<String> pointVecName = new ArrayList<String>();
+        String[][] limit;
 
         Iterator<Person> pVecIterator = pVec.iterator();
         while (pVecIterator.hasNext())
@@ -75,17 +78,36 @@ public class SettleModify {
         pVecDym = (ArrayList<Person>) pVec.clone();
         pVecDymName = (ArrayList<String>) pVecName.clone();
         sVecDym = (ArrayList<Solution>) sVec.clone();
+        limit=new String[2][sVecDym.size()];
 
-        Iterator<Person> settleZeroIterator = pVec.iterator();
+        Iterator<Solution> sVecDymIterator1=sVecDym.iterator();
+        int i=0;
+        while(sVecDymIterator1.hasNext()){
+            Solution solu=new Solution(sVecDymIterator1.next());
+            String giverName=solu.getGiver();
+            String receiverName=solu.getReceiver();
+            limit[0][i]=giverName;
+            limit[1][i]=receiverName;
+            Person giver=pVecDym.get(pVecDymName.indexOf(giverName));
+            giver.setPaid(giver.getPaid()+solu.getAmount());
+            if(Math.abs(giver.getPaid())<0.01){
+                pVecDymName.remove(giver.getName());
+                pVecDym.remove(giver);
+            }
+            Person receiver= pVecDym.get(pVecDymName.indexOf(receiverName));
+            receiver.setPaid(receiver.getPaid() - solu.getAmount());
+            if(Math.abs(receiver.getPaid())<=0.01){
+                pVecDymName.remove(receiver.getName());
+                pVecDym.remove(receiver);
+            }
+            i++;
+        }
+
+        Iterator<Person> settleZeroIterator = pVecDym.iterator();
         while (settleZeroIterator.hasNext()) {
             Person person = settleZeroIterator.next();
-            if (Math.abs(person.getPaid()) < 0.01) {
-                pVecDym.remove(person);
-                pVecDymName.remove(person.getName());
-            } else {
-                pointVec.add(new SettleModify().new Point(person.getName()));
-                pointVecName.add(person.getName());
-            }
+            pointVec.add(this.new Point(person.getName()));
+            pointVecName.add(person.getName());
         }
 
         Iterator<Point> poIterator = pointVec.iterator();
@@ -94,47 +116,10 @@ public class SettleModify {
             Iterator<String> pointVecNameIterator = pointVecName.iterator();
             while (pointVecNameIterator.hasNext()) {
                 String neighbor = pointVecNameIterator.next();
-                double binary = pVecDym.get(pVecDymName.indexOf(thePoint.name))
-                        .getPaid()
-                        * pVecDym.get(pVecDymName.indexOf(neighbor)).getPaid();
-                if (binary < 0)
+                if (!hasLimit(thePoint.name, neighbor, limit)
+                        && thePoint.name != neighbor)
                     thePoint.neighbor.add(neighbor);
             }
-        }
-
-        Iterator<Solution> sVecDymIterator1 = sVecDym.iterator();
-        int i = 0;
-        while (sVecDymIterator1.hasNext()) {
-            Solution solu = new Solution(sVecDymIterator1.next());
-            String giverName = solu.getGiver();
-            String receiverName = solu.getReceiver();
-            pointVec.get(pointVecName.indexOf(giverName)).neighbor
-                    .remove(receiverName);
-            Person giver = pVecDym.get(pVecDymName.indexOf(giverName));
-            giver.setPaid(giver.getPaid() + solu.getAmount());
-            if (Math.abs(giver.getPaid()) < 0.01) {
-                pVecDymName.remove(giver.getName());
-                pVecDym.remove(giver);
-                settlePerson(pointVec.get(pointVecName.indexOf(giverName)),
-                        pointVec, pointVecName);
-            }
-            else
-                pointVec.get(pointVecName.indexOf(receiverName)).neighbor
-                        .remove(giverName);
-            Person receiver = pVecDym.get(pVecDymName.indexOf(receiverName));
-            receiver.setPaid(receiver.getPaid() - solu.getAmount());
-            if (Math.abs(receiver.getPaid()) <= 0.01) {
-                pVecDymName.remove(receiver.getName());
-                pVecDym.remove(receiver);
-                settlePerson(pointVec.get(pointVecName.indexOf(receiverName)),
-                        pointVec, pointVecName);
-            }
-            else {
-                if (giver.getPaid() != 0)
-                    pointVec.get(pointVecName.indexOf(giverName)).neighbor
-                            .remove(receiverName);
-            }
-            i++;
         }
 
         boolean hasCompleteSolution=false;
@@ -148,55 +133,23 @@ public class SettleModify {
             String mostNeighbor=findMostLimitNeighbor(pointVec.get(pointVecName.indexOf(mostLimit)),pointVec);
             if(mostNeighbor==null) break;
 
-            Person maxPayer;
-            Person minPayer;
-            if(pVecDym.get(pVecDymName.indexOf(mostLimit)).getPaid()>0){
-                maxPayer=pVecDym.get(pVecDymName.indexOf(mostLimit));
-                minPayer=pVecDym.get(pVecDymName.indexOf(mostNeighbor));
-            }
-            else{
-                maxPayer=pVecDym.get(pVecDymName.indexOf(mostNeighbor));
-                minPayer=pVecDym.get(pVecDymName.indexOf(mostLimit));
-            }
+            Person outPerson=pVecDym.get(pVecDymName.indexOf(mostLimit));
+            Person remainPerson=pVecDym.get(pVecDymName.indexOf(mostNeighbor));
+            remainPerson.setPaid(remainPerson.getPaid()+outPerson.getPaid());
 
-            if (maxPayer.getPaid() > -minPayer.getPaid()+0.01) {
-                maxPayer.setPaid(maxPayer.getPaid() + minPayer.getPaid());
-                Person newGiver = pVec
-                        .get(pVecName.indexOf(minPayer.getName()));
-                Person newReceiver = pVec.get(pVecName.indexOf(maxPayer
-                        .getName()));
-                Solution newSolu = new Solution(newGiver.getName(), newReceiver.getName(),
-                        -minPayer.getPaid());
-                sVecDym.add(newSolu);
-                pVecDymName.remove(minPayer.getName());
-                pVecDym.remove(minPayer);
-                settlePerson(pointVec.get(pointVecName.indexOf(minPayer.getName())), pointVec, pointVecName);
-            } else if (maxPayer.getPaid()+0.01 < -minPayer.getPaid()) {
-                minPayer.setPaid(maxPayer.getPaid() + minPayer.getPaid());
-                Person newGiver = pVec
-                        .get(pVecName.indexOf(minPayer.getName()));
-                Person newReceiver = pVec.get(pVecName.indexOf(maxPayer
-                        .getName()));
-                Solution newSolu = new Solution(newGiver.getName(), newReceiver.getName(),
-                        maxPayer.getPaid());
-                sVecDym.add(newSolu);
-                pVecDymName.remove(maxPayer.getName());
-                pVecDym.remove(maxPayer);
-                settlePerson(pointVec.get(pointVecName.indexOf(maxPayer.getName())), pointVec, pointVecName);
-            } else {
-                Person newGiver = pVec
-                        .get(pVecName.indexOf(minPayer.getName()));
-                Person newReceiver = pVec.get(pVecName.indexOf(maxPayer
-                        .getName()));
-                Solution newSolu = new Solution(newGiver.getName(), newReceiver.getName(),
-                        maxPayer.getPaid());
-                sVecDym.add(newSolu);
-                pVecDymName.remove(maxPayer.getName());
-                pVecDymName.remove(minPayer.getName());
-                pVecDym.remove(maxPayer);
-                pVecDym.remove(minPayer);
-                settlePerson(pointVec.get(pointVecName.indexOf(minPayer.getName())), pointVec, pointVecName);
-                settlePerson(pointVec.get(pointVecName.indexOf(maxPayer.getName())), pointVec, pointVecName);
+            Solution newSolu;
+            if(outPerson.getPaid()>0)
+                newSolu = new Solution(remainPerson.getName(), outPerson.getName(),outPerson.getPaid());
+            else
+                newSolu = new Solution(outPerson.getName(), remainPerson.getName(),-outPerson.getPaid());
+            sVecDym.add(newSolu);
+            pVecDymName.remove(outPerson.getName());
+            pVecDym.remove(outPerson);
+            settlePerson(pointVec.get(pointVecName.indexOf(outPerson.getName())), pointVec, pointVecName);
+            if(Math.abs(remainPerson.getPaid())<0.01){
+                pVecDymName.remove(remainPerson.getName());
+                pVecDym.remove(remainPerson);
+                settlePerson(pointVec.get(pointVecName.indexOf(remainPerson.getName())), pointVec, pointVecName);
             }
         }
 
