@@ -160,6 +160,7 @@ public class Actioner {
      * @param _amount 借款金额
      */
     public void CreateLoanRecord(String _bookName, String _lender, String _borrower, double _amount) {
+        if (_lender.equals(_borrower)) return;
         if (_amount > 0) br.CreateLoanRecord(_bookName, _lender, _borrower, _amount);
         else if (_amount < 0) br.CreateLoanRecord(_bookName, _borrower, _lender, -_amount);
     }
