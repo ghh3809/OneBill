@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent" android:layout_height="match_parent"
+android:id="@+id/tab_consume"
+android:background="@drawable/ic_background">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/relativeLayout3"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/food_button"
+        android:src="@mipmap/hot_drink"
+        android:alpha="1"
+        android:layout_weight="1"/>
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/trans_button"
+            android:src="@mipmap/car"
+            android:layout_weight="1"
+            android:alpha="0.5">
+        </ImageButton>
+
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/play_button"
+        android:src="@mipmap/joystick"
+        android:alpha="0.5"
+        android:layout_weight="1"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/accom_button"
+            android:src="@mipmap/house"
+            android:alpha="0.5"
+            android:layout_weight="1"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/other_button"
+        android:src="@mipmap/gift"
+        android:alpha="0.5"
+        android:layout_weight="1"/>
+</LinearLayout>
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:text="请对实际支付人输入支付金额"
+    android:textColor="@color/colorText"
+    android:textSize="18sp"
+    android:id="@+id/textView3"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:gravity="center_vertical"
+    android:layout_below="@+id/relativeLayout3" />
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView"
+    android:layout_below="@+id/textView3"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_above="@+id/sum_layout">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/input_layout">
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="80dp" -->
+        <!--android:textSize="18sp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="23333"/>-->
+    </LinearLayout>
+</ScrollView>
+
+<LinearLayout
+    android:id="@+id/sum_layout"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentBottom="true">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="总计￥"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        android:id="@+id/sum_text"
+        android:gravity="center"
+        android:layout_weight="1"/>
+</LinearLayout>
+
+</RelativeLayout>
