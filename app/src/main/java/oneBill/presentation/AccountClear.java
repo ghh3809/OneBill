@@ -155,19 +155,40 @@ public class AccountClear extends AppCompatActivity {
                     }
 
                     /*获取解决方案*/
-                    try {
-                        if(arraylistCons.size() == 0) {
+                    if(arraylistCons.size() == 0) {
+                        try {
+                            System.out.println("Without cons");
                             arraylist = actioner.SettleRecord(name);
+                        }catch (UnableToClearException e){
+                            Toast.makeText(getApplicationContext(),"无需清帐",Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
                         }
-                        else {
-                            arraylist = actioner.SettleRecord(name, arraylistCons);
-                        }
-                        numAccountClear = arraylist.size();
-                    } catch (UnableToClearException e) {
-                        Toast.makeText(getApplicationContext(),"无需清帐、或约束过多，请检查",Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
                     }
+                    else {
+                        try {
+                            System.out.println("With cons");
+                            arraylist = actioner.SettleRecord(name, arraylistCons);
+                        } catch (UnableToClearException e) {
+                            Toast.makeText(getApplicationContext(), "约束非法，请检查", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    }
+                    /*
+                    for(int i = 0; i < arraylistCons.size(); ++ i){
+                        System.out.println("cons");
+                        System.out.println(arraylistCons.get(i).getGiver());
+                        System.out.println(arraylistCons.get(i).getReceiver());
+                        System.out.println(arraylistCons.get(i).getAmount());
+                    }
+                    for(int i = 0; i < arraylist.size(); ++ i){
+                        System.out.println("solv");
+                        System.out.println(arraylist.get(i).getGiver());
+                        System.out.println(arraylist.get(i).getReceiver());
+                        System.out.println(arraylist.get(i).getAmount());
+                    }
+                    */
 
+                    numAccountClear = arraylist.size();
                     /*列示解决方案*/
                     for(int i = 0; i < numAccountClear; ++ i){
                         vTV.add(i, new TextView(AccountClear.this));
