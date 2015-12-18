@@ -125,8 +125,9 @@ public class AccountClear extends AppCompatActivity {
                     linearAccountClear.removeView(vTV.get(k));
                 numAccountClear = 0;
 
-                /*非浮点数的金额*/
-                boolean wrongNumber = false;
+                boolean wrongNumber = false, samePerson = false;
+
+                /*判断错误情况*/
                 for(int k = 0; k < countet; ++ k){
                     String string = vET.get(k).getText().toString();
                     try{
@@ -135,9 +136,25 @@ public class AccountClear extends AppCompatActivity {
                         wrongNumber = true;
                     }
                 }
+                for(int k = 0; k < countet; ++ k){
+                    String string1, string2;
+                    string1 = vSP.get(2 * k).getSelectedItem().toString();
+                    string2 = vSP.get(2 * k + 1).getSelectedItem().toString();
 
-                if(wrongNumber){
-                    Toast.makeText(getApplicationContext(), "请输入正确金额", Toast.LENGTH_SHORT).show();
+                    if(string1.equals(string2)){
+                        samePerson = true;
+                        break;
+                    }
+                }
+
+                if(wrongNumber || samePerson) {
+                    if (wrongNumber) {
+                        System.out.println("wrong number");
+                        Toast.makeText(getApplicationContext(), "请输入正确金额", Toast.LENGTH_SHORT).show();
+                    } else {
+                        System.out.println("same person");
+                        Toast.makeText(getApplicationContext(), "请输入不同成员", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else{
                     ArrayList<Solution> arraylist = new ArrayList<Solution>();
@@ -173,22 +190,11 @@ public class AccountClear extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                    /*
-                    for(int i = 0; i < arraylistCons.size(); ++ i){
-                        System.out.println("cons");
-                        System.out.println(arraylistCons.get(i).getGiver());
-                        System.out.println(arraylistCons.get(i).getReceiver());
-                        System.out.println(arraylistCons.get(i).getAmount());
-                    }
-                    for(int i = 0; i < arraylist.size(); ++ i){
-                        System.out.println("solv");
-                        System.out.println(arraylist.get(i).getGiver());
-                        System.out.println(arraylist.get(i).getReceiver());
-                        System.out.println(arraylist.get(i).getAmount());
-                    }
-                    */
 
                     numAccountClear = arraylist.size();
+                    if(numAccountClear == 0)
+                        Toast.makeText(getApplicationContext(),"无需清帐",Toast.LENGTH_SHORT).show();
+
                     /*列示解决方案*/
                     for(int i = 0; i < numAccountClear; ++ i){
                         vTV.add(i, new TextView(AccountClear.this));
@@ -205,14 +211,14 @@ public class AccountClear extends AppCompatActivity {
 
                         linearAccountClear.addView(vTV.get(i));
                     }
-
-                    /*清空约束条件*/
-                    for(int k = 0; k < countll; ++ k)
-                        linearAccountClearConstraint.removeView(vLL.get(k));
-                    countll = 0;
-                    countet = 0;
-                    countsp = 0;
                 }
+
+                /*清空约束条件*/
+                for(int k = 0; k < countll; ++ k)
+                    linearAccountClearConstraint.removeView(vLL.get(k));
+                countll = 0;
+                countet = 0;
+                countsp = 0;
             }
         });
     }
