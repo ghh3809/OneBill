@@ -18,36 +18,44 @@
         <activity
             android:name="oneBill.presentation.ManageMember"
             android:launchMode="singleTask"
-            android:label="@string/title_activity_manage_member">
+            android:label="@string/title_activity_manage_member"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="oneBill.presentation.PreviewActivity"
             android:launchMode="singleTask"
-            android:label="@string/title_activity_preview" >
+            android:label="@string/title_activity_preview"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="oneBill.presentation.PayableActivity"
             android:label="@string/title_activity_payable"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="oneBill.presentation.AddRecordActivity"
             android:label="@string/title_activity_add_record"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="oneBill.presentation.AddBook"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name="oneBill.presentation.DeleteMember"
             android:launchMode="singleTask"
-            android:label="@string/title_activity_delete_member" >
+            android:label="@string/title_activity_delete_member"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="oneBill.presentation.MainActivity"
             android:launchMode="singleTask"
             android:label="一叶账目"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,17 +65,20 @@
         <activity
             android:name="oneBill.presentation.Account"
             android:launchMode="singleTask"
-            android:label="@string/title_activity_account">
+            android:label="@string/title_activity_account"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="oneBill.presentation.AccountLog"
             android:label="@string/title_activity_account_log"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="oneBill.presentation.AccountClear"
             android:label="@string/title_activity_account_clear"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
