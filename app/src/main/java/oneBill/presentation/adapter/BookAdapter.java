@@ -2,6 +2,7 @@ package oneBill.presentation.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,9 @@ import oneBill.control.Actioner;
 import oneBill.domain.entity.Book;
 import oneBill.domain.entity.Log;
 import oneBill.presentation.AddRecordActivity;
+import oneBill.presentation.activity.AtyAddRecord;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by 豪豪 on 2017/3/18 0018.
@@ -33,12 +37,15 @@ public class BookAdapter extends ArrayAdapter<Book> {
     private Actioner actioner;
     //随机颜色，利用book的HashCode计算
     int[] randomColor = new int[]{R.color.darkGreen, R.color.lightGreen, R.color.darkBrown, R.color.lightBrown};
+    int progress;
 
     public BookAdapter(Actioner actioner, Context context, int textViewResourceId, List<Book> bookList) {
         super(context, textViewResourceId, bookList);
         this.resourceId = textViewResourceId;
         this.context = context;
         this.actioner = actioner;
+        SharedPreferences pref = context.getSharedPreferences("setting", MODE_PRIVATE);
+        progress = pref.getInt("MaxDetail", 1);
     }
 
     @NonNull
@@ -56,10 +63,10 @@ public class BookAdapter extends ArrayAdapter<Book> {
         ImageView imageviewAddRecord = (ImageView) view.findViewById(R.id.imageviewAddRecord);
         TextView textviewSum = (TextView) view.findViewById(R.id.textviewSum);
         TextView textviewRecent = (TextView) view.findViewById(R.id.textviewRecent);
-        textviewBand.setBackgroundResource(randomColor[book.hashCode() % 4]);
+        textviewBand.setBackgroundResource(randomColor[book.getName().hashCode() % 4]);
         textviewBookName.setText(book.getName());
         //首个显示详细内容，后续显示简要内容
-        if (position < 1) {
+        if (position < progress) {
             textviewSum.setVisibility(View.VISIBLE);
             textviewRecent.setVisibility(View.VISIBLE);
             textviewSum.setText("¥ " + actioner.GetSum(book.getName()));
@@ -76,9 +83,9 @@ public class BookAdapter extends ArrayAdapter<Book> {
         imageviewAddRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
-//                Intent intent = new Intent(BookAdapter.this.context, AtyWelcome.class);
-                Intent intent = new Intent(BookAdapter.this.context, AddRecordActivity.class);
+                //TODOe
+                        Intent intent = new Intent(BookAdapter.this.context, AtyAddRecord.class);
+//                Intent intent = new Intent(BookAdapter.this.context, AddRecordActivity.class);
                 intent.putExtra("bookName", book.getName());
                 BookAdapter.this.context.startActivity(intent);
             }

@@ -22,15 +22,17 @@ import java.util.ArrayList;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.domain.entity.Person;
 import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.domain.entity.error.MemberReturnException;
 import oneBill.domain.entity.error.NullException;
 
 public class ManageMember extends AppCompatActivity {
 
-    ArrayList<String> names = new ArrayList<String>();
-    ArrayList<Double> Bills = new ArrayList<Double>();
-    ArrayList<String> bills = new ArrayList<String>();
+    ArrayList<String> names = new ArrayList<>();
+    ArrayList<Double> Bills = new ArrayList<>();
+    ArrayList<String> bills = new ArrayList<>();
+    ArrayList<Person> persons = new ArrayList<>();
 
     String bookName;
     ListAdapter adapter = null;
@@ -82,8 +84,13 @@ public class ManageMember extends AppCompatActivity {
     public void initListAllPersons() {
         //从数据库获取names和bills
 
-        names = actioner.GetMember(bookName);
-        Bills = actioner.QueryNetAmount(bookName);
+
+        persons = actioner.GetMembers(bookName);
+        for (int i = 0; i < persons.size(); i ++) {
+            Bills.add(persons.get(i).getPaid());
+            names.add(persons.get(i).getName());
+        }
+//        Bills = actioner.QueryNetAmount(bookName);
 
         /*
         names.add("张三");
@@ -108,7 +115,7 @@ public class ManageMember extends AppCompatActivity {
     }
 
     public void showByMyBaseAdapter() {
-        adapter = new MyBaseAdapter(this, names, bills,Bills);
+        adapter = new MyBaseAdapter(this, names, bills, Bills);
         listView01.setAdapter(adapter);
     }
 

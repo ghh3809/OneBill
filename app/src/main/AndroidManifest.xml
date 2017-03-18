@@ -51,7 +51,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="oneBill.presentation.MainActivity"
+            android:name="oneBill.presentation.activity.AtyWelcome"
             android:launchMode="singleTask"
             android:label="一叶账目"
             android:theme="@style/AppTheme.NoActionBar"
@@ -61,6 +61,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="oneBill.presentation.activity.AtyMain"
+            android:launchMode="singleTask"
+            android:label="@string/title_activity_account"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="oneBill.presentation.Account"
@@ -76,6 +82,24 @@
         </activity>
         <activity
             android:name="oneBill.presentation.AccountClear"
+            android:label="@string/title_activity_account_clear"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="oneBill.presentation.activity.AtyAbout"
+            android:label="@string/title_activity_account_clear"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="oneBill.presentation.activity.AtySetting"
+            android:label="@string/title_activity_account_clear"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="oneBill.presentation.activity.AtyAddRecord"
             android:label="@string/title_activity_account_clear"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">

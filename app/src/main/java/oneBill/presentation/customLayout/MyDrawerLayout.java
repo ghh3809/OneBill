@@ -15,8 +15,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
-import oneBill.presentation.DrawerData;
-import oneBill.presentation.activity.AtyWelcome;
+import oneBill.presentation.activity.AtyAbout;
+import oneBill.presentation.activity.AtySetting;
 import oneBill.presentation.adapter.DrawerDataAdapter;
 
 /**
@@ -85,10 +85,15 @@ public class MyDrawerLayout extends LinearLayout implements AdapterView.OnItemCl
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch(parent.getId()) {
             case R.id.listviewDrawer:
-                Toast.makeText(MyDrawerLayout.this.context, "即将上线，敬请关注！", Toast.LENGTH_SHORT).show();
+                if (position == 0) {
+                    Intent intent = new Intent((Activity)context, AtySetting.class);
+                    context.startActivity(intent);
+                } else {
+                    Toast.makeText(MyDrawerLayout.this.context, "即将上线，敬请关注！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.listviewBottom:
-                Intent intent = new Intent((Activity)context, AtyWelcome.class);
+                Intent intent = new Intent((Activity)context, AtyAbout.class);
                 context.startActivity(intent);
                 break;
         }

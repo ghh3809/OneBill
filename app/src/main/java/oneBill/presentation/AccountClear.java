@@ -18,6 +18,7 @@ import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.domain.entity.Person;
 import oneBill.domain.entity.Solution;
 import oneBill.domain.entity.error.UnableToClearException;
 
@@ -51,11 +52,11 @@ public class AccountClear extends AppCompatActivity {
         actioner = new Actioner(this);
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
-        person=new String[actioner.GetMember(name).size()];
+        person=new String[actioner.GetMembers(name).size()];
         int index = 0;
-        Iterator iterator=actioner.GetMember(name).iterator();
+        Iterator iterator=actioner.GetMembers(name).iterator();
         while(iterator.hasNext()){
-            person[index]= (String) iterator.next();
+            person[index]= ((Person) iterator.next()).getName();
             index++;
         }
 

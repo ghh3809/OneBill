@@ -5,4 +5,26 @@ package oneBill.domain.entity;
  */
 
 public class Detail {
+
+    private String person;
+    private double paid;
+    private double payable;
+
+    public Detail(String person, double paid, double payable) {
+        this.person = person;
+        this.paid = paid;
+        this.payable = payable;
+    }
+
+    public String getPerson() {
+        return person;
+    }
+
+    public double getPaid() {
+        return paid;
+    }
+
+    public double getPayable() {
+        return payable;
+    }
 }

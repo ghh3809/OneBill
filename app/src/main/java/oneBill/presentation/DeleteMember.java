@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.domain.entity.Person;
 
 
 public class DeleteMember extends AppCompatActivity {
@@ -37,9 +38,9 @@ public class DeleteMember extends AppCompatActivity {
 
         //数据
         //TODO 获取成员清单
-        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<Person> persons = new ArrayList<>();
         actioner = new Actioner(this);
-        names = actioner.GetMember(bookName);
+        persons = actioner.GetMembers(bookName);
 
         //names.add("张三");
         //names.add("李四");
@@ -48,8 +49,11 @@ public class DeleteMember extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.personNameTo);
 
         ArrayList<String> data_List = new ArrayList();
-        data_List.addAll(names);
-        data_List.remove(deleteName);
+        for (int i = 0; i < persons.size(); i ++) {
+            if (!persons.get(i).getName().equals(deleteName)) {
+                data_List.add(persons.get(i).getName());
+            }
+        }
 
         //适配器
         arr_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,data_List);

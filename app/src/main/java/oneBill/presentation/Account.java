@@ -16,6 +16,8 @@ import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.domain.entity.Log;
+import oneBill.presentation.activity.AtyMain;
 
 public class Account extends AppCompatActivity {
     Actioner actioner;
@@ -27,8 +29,8 @@ public class Account extends AppCompatActivity {
     ImageView ivToClearFromAccount;
     ImageView ivDeleteFromAccount;
     String name;
-    ArrayList<ArrayList<String>> arraylist;
-    ArrayList<String> arraylist1;
+    ArrayList<Log> arraylist;
+    Log arraylist1;
     int numAccount;
     LinearLayout linearTime,linearType,linearCons;
     Vector<TextView> vTV = new Vector<TextView>();
@@ -54,7 +56,7 @@ public class Account extends AppCompatActivity {
         ivToMainFromAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Account.this, MainActivity.class));
+                startActivity(new Intent(Account.this, AtyMain.class));
                 Account.this.finish();
             }
         });
@@ -64,6 +66,7 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(Account.this, AddRecordActivity.class);
+//                Intent intent1 = new Intent(Account.this,AtyMain.class);
                 intent1.putExtra("bookName", name);
                 startActivity(intent1);
             }
@@ -74,6 +77,7 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(Account.this, ManageMember.class);
+//                Intent intent1 = new Intent(Account.this,AtyMain.class);
                 intent1.putExtra("bookName",name);
                 startActivity(intent1);
             }
@@ -84,6 +88,7 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(Account.this,AccountClear.class);
+//                Intent intent1 = new Intent(Account.this,AtyMain.class);
                 intent1.putExtra("name", name);
                 startActivity(intent1);
             }
@@ -94,13 +99,13 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(Account.this)
-                        .setTitle("Alert!")
-                        .setMessage("确认删除此帐本?")
+                        .setTitle("警告")
+                        .setMessage("确认删除此帐本？删除后，将无法恢复。")
                         .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 actioner.DeleteBook(name);
-                                startActivity(new Intent(Account.this, MainActivity.class));
+                                startActivity(new Intent(Account.this, AtyMain.class));
                                 Account.this.finish();
                             }
                         })
@@ -125,28 +130,7 @@ public class Account extends AppCompatActivity {
         for(int i = 0;i < numAccount;++ i) {
             final int num = i;  //传给ClickListener的final参数
             arraylist1 = arraylist.get(i);  //获取第i条记录
-            String type;
-            //把类型转换成中文
-            switch (arraylist1.get(3)){
-                case "FOOD":
-                    type = "吃喝";
-                    break;
-                case "TRANS":
-                    type = "交通";
-                    break;
-                case "PLAY":
-                    type = "娱乐";
-                    break;
-                case "ACCOM":
-                    type = "住宿";
-                    break;
-                case "LOAN":
-                    type = "借款";
-                    break;
-                default:
-                    type = "其他";
-                    break;
-            }
+            String type = arraylist1.getType();
 
             vTV.add(3 * i, new TextView(Account.this));   //三个TextView分别记录时间、类型、消费金额
             vTV.get(3*i).setId(3*i);
@@ -155,10 +139,10 @@ public class Account extends AppCompatActivity {
             vTV.add(3*i+2, new TextView(Account.this));
             vTV.get(3*i+2).setId(3*i+2);
 
-            Double amt1 = Double.parseDouble(arraylist1.get(2));
+            Double amt1 = arraylist1.getAmount();
             DecimalFormat df1 = new DecimalFormat("#0.00");
 
-            vTV.get(3*i).setText(arraylist1.get(1));
+            vTV.get(3*i).setText(arraylist1.getTime());
             vTV.get(3*i+1).setText(type);
             vTV.get(3*i+2).setText(df1.format(amt1));
 
@@ -174,41 +158,21 @@ public class Account extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     System.out.println(num);
-                    ArrayList<String> arrayList = arraylist.get(num);
-                    String type;
-                    //把类型转换成中文
-                    switch (arrayList.get(3)){
-                        case "FOOD":
-                            type = "吃喝";
-                            break;
-                        case "TRANS":
-                            type = "交通";
-                            break;
-                        case "PLAY":
-                            type = "娱乐";
-                            break;
-                        case "ACCOM":
-                            type = "住宿";
-                            break;
-                        case "LOAN":
-                            type = "借款";
-                            break;
-                        default:
-                            type = "其他";
-                            break;
-                    }
+                    Log arrayList = arraylist.get(num);
+                    String type = arrayList.getType();
 
                     Intent i = new Intent(Account.this, AccountLog.class);
+//                    Intent i = new Intent(Account.this, AtyMain.class);
                     Bundle b = new Bundle();
 
                     b.putString("name", name);
-                    b.putInt("id", Integer.parseInt(arrayList.get(0)));
+                    b.putInt("id", arrayList.getID());
 
-                    Double amt = Double.parseDouble(arrayList.get(2));
+                    Double amt = arrayList.getAmount();
                     DecimalFormat df = new DecimalFormat("#0.00");
 
                     StringBuilder sb1 = new StringBuilder();
-                    sb1.append(arrayList.get(1));
+                    sb1.append(arrayList.getTime());
                     sb1.append("   ￥");
                     sb1.append(df.format(amt));
                     sb1.append("    ");

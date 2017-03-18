@@ -24,7 +24,7 @@ public class PayableActivity extends AppCompatActivity {
 
     Actioner actioner;
     String bookName;
-    int type;
+    String type;
     String[] person;
     double[] paid;
     double[] payable;
@@ -46,7 +46,7 @@ public class PayableActivity extends AppCompatActivity {
         actioner=new Actioner(this);
         Intent intent=getIntent();
         bookName=intent.getStringExtra("bookName");
-        type= intent.getIntExtra("type", 0);
+        type = intent.getStringExtra("type");
         paid=intent.getDoubleArrayExtra("paid");
         person=intent.getStringArrayExtra("person");
         payable=new double[person.length];

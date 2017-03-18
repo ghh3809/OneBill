@@ -18,6 +18,7 @@ import oneBill.control.Actioner;
 import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.domain.entity.error.MemberReturnException;
 import oneBill.domain.entity.error.NullException;
+import oneBill.presentation.activity.AtyMain;
 
 public class AddBook extends AppCompatActivity {
     ImageButton ibtnaddperson;
@@ -26,16 +27,12 @@ public class AddBook extends AppCompatActivity {
     EditText etaddperson;
     EditText etname;
     Vector<EditText> personname=new Vector<EditText>();
-    int i=0;//输入人员的个数
+    int i = 0;//输入人员的个数
     String person;
-    RelativeLayout.LayoutParams etlaypa;
-    RelativeLayout.LayoutParams ibtnlaypa;
     LinearLayout llayaddperson;
-    RelativeLayout rlayibtn;
     private Actioner actioner;
     String bookname;
     View.OnClickListener oklistener;
-    Vector<String> addedperson=new Vector<String>();
     boolean nullname=false;
     boolean duplicatename=false;
 
@@ -72,7 +69,7 @@ public class AddBook extends AppCompatActivity {
         ibtnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(AddBook.this,MainActivity.class);
+                Intent intent= new Intent(AddBook.this, AtyMain.class);
                 startActivity(intent);
             }
         });
@@ -106,6 +103,7 @@ public class AddBook extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"参与人员中存在空的人名，已自动忽略",Toast.LENGTH_SHORT).show();
                         if(duplicatename)
                             Toast.makeText(getApplicationContext(), "参与人员出现重名，重名的已自动忽略", Toast.LENGTH_SHORT).show();
+                        //TODO
                         Intent intent = new Intent(AddBook.this, Account.class);
                         intent.putExtra("name", bookname);
                         startActivity(intent);

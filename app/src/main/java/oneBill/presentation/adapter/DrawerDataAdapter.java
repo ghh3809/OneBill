@@ -9,11 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
-import oneBill.presentation.DrawerData;
+import oneBill.presentation.customLayout.DrawerData;
 
 /**
  * Created by 豪豪 on 2017/3/18 0018.

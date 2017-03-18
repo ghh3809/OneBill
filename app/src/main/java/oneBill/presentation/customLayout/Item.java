@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
  * Class Item: each input can be seen as an item, and each item has a value and a type.
  * If the item is a number or a result, the value is the number or result; otherwise the value is -1.
  */
-public class Item {
+class Item {
 
     public double value = 0;
     public int type = 0;

@@ -1,4 +1,4 @@
-package oneBill.presentation.Activity;
+package oneBill.presentation.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import oneBill.control.Actioner;
 import oneBill.domain.entity.Book;
 import oneBill.presentation.Account;
 import oneBill.presentation.AddBook;
-import oneBill.presentation.BookAdapter;
+import oneBill.presentation.adapter.BookAdapter;
 
 /**
  * Created by 豪豪 on 2017/3/18 0018.
@@ -47,6 +47,11 @@ public class AtyMain extends AppCompatActivity implements View.OnClickListener, 
         imageviewMenu.setOnClickListener(this);
         imageviewHelp.setOnClickListener(this);
         imageviewAddBook.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         books = actioner.GetBooks();
         listviewBook.setAdapter(new BookAdapter(actioner, this, R.layout.book_data, books));
         listviewBook.setOnItemClickListener(this);

@@ -17,6 +17,8 @@ import java.util.Vector;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.domain.entity.Detail;
+import oneBill.domain.entity.Person;
 
 public class AccountLog extends AppCompatActivity {
     Actioner actioner;
@@ -28,7 +30,7 @@ public class AccountLog extends AppCompatActivity {
     String detail;
     int id;
     int numAccountLog;
-    ArrayList<ArrayList<String>> arraylist;
+    ArrayList<Detail> arraylist;
     Vector<TextView> vTV = new Vector<TextView>();
 
 
@@ -68,11 +70,11 @@ public class AccountLog extends AppCompatActivity {
 
             DecimalFormat df = new DecimalFormat("#0.00");
 
-            ArrayList<String> arraylist1 = arraylist.get(i);
+            Detail arraylist1 = arraylist.get(i);
             StringBuilder sb = new StringBuilder();
-            vTV.get(3 * i).setText(arraylist1.get(0));
-            vTV.get(3 * i + 1).setText(df.format(Double.parseDouble(arraylist1.get(1))));
-            vTV.get(3 * i + 2).setText(df.format(Double.parseDouble(arraylist1.get(2))));
+            vTV.get(3 * i).setText(arraylist1.getPerson());
+            vTV.get(3 * i + 1).setText(df.format(arraylist1.getPaid()));
+            vTV.get(3 * i + 2).setText(df.format(arraylist1.getPayable()));
 
             linearMember.addView(vTV.get(3 * i));
             linearPaid.addView(vTV.get(3 * i + 1));
@@ -129,13 +131,13 @@ public class AccountLog extends AppCompatActivity {
             public void onClick(View v) {
                 //先判断记录中所有成员是不是都存在，如果不是不可删除（deletable = false）
                 boolean deletable = true;
-                ArrayList<String> namelist = actioner.GetMember(name);
-                ArrayList<ArrayList<String>> loglist = actioner.GetDetail(id);
+                ArrayList<Person> namelist = actioner.GetMembers(name);
+                ArrayList<Detail> loglist = actioner.GetDetail(id);
                 for(int i = 0; i < loglist.size(); ++ i){
-                    String logperson = loglist.get(i).get(0);
+                    String logperson = loglist.get(i).getPerson();
                     boolean exist = false;
 
-                    for(int j = 0; j < namelist.size(); ++ j) if(logperson.equals(namelist.get(j)))
+                    for(int j = 0; j < namelist.size(); ++ j) if(logperson.equals(namelist.get(j).getName()))
                         exist = true;
 
                     if(!exist){

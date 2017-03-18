@@ -1,4 +1,4 @@
-package oneBill.presentation.Activity;
+package oneBill.presentation.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

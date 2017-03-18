@@ -12,9 +12,6 @@ public class Person {
         this.paid=paid;
     }
 
-    public Person() {
-    }
-
     public String getName() {
         return name;
     }

@@ -19,12 +19,14 @@ import java.util.Iterator;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.domain.entity.Person;
+import oneBill.domain.entity.Type;
 
 public class AddRecordActivity extends AppCompatActivity {
 
     String bookName;
     Actioner actioner;
-    int type;
+    Type type = Type.吃喝;
     String[] person;
     static AddRecordActivity instance;
 
@@ -35,11 +37,12 @@ public class AddRecordActivity extends AppCompatActivity {
         actioner=new Actioner(this);
         Intent intent=getIntent();
         bookName=intent.getStringExtra("bookName");
-        person=new String[actioner.GetMember(bookName).size()];
+        person=new String[actioner.GetMembers(bookName).size()];
         int index=0;
-        Iterator iterator=actioner.GetMember(bookName).iterator();
+        Iterator iterator=actioner.GetMembers(bookName).iterator();
         while(iterator.hasNext()){
-            person[index]= (String) iterator.next();
+            Person p = (Person) iterator.next();
+            person[index]= p.getName();
             index++;
         }
         instance=this;
@@ -52,13 +55,12 @@ public class AddRecordActivity extends AppCompatActivity {
         tabHost.addTab(tab2);
 
         Spinner spinner=(Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter =new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,person);
+        ArrayAdapter<String> adapter =new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,person);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         Spinner spinner2=(Spinner)findViewById(R.id.spinner2);
-        ArrayAdapter<String> adapter2 =new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,person);
+        ArrayAdapter<String> adapter2 =new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,person);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //ArrayAdapter<String> adapter2 =new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice,person);
         spinner2.setAdapter(adapter2);
 
         LinearLayout input_layout= (LinearLayout) findViewById(R.id.input_layout);
@@ -120,7 +122,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 play_button.setAlpha((float)0.5);
                 accom_button.setAlpha((float)0.5);
                 other_button.setAlpha((float)0.5);
-                type=1;
+                type=Type.吃喝;
             }
         });
         trans_button.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +133,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 play_button.setAlpha((float)0.5);
                 accom_button.setAlpha((float)0.5);
                 other_button.setAlpha((float)0.5);
-                type=2;
+                type=Type.交通;
             }
         });
         play_button.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +144,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 v.setAlpha((float)1.0);
                 accom_button.setAlpha((float)0.5);
                 other_button.setAlpha((float)0.5);
-                type=3;
+                type=Type.娱乐;
             }
         });
         accom_button.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +155,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 play_button.setAlpha((float)0.5);
                 v.setAlpha((float) 1.0);
                 other_button.setAlpha((float)0.5);
-                type=4;
+                type=Type.住宿;
             }
         });
         other_button.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +166,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 play_button.setAlpha((float)0.5);
                 accom_button.setAlpha((float)0.5);
                 v.setAlpha((float) 1.0);
-                type=5;
+                type=Type.其它;
             }
         });
 
@@ -187,9 +189,9 @@ public class AddRecordActivity extends AppCompatActivity {
                         if("".equals(edit.getText().toString())||".".equals(edit.getText().toString())) paid[i]=0;
                         else paid[i]=Double.valueOf(edit.getText().toString());
                     }
-                    Intent intent=new Intent(AddRecordActivity.this,PayableActivity.class);
+                    Intent intent=new Intent(AddRecordActivity.this, PayableActivity.class);
                     intent.putExtra("bookName",bookName);
-                    intent.putExtra("type",type);
+                    intent.putExtra("type",type.toString());
                     intent.putExtra("person",person);
                     intent.putExtra("paid",paid);
                     startActivity(intent);

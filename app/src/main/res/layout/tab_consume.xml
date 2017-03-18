@@ -60,7 +60,7 @@ android:background="@drawable/ic_background">
 <TextView
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:text="请对实际支付人输入支付金额"
+    android:text="实际支付金额      总计 ¥"
     android:textColor="@color/colorText"
     android:textSize="18sp"
     android:id="@+id/textView3"
@@ -82,32 +82,26 @@ android:background="@drawable/ic_background">
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/input_layout">
-        <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="80dp" -->
-        <!--android:textSize="18sp"-->
-        <!--android:gravity="center"-->
-        <!--android:text="23333"/>-->
     </LinearLayout>
 </ScrollView>
 
-<LinearLayout
-    android:id="@+id/sum_layout"
-    android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:orientation="horizontal"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentBottom="true">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="总计￥"
-        android:textColor="@color/colorText"
-        android:textSize="18sp"
-        android:id="@+id/sum_text"
-        android:gravity="center"
-        android:layout_weight="1"/>
-</LinearLayout>
+<!--<LinearLayout-->
+    <!--android:id="@+id/sum_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentBottom="true">-->
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:text="总计￥"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textColor="@color/colorText"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textSize="18sp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/sum_text"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_weight="1"/>&ndash;&gt;-->
+<!--</LinearLayout>-->
 
 </RelativeLayout>
