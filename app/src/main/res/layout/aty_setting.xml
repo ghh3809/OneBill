@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/up_margin"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:layout_marginRight="@dimen/left_margin"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/text_title"
+            android:text="首页展示详细账本数："/>
+
+        <SeekBar
+            android:id="@+id/seekbarNumber"
+            android:max="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textviewNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/text_title"
+            android:layout_marginLeft="@dimen/left_margin"
+            android:text="0"/>
+
+    </LinearLayout>
+</LinearLayout>

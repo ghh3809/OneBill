@@ -19,7 +19,7 @@ public class PreviewActivity extends AppCompatActivity {
 
     Actioner actioner;
     String bookName;
-    int type;
+    String type;
     String[] person;
     double[] paid;
     double[] payable;
@@ -32,7 +32,7 @@ public class PreviewActivity extends AppCompatActivity {
         actioner=new Actioner(this);
         Intent intent=getIntent();
         bookName=intent.getStringExtra("bookName");
-        type= (int) intent.getIntExtra("type",0);
+        type= intent.getStringExtra("type");
         paid=intent.getDoubleArrayExtra("paid");
         payable=intent.getDoubleArrayExtra("payable");
         person=intent.getStringArrayExtra("person");
@@ -62,17 +62,14 @@ public class PreviewActivity extends AppCompatActivity {
                     payable_list.add(payable[i]);
                 }
                 try {
-                    actioner.CreateConsumRecord(bookName,type,paid_list,payable_list);
+                    actioner.CreateConsumeRecord(bookName,type,paid_list,payable_list);
                     actioner.CloseDataBase();
                 } catch (AmountMismatchException e) {
                     e.printStackTrace();
                 }
                 Intent intent = new Intent(PreviewActivity.this, Account.class);
-                intent.putExtra("name",bookName);
+                intent.putExtra("bookName",bookName);
                 startActivity(intent);
-                PreviewActivity.this.finish();
-                PayableActivity.instance.finish();
-                AddRecordActivity.instance.finish();
             }
         });
 
@@ -97,7 +94,7 @@ public class PreviewActivity extends AppCompatActivity {
     }
     @Override
     protected void onDestroy(){
-        super.onDestroy();
         actioner.CloseDataBase();
+        super.onDestroy();
     }
 }

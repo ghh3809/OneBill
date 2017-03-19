@@ -32,13 +32,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS const" +
                 "(BookNum INT, IDNum INT)");
         db.execSQL("INSERT INTO const VALUES(0, 0)");
-//        Cursor c = db.rawQuery("SELECT COUNT(*) AS Num FROM const", null);
-//        int constNum = 0;
-//        while(c.moveToNext()) {
-//            constNum = c.getInt(c.getColumnIndex("Num"));
-//        }
-//        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + constNum);
-//        if (constNum == 0) db.execSQL("INSERT INTO const VALUES(0, 0)");
     }
 
     //如果DATABASE_VERSION值被改为2,系统发现现有数据库版本不同,即会调用onUpgrade

@@ -10,10 +10,14 @@
     <dimen name="left_margin_big">40dp</dimen>
 
     <dimen name="icon">24dp</dimen>
+    <dimen name="bigIcon">36dp</dimen>
 
 
     <dimen name="text_title">22sp</dimen>
     <dimen name="text_normal">18sp</dimen>
     <dimen name="text_large">36sp</dimen>
     <dimen name="text_small">14sp</dimen>
+
+    <dimen name="drawerWidth">240dp</dimen>
+    <dimen name="bandWidth">8dp</dimen>
 </resources>

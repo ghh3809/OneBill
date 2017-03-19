@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/layoutBack"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/left_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/icon"
+                android:layout_height="@dimen/icon"
+                android:src="@mipmap/arrow_head_left"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_gravity="center_vertical"
+                android:text="返回"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textviewTitle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_title"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="一叶账目"/>
+
+        <LinearLayout
+            android:id="@+id/layoutContinue"
+            android:orientation="horizontal"
+            android:layout_marginRight="@dimen/left_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:layout_gravity="center_vertical"
+                android:text="下一步"/>
+
+            <ImageView
+                android:layout_width="@dimen/icon"
+                android:layout_height="@dimen/icon"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/arrow_head_right"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TabHost
+        android:id="@+id/tabHost"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TabWidget>
+
+            <FrameLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include android:id="@+id/tab_consume" layout="@layout/tab_consume_add_record" />
+                <include android:id="@+id/tab_loan" layout="@layout/tab_loan_add_record" />
+
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+    <oneBill.presentation.customLayout.CalculatorLayout
+        android:id="@+id/calculatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </oneBill.presentation.customLayout.CalculatorLayout>
+</LinearLayout>
