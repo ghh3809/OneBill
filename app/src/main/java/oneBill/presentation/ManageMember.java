@@ -77,10 +77,10 @@ public class ManageMember extends AppCompatActivity {
 
     @Override
     protected void onDestroy(){
-        super.onDestroy();
         actioner.CloseDataBase();
-        ManageMember.this.finish();
+        super.onDestroy();
     }
+
     public void initListAllPersons() {
         //从数据库获取names和bills
 

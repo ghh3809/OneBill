@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import java.util.Vector;
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
 import oneBill.domain.entity.Log;
+import oneBill.presentation.activity.AtyAddRecord;
 import oneBill.presentation.activity.AtyMain;
 
 public class Account extends AppCompatActivity {
@@ -33,17 +35,28 @@ public class Account extends AppCompatActivity {
     Log arraylist1;
     int numAccount;
     LinearLayout linearTime,linearType,linearCons;
-    Vector<TextView> vTV = new Vector<TextView>();
+    Vector<TextView> vTV = new Vector<>();
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        name = intent.getStringExtra("bookName");
+        if (intent.getBooleanExtra("FromHome", false)) {
+            Intent newIntent = new Intent(Account.this, AtyAddRecord.class);
+            newIntent.putExtra("bookName", name);
+            startActivity(newIntent);
+        }
+    }
 
     @Override
     protected void onResume() {
+
         super.onResume();
         setContentView(R.layout.activity_account);
 
         actioner = new Actioner(this);
         final Intent intent = getIntent();
-        name = intent.getStringExtra("name");
-
         tvNameInAccount = (TextView) findViewById(R.id.tvNameInAccount);
         tvNameInAccount.setText(name);
 
@@ -57,7 +70,6 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Account.this, AtyMain.class));
-                Account.this.finish();
             }
         });
 
@@ -65,8 +77,7 @@ public class Account extends AppCompatActivity {
         ivAddLogFromAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Account.this, AddRecordActivity.class);
-//                Intent intent1 = new Intent(Account.this,AtyMain.class);
+                Intent intent1 = new Intent(Account.this, AtyAddRecord.class);
                 intent1.putExtra("bookName", name);
                 startActivity(intent1);
             }
@@ -77,7 +88,6 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(Account.this, ManageMember.class);
-//                Intent intent1 = new Intent(Account.this,AtyMain.class);
                 intent1.putExtra("bookName",name);
                 startActivity(intent1);
             }
@@ -87,9 +97,8 @@ public class Account extends AppCompatActivity {
         ivToClearFromAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Account.this,AccountClear.class);
-//                Intent intent1 = new Intent(Account.this,AtyMain.class);
-                intent1.putExtra("name", name);
+                Intent intent1 = new Intent(Account.this, AccountClear.class);
+                intent1.putExtra("bookName", name);
                 startActivity(intent1);
             }
         });
@@ -100,13 +109,12 @@ public class Account extends AppCompatActivity {
             public void onClick(View v) {
                 new AlertDialog.Builder(Account.this)
                         .setTitle("警告")
-                        .setMessage("确认删除此帐本？删除后，将无法恢复。")
+                        .setMessage("确认删除此帐本？删除后，将无法恢复！")
                         .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 actioner.DeleteBook(name);
                                 startActivity(new Intent(Account.this, AtyMain.class));
-                                Account.this.finish();
                             }
                         })
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -162,7 +170,6 @@ public class Account extends AppCompatActivity {
                     String type = arrayList.getType();
 
                     Intent i = new Intent(Account.this, AccountLog.class);
-//                    Intent i = new Intent(Account.this, AtyMain.class);
                     Bundle b = new Bundle();
 
                     b.putString("name", name);
@@ -187,7 +194,7 @@ public class Account extends AppCompatActivity {
     }
     @Override
     protected void onDestroy(){
-        super.onDestroy();
         actioner.CloseDataBase();
+        super.onDestroy();
     }
 }

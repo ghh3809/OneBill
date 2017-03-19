@@ -19,6 +19,7 @@ import java.text.DecimalFormat;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
+import oneBill.presentation.activity.AtyAddRecord;
 
 public class PayableActivity extends AppCompatActivity {
 
@@ -232,7 +233,7 @@ public class PayableActivity extends AppCompatActivity {
         findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PayableActivity.this, AddRecordActivity.class);
+                Intent intent = new Intent(PayableActivity.this, AtyAddRecord.class);
                 intent.putExtra("bookName",bookName);
                 startActivity(intent);
                 PayableActivity.this.finish();
@@ -254,8 +255,8 @@ public class PayableActivity extends AppCompatActivity {
     }
     @Override
     protected void onDestroy(){
-        super.onDestroy();
         actioner.CloseDataBase();
+        super.onDestroy();
     }
 
     protected void initialize(){

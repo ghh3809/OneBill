@@ -11,14 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import cn.edu.tsinghua.cs.httpsoft.onebill.R;
 import oneBill.control.Actioner;
 import oneBill.domain.entity.Book;
 import oneBill.domain.entity.Log;
-import oneBill.presentation.AddRecordActivity;
-import oneBill.presentation.activity.AtyAddRecord;
+import oneBill.presentation.Account;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -72,7 +72,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
             textviewSum.setText("¥ " + actioner.GetSum(book.getName()));
             try {
                 Log recentRecord = actioner.GetLatestRecord(book.getName());
-                textviewRecent.setText("最近消费：" + recentRecord.getTime() + " ¥ " + recentRecord.getAmount() + " " + recentRecord.getType());
+                textviewRecent.setText("最近消费：" + recentRecord.getTime() + "  ¥  " + new DecimalFormat("#.##").format(recentRecord.getAmount()) + "  " + recentRecord.getType());
             } catch (Exception e){
                 textviewRecent.setText("无最近消费");
             }
@@ -83,10 +83,10 @@ public class BookAdapter extends ArrayAdapter<Book> {
         imageviewAddRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODOe
-                        Intent intent = new Intent(BookAdapter.this.context, AtyAddRecord.class);
-//                Intent intent = new Intent(BookAdapter.this.context, AddRecordActivity.class);
+                //TODO
+                Intent intent = new Intent(BookAdapter.this.context, Account.class);
                 intent.putExtra("bookName", book.getName());
+                intent.putExtra("FromHome", true);
                 BookAdapter.this.context.startActivity(intent);
             }
         });

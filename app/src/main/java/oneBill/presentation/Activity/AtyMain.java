@@ -86,9 +86,15 @@ public class AtyMain extends AppCompatActivity implements View.OnClickListener, 
             case R.id.listviewBook:
                 //TODO
                 Intent intent = new Intent(AtyMain.this, Account.class);
-                intent.putExtra("name", books.get(position).getName());
+                intent.putExtra("bookName", books.get(position).getName());
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        actioner.CloseDataBase();
+        super.onDestroy();
     }
 }

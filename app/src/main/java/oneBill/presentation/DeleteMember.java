@@ -124,7 +124,7 @@ public class DeleteMember extends AppCompatActivity {
     }
     @Override
     protected void onDestroy(){
-        super.onDestroy();
         actioner.CloseDataBase();
+        super.onDestroy();
     }
 }

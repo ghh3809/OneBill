@@ -7,17 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="@dimen/text_small"
+        android:textSize="@dimen/text_normal"
         android:gravity="right"
+        android:background="@color/colorWhiteAlpha"
         android:id="@+id/textViewFormula"/>
-
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="0"-->
-        <!--android:textSize="50dp"-->
-        <!--android:gravity="right"-->
-        <!--android:id="@+id/textViewScreen"/>-->
 
     <TableLayout
         android:layout_width="match_parent"

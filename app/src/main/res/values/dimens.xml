@@ -10,7 +10,7 @@
     <dimen name="left_margin_big">40dp</dimen>
 
     <dimen name="icon">24dp</dimen>
-    <dimen name="bigIcon">48dp</dimen>
+    <dimen name="bigIcon">36dp</dimen>
 
 
     <dimen name="text_title">22sp</dimen>

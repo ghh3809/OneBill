@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">OneBill</string>
     <string name="nameChinese">一叶账目</string>
-    <string name="version">一叶账目  V1.1</string>
+    <string name="version">一叶账目  V1.2</string>
     <string name="about">本应用由清华大学一叶账目小组开发\n如有问题请联系：ghh3809@163.com\n感谢您的使用！</string>
     <string name="action_settings">Settings</string>
 

@@ -243,9 +243,8 @@ public class Broker {
      * @param _amount
      */
     public void CreateLoanRecord(String _bookName, String _lender, String _borrower, double _amount) {
-        Type type = Type.借贷;
         int id = reader.QueryIDNum() + 1;
-        writer.AddLog(id, type.toString(), _bookName, _amount);
+        writer.AddLog(id, "借贷", _bookName, _amount);
         writer.AddDetail(id, _bookName, _lender, _amount, 0);
         writer.AddDetail(id, _bookName, _borrower, 0, _amount);
         writer.UpdateBookTime(_bookName);

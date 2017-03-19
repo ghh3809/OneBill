@@ -40,8 +40,8 @@ public class AccountClear extends AppCompatActivity {
 
     @Override
     protected void onDestroy(){
-        super.onDestroy();
         actioner.CloseDataBase();
+        super.onDestroy();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class AccountClear extends AppCompatActivity {
 
         actioner = new Actioner(this);
         Intent intent = getIntent();
-        name = intent.getStringExtra("name");
+        name = intent.getStringExtra("bookName");
         person=new String[actioner.GetMembers(name).size()];
         int index = 0;
         Iterator iterator=actioner.GetMembers(name).iterator();
@@ -65,9 +65,8 @@ public class AccountClear extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(AccountClear.this,Account.class);
-                intent1.putExtra("name", name);
+                intent1.putExtra("bookName", name);
                 startActivity(intent1);
-                AccountClear.this.finish();
             }
         });
 

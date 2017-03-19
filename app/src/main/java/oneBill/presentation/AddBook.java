@@ -105,7 +105,7 @@ public class AddBook extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "参与人员出现重名，重名的已自动忽略", Toast.LENGTH_SHORT).show();
                         //TODO
                         Intent intent = new Intent(AddBook.this, Account.class);
-                        intent.putExtra("name", bookname);
+                        intent.putExtra("bookName", bookname);
                         startActivity(intent);
                         AddBook.this.finish();
                     } catch (NullException e) {
@@ -121,7 +121,7 @@ public class AddBook extends AppCompatActivity {
     }
     @Override
     protected void onDestroy(){
-        super.onDestroy();
         actioner.CloseDataBase();
+        super.onDestroy();
     }
 }

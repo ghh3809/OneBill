@@ -132,7 +132,7 @@ public class Actioner {
     public Log GetLatestRecord(String _bookName) throws NullException {
         ArrayList<Log> logs = br.GetRecord(_bookName);
         for (int i = 0; i < logs.size(); i ++) {
-            if (logs.get(i).getType() != "借贷") {
+            if (!logs.get(i).getType().equals("借贷")) {
                 return logs.get(i);
             }
         }

@@ -68,11 +68,8 @@ public class PreviewActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Intent intent = new Intent(PreviewActivity.this, Account.class);
-                intent.putExtra("name",bookName);
+                intent.putExtra("bookName",bookName);
                 startActivity(intent);
-                PreviewActivity.this.finish();
-                PayableActivity.instance.finish();
-                AddRecordActivity.instance.finish();
             }
         });
 
@@ -97,7 +94,7 @@ public class PreviewActivity extends AppCompatActivity {
     }
     @Override
     protected void onDestroy(){
-        super.onDestroy();
         actioner.CloseDataBase();
+        super.onDestroy();
     }
 }
