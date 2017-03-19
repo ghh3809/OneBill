@@ -24,6 +24,10 @@ public class Writer {
         db = helper.getWritableDatabase();
     }
 
+    /**
+     * 在book表中插入新账本
+     * @param _bookName
+     */
     public void AddBook(String _bookName) {
         SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss:SSS");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
@@ -36,14 +40,31 @@ public class Writer {
         db.insert("Book", null, cv);
     }
 
+    /**
+     * 在person表中插入新人
+     * @param _bookName
+     * @param _person
+     */
     public void AddPerson(String _bookName, String _person) {
         db.execSQL("INSERT INTO person VALUES(?, ?, ?)", new String[]{_person, _bookName, "1"});
     }
 
+    /**
+     * 更新person表中某人为存在
+     * @param _bookName
+     * @param _person
+     */
     public void UpdatePerson(String _bookName, String _person) {
         db.execSQL("UPDATE person SET IsExist = 1 WHERE BookName = ? AND Name = ?", new String[]{_bookName, _person});
     }
 
+    /**
+     * 在log表中新增记录
+     * @param _id
+     * @param _type
+     * @param _bookName
+     * @param _amount
+     */
     public void AddLog(int _id, String _type, String _bookName, double _amount) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
@@ -57,6 +78,14 @@ public class Writer {
         db.insert("log", null, cv);
     }
 
+    /**
+     * 在detail表中新增记录
+     * @param _id
+     * @param _bookName
+     * @param _person
+     * @param _paid
+     * @param _payable
+     */
     public void AddDetail(int _id, String _bookName, String _person, double _paid, double _payable) {
         ContentValues cv = new ContentValues();
         cv.put("ID", _id);
@@ -67,6 +96,14 @@ public class Writer {
         if ((_paid > 1E-5) || (_payable > 1E-5)) db.insert("detail", null, cv);
     }
 
+    /**
+     * 在detail表中新增多个记录
+     * @param _id
+     * @param _bookName
+     * @param _persons
+     * @param _paid
+     * @param _payable
+     */
     public void AddDetails(int _id, String _bookName, ArrayList<String> _persons, ArrayList<Double> _paid, ArrayList<Double> _payable) {
         db.beginTransaction();
         int n = _persons.size();
@@ -80,6 +117,11 @@ public class Writer {
         }
     }
 
+    /**
+     * 更新总和
+     * @param _bookName
+     * @param _amount
+     */
     public void AddSum(String _bookName, double _amount) {
         Cursor c = db.rawQuery("SELECT Sum FROM book WHERE BookName = ?", new String[]{_bookName});
         double sum = 0;
@@ -92,6 +134,10 @@ public class Writer {
         db.update("book", cv, "BookName = ?", new String[]{_bookName});
     }
 
+    /**
+     * 从所有表中删除book账单
+     * @param _bookName
+     */
     public void DeleteBook(String _bookName) {
         db.delete("book", "BookName = ?", new String[]{_bookName});
         db.delete("person", "BookName = ?", new String[]{_bookName});
@@ -99,12 +145,21 @@ public class Writer {
         db.delete("detail", "BookName = ?", new String[]{_bookName});
     }
 
+    /**
+     * person表中更新某人存在为0
+     * @param _bookName
+     * @param _person
+     */
     public void DeletePerson(String _bookName, String _person) {
         ContentValues cv = new ContentValues();
         cv.put("IsExist", 0);
         db.update("person", cv, "BookName = ? AND Name = ?", new String[]{_bookName, _person});
     }
 
+    /**
+     * log和detail表中删除记录，更新总和
+     * @param _id
+     */
     public void DeleteLog(int _id) {
         Cursor c = db.rawQuery("SELECT Amount,BookName FROM log WHERE ID = ?", new String[]{String.valueOf(_id)});
         double amount = 0;
@@ -119,6 +174,10 @@ public class Writer {
         db.delete("detail", "ID = ?", new String[]{String.valueOf(_id)});
     }
 
+    /**
+     * 更新账本修改时间
+     * @param _bookName
+     */
     public void UpdateBookTime(String _bookName) {
         SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss:SSS");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
@@ -128,6 +187,11 @@ public class Writer {
         db.update("book", cv, "BookName = ?", new String[]{_bookName});
     }
 
+    /**
+     * 更新账本名称
+     * @param _oldName
+     * @param _newName
+     */
     public void UpdateBookName(String _oldName, String _newName) {
         ContentValues cv = new ContentValues();
         cv.put("BookName", _newName);
@@ -137,6 +201,9 @@ public class Writer {
         db.update("detail", cv, "BookName = ?", new String[]{_oldName});
     }
 
+    /**
+     * 账本数加1
+     */
     public void UpdateBookNumber() {
         Cursor c = db.rawQuery("SELECT BookNum FROM const", null);
         int BookNum = 0;
@@ -149,6 +216,9 @@ public class Writer {
         db.update("const", cv, null, null);
     }
 
+    /**
+     * 记录数加1
+     */
     public void UpdateIDNumber() {
         Cursor c = db.rawQuery("SELECT IDNum FROM const", null);
         int IDNum = 0;
