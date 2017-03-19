@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/layoutEat"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:alpha="1">
+
+                <ImageView
+                    android:layout_width="@dimen/bigIcon"
+                    android:layout_height="@dimen/bigIcon"
+                    android:src="@mipmap/hot_drink"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="吃喝"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/text_normal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutTrans"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:alpha="0.3">
+
+                <ImageView
+                    android:layout_width="@dimen/bigIcon"
+                    android:layout_height="@dimen/bigIcon"
+                    android:src="@mipmap/car"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="交通"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/text_normal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPlay"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:alpha="0.3">
+
+                <ImageView
+                    android:layout_width="@dimen/bigIcon"
+                    android:layout_height="@dimen/bigIcon"
+                    android:src="@mipmap/joystick"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="娱乐"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/text_normal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutAccom"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:alpha="0.3">
+
+                <ImageView
+                    android:layout_width="@dimen/bigIcon"
+                    android:layout_height="@dimen/bigIcon"
+                    android:src="@mipmap/house"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="住宿"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/text_normal"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutOther"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:alpha="0.3">
+
+                <ImageView
+                    android:layout_width="@dimen/bigIcon"
+                    android:layout_height="@dimen/bigIcon"
+                    android:layout_weight="1"
+                    android:src="@mipmap/gift"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="其它"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/text_normal"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/left_margin"
+                android:text="输入实际支付金额      总计 ¥ "
+                android:textSize="@dimen/text_normal"/>
+
+            <TextView
+                android:id="@+id/textviewSum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="@dimen/text_normal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 元"
+                android:textSize="@dimen/text_normal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/linearlayoutPaid"
+            android:layout_marginLeft="@dimen/left_margin"
+            android:layout_marginRight="@dimen/left_margin_big"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+

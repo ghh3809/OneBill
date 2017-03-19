@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.edu.tsinghua.cs.httpsoft.onebill" >
+    package="cn.edu.tsinghua.cs.httpsoft.onebill"
+    android:versionCode="2"
+    android:versionName="1.2">
 
     <supports-screens
         android:anyDensity="true"
@@ -22,6 +24,12 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name="oneBill.presentation.AddBook"
+            android:launchMode="singleTask"
+            android:label="@string/title_activity_manage_member"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name="oneBill.presentation.PreviewActivity"
             android:launchMode="singleTask"
             android:label="@string/title_activity_preview"
@@ -34,24 +42,13 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="oneBill.presentation.AddRecordActivity"
-            android:label="@string/title_activity_add_record"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name="oneBill.presentation.AddBook"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name="oneBill.presentation.DeleteMember"
             android:launchMode="singleTask"
             android:label="@string/title_activity_delete_member"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="oneBill.presentation.MainActivity"
+            android:name="oneBill.presentation.activity.AtyWelcome"
             android:launchMode="singleTask"
             android:label="一叶账目"
             android:theme="@style/AppTheme.NoActionBar"
@@ -61,6 +58,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="oneBill.presentation.activity.AtyMain"
+            android:launchMode="singleTask"
+            android:label="@string/title_activity_account"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="oneBill.presentation.Account"
@@ -76,6 +79,24 @@
         </activity>
         <activity
             android:name="oneBill.presentation.AccountClear"
+            android:label="@string/title_activity_account_clear"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="oneBill.presentation.activity.AtyAbout"
+            android:label="@string/title_activity_account_clear"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="oneBill.presentation.activity.AtySetting"
+            android:label="@string/title_activity_account_clear"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="oneBill.presentation.activity.AtyAddRecord"
             android:label="@string/title_activity_account_clear"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">

@@ -4,7 +4,12 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import oneBill.domain.entity.Book;
+import oneBill.domain.entity.Detail;
+import oneBill.domain.entity.Log;
+import oneBill.domain.entity.Person;
 import oneBill.domain.entity.Solution;
+import oneBill.domain.entity.Type;
 import oneBill.domain.entity.error.AmountMismatchException;
 import oneBill.domain.entity.error.DuplicationNameException;
 import oneBill.domain.entity.error.MemberReturnException;
@@ -43,8 +48,8 @@ public class Actioner {
      * <p>获取已经创建的账本名称的ArrayList列表。顺序按最近修改时间降序排列。<br>
      * @return 返回按修改时间降序排列的ArrayList列表
      */
-    public ArrayList<String> GetBook() {
-        return br.GetBook();
+    public ArrayList<Book> GetBooks() {
+        return br.GetBooks();
     }
 
     /**
@@ -84,8 +89,8 @@ public class Actioner {
      * @param _bookName 要获取成员的账本名
      * @return 返回成员列表
      */
-    public ArrayList<String> GetMember(String _bookName) {
-        return br.GetMember(_bookName);
+    public ArrayList<Person> GetMembers(String _bookName) {
+        return br.GetMembers(_bookName);
     }
 
     /**
@@ -114,7 +119,7 @@ public class Actioner {
      * @param _bookName 要获取记录的账本
      * @return 返回账本记录
      */
-    public ArrayList<ArrayList<String>> GetRecord(String _bookName) {
+    public ArrayList<Log> GetRecord(String _bookName) {
         return br.GetRecord(_bookName);
     }
 
@@ -124,9 +129,14 @@ public class Actioner {
      * @param _bookName 要获取记录的账本
      * @return 返回账本记录
      */
-    public ArrayList<String> GetLatestRecord(String _bookName) throws NullException {
-        if (br.GetConsumRecord(_bookName).size() == 0) throw new NullException();
-        return br.GetConsumRecord(_bookName).get(0);
+    public Log GetLatestRecord(String _bookName) throws NullException {
+        ArrayList<Log> logs = br.GetRecord(_bookName);
+        for (int i = 0; i < logs.size(); i ++) {
+            if (!logs.get(i).getType().equals("借贷")) {
+                return logs.get(i);
+            }
+        }
+        throw new NullException();
     }
 
     /**
@@ -135,7 +145,7 @@ public class Actioner {
      * @param _ID 要获取明细的记录ID号
      * @return 返回记录明细
      */
-    public ArrayList<ArrayList<String>> GetDetail(int _ID) {
+    public ArrayList<Detail> GetDetail(int _ID) {
         return br.GetDetail(_ID);
     }
 
@@ -148,8 +158,8 @@ public class Actioner {
      * @param _payable 应付数组
      * @throws AmountMismatchException 当实付与应付总额出现矛盾时，抛出此异常。
      */
-    public void CreateConsumRecord(String _bookName, int _type, ArrayList<Double> _paid, ArrayList<Double> _payable) throws AmountMismatchException {
-        br.CreateConsumRecord(_bookName, _type, _paid, _payable);
+    public void CreateConsumeRecord(String _bookName, String _type, ArrayList<Double> _paid, ArrayList<Double> _payable) throws AmountMismatchException {
+        br.CreateConsumeRecord(_bookName, _type, _paid, _payable);
     }
 
     /**
@@ -173,21 +183,6 @@ public class Actioner {
      */
     public void DeleteRecord(int _ID) {
         br.DeleteRecord(_ID);
-    }
-
-    /**
-     * 查询净支出额.
-     * <p>查询列表中成员的净支出额（总支出-总应付），顺序按照人员列表顺序排列。<br>
-     * @param _bookName 要查询的账本名
-     * @return 净支出额列表
-     */
-    public ArrayList<Double> QueryNetAmount(String _bookName) {
-        ArrayList<String> persons = br.GetMember(_bookName);
-        ArrayList<Double> net = new ArrayList<Double>();
-        for(int i = 0; i < persons.size(); i ++) {
-            net.add(QueryNetAmount(_bookName, persons.get(i)));
-        }
-        return net;
     }
 
     /**
